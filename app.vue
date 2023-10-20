@@ -1,0 +1,77 @@
+<!-- @format -->
+
+<template>
+  <baseLoading></baseLoading>
+  <client-only
+    ><NuxtLayout>
+      <div class="page-container">
+        <LayoutSlider />
+        <div class="page-container-right">
+          <LayoutHeader />
+
+          <main class="page-container-main"><NuxtPage /></main>
+        </div>
+      </div> </NuxtLayout
+  ></client-only>
+</template>
+
+<script setup lang="ts">
+  import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+
+  const nuxtApp = useNuxtApp();
+
+  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    nuxtApp.vueApp.component(key, component);
+  }
+
+  // Server & Client
+  // 监听不到此函数，因为在setup里
+  nuxtApp.hook("app:created", (vueApp) => {
+    console.log("app:created");
+  });
+  // Client
+  // 监听不到此函数，因为在setup里
+  nuxtApp.hook("app:beforeMount", (vueApp) => {
+    console.log("app:beforeMount");
+  });
+
+  // Server & Client
+  // 监听不到此函数，因为在setup里
+  nuxtApp.hook("vue:setup", () => {
+    console.log("vue:setup");
+  });
+
+  // Server
+  nuxtApp.hook("app:rendered", (renderContext) => {
+    console.log("app:rendered");
+  });
+
+  // Client
+  nuxtApp.hook("app:mounted", (vueApp) => {
+    console.log("app:mounted");
+  });
+
+  nuxtApp.hook("page:finish", (vueApp) => {
+    console.log("page:finish");
+  });
+</script>
+
+<style lang="scss" scoped>
+  .page-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+  .page-container-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-x: hidden;
+    .page-container-main {
+      width: 100%;
+      height: calc(100% - var(--nav-height));
+    }
+  }
+</style>
