@@ -14,12 +14,11 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@nuxtjs/tailwindcss", "@nuxtjs/device", "@nuxt/image"],
-  image: {
-    inject: true,
-    dir: "assets/images",
+  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@nuxtjs/tailwindcss", "@nuxtjs/device", "nuxt-svgo"],
+  svgo: {
+    svgo: true,
 
-    format: ["webp", "avif", "jpeg", "jpg", "png", "gif"],
+    autoImportPath: "./assets/svg/icon/",
   },
   i18n: {
     vueI18n: "./i18n.config.ts",
@@ -33,10 +32,11 @@ export default defineNuxtConfig({
       },
     },
   },
+
   elementPlus: {
     icon: "ElIcon",
     importStyle: "scss",
     themes: ["dark"],
   },
-  css: ["@/assets/Stylesheets/index.scss", "element-plus/dist/index.css"],
+  css: ["@/assets/Stylesheets/index.scss", "element-plus/dist/index.css", "@/assets/fonts/iconfont/iconfont.css"],
 });

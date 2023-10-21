@@ -19,7 +19,14 @@
         :collapse-transition="true"
         :collapse="is_collapse"
       >
-        <LayoutItem v-for="route in menus" :key="route.path" :item="route" :base-path="route.path" />
+        <template v-for="routes in menus">
+          <el-menu-item-group v-if="routes.itemGroup"
+            ><LayoutItem v-for="route in routes.itemGroup" :key="route.path" :item="route" :base-path="route.path"
+          /></el-menu-item-group>
+          <template v-else>
+            <LayoutItem :key="routes.path" :item="routes" :base-path="routes.path" />
+          </template>
+        </template>
       </el-menu>
     </div>
   </div>
@@ -27,12 +34,13 @@
 
 <script setup>
   import {computed, ref} from "vue";
+  import router from "@/router";
 
-  const router = useRouter();
+  const routers = useRouter();
   const route = useRoute();
-  const menu = router.getRoutes();
+  const menu = routers.getRoutes();
 
-  const menus = ref(menu);
+  const menus = ref(router);
 
   const is_collapse = useIsCollapse();
 
@@ -105,16 +113,16 @@
       }
     }
     .el-menu-vertical-demo:not(.el-menu--collapse) {
-      width: 320px;
+      width: var(--slider-width);
       .el-menu-item {
         background-color: var(--el-fill-color);
         margin: 5px 0;
-        border-radius: 4px;
+        border-radius: 6px;
       }
       ::v-deep(.el-sub-menu__title) {
         background-color: var(--el-fill-color);
         margin: 5px 0;
-        border-radius: 4px;
+        border-radius: 6px;
       }
     }
   }

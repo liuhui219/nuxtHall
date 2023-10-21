@@ -1,0 +1,58 @@
+{
+  "id": "4296752",
+  "name": "hall",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8727201",
+      "name": "星星",
+      "font_class": "Mygame",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "9709389",
+      "name": "rewards-gift",
+      "font_class": "Rewards",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "35451667",
+      "name": "recently-viewed",
+      "font_class": "Recent",
+      "unicode": "e7ea",
+      "unicode_decimal": 59370
+    },
+    {
+      "icon_id": "36038438",
+      "name": "AffiliateConnectionsFilled",
+      "font_class": "Affiliate",
+      "unicode": "e69d",
+      "unicode_decimal": 59037
+    },
+    {
+      "icon_id": "37154981",
+      "name": "Casino",
+      "font_class": "Casino",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "4798259",
+      "name": "20",
+      "font_class": "Bonus",
+      "unicode": "efbc",
+      "unicode_decimal": 61372
+    },
+    {
+      "icon_id": "8810393",
+      "name": "VIP皇冠",
+      "font_class": "Vip",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    }
+  ]
+}

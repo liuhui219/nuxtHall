@@ -1,7 +1,7 @@
 <!-- @format -->
 
 <template>
-  <baseLoading></baseLoading>
+  <baseLoading v-if="pageLoading"></baseLoading>
   <client-only
     ><NuxtLayout>
       <div class="page-container">
@@ -19,7 +19,7 @@
   import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
   const nuxtApp = useNuxtApp();
-
+  const pageLoading = usePageLoading();
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     nuxtApp.vueApp.component(key, component);
   }
@@ -53,6 +53,7 @@
 
   nuxtApp.hook("page:finish", (vueApp) => {
     console.log("page:finish");
+    pageLoading.value = false;
   });
 </script>
 
@@ -68,10 +69,11 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    overflow-x: hidden;
+
     .page-container-main {
       width: 100%;
       height: calc(100% - var(--nav-height));
+      overflow-x: hidden;
     }
   }
 </style>

@@ -2,7 +2,7 @@
 
 <template>
   <div class="app-loading">
-    <nuxt-img class="loading-base-img" src="/loading.avif" />
+    <img class="loading-base-img" src="~/assets/images/load/loading.avif" />
   </div>
 </template>
 <script setup lang="ts">
