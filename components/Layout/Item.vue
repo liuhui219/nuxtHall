@@ -13,7 +13,7 @@
       <img
         v-if="item.meta.type === 'image'"
         class="w-[24px] mr-[8px]"
-        :src="getResConfigImage()[`${item.meta.icon}`]"
+        :src="$importImage(item.meta.icon, 'png', 'images/menu')"
       />
       <el-icon v-else class="menuIcon"><i class="iconfont" :class="`icon-${item.meta.icon}`"></i></el-icon>
 
@@ -32,8 +32,8 @@
 </template>
 
 <script setup>
-  import {filename} from "pathe/utils";
   const {t} = useI18n();
+  const {$importImage} = useNuxtApp();
   const props = defineProps({
     item: {
       type: Object,
@@ -45,10 +45,10 @@
     },
   });
 
-  const getResConfigImage = () => {
-    const glob = import.meta.glob("@/assets/images/menu/*.png", {eager: true});
-    return Object.fromEntries(Object.entries(glob).map(([key, value]) => [filename(key), value.default]));
-  };
+  // const getResConfigImage = () => {
+  //   const glob = import.meta.glob("@/assets/images/menu/*.png", {eager: true});
+  //   return Object.fromEntries(Object.entries(glob).map(([key, value]) => [filename(key), value.default]));
+  // };
 
   const hasOneShowingChild = (item) => {
     if (item.children) {

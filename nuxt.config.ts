@@ -14,12 +14,8 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@nuxtjs/tailwindcss", "@nuxtjs/device", "nuxt-svgo"],
-  svgo: {
-    svgo: true,
+  modules: ["@nuxtjs/i18n", "@element-plus/nuxt", "@nuxtjs/tailwindcss", "@nuxtjs/device"],
 
-    autoImportPath: "./assets/svg/icon/",
-  },
   i18n: {
     vueI18n: "./i18n.config.ts",
   },
