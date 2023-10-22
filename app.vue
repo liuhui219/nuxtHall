@@ -65,7 +65,7 @@
     flex-direction: row;
   }
   .page-container-right {
-    flex: 1;
+    width: calc(100% - var(--main-width));
     display: flex;
     flex-direction: column;
     height: 100%;

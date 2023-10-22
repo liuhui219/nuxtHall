@@ -1,7 +1,7 @@
 <!-- @format -->
 
 <template>
-  <div class="sider_menu" :class="{hide: is_collapse}">
+  <div class="sider_menu" ref="siderMenu" :class="{hide: is_collapse}">
     <div class="logo">
       <div class="sysName" @click="isCollapseFn">
         <el-icon><component :is="is_collapse ? 'Expand' : 'Fold'"></component></el-icon>
@@ -33,9 +33,9 @@
 </template>
 
 <script setup>
-  import {computed, ref} from "vue";
+  import {computed, onMounted, ref, nextTick} from "vue";
   import router from "@/router";
-
+  const siderMenu = ref(null);
   const routers = useRouter();
   const route = useRoute();
   const menu = routers.getRoutes();
@@ -54,14 +54,30 @@
     },
   });
 
-  const isCollapseFn = () => {
+  onMounted(() => {});
+
+  const isCollapseFn = async () => {
+    let width;
+
     is_collapse.value = !is_collapse.value;
+    width = !is_collapse.value ? "320px" : "72px";
+    await nextTick();
+
+    if (!is_collapse.value) {
+      let timeout = setTimeout(() => {
+        document.documentElement.style.setProperty("--main-width", width);
+        timeout = null;
+      }, 300);
+    } else {
+      document.documentElement.style.setProperty("--main-width", width);
+    }
   };
 </script>
 
 <style lang="scss" scoped>
   .sider_menu {
     height: 100%;
+
     box-sizing: border-box;
     overflow: hidden;
     display: flex;
@@ -69,10 +85,8 @@
     box-shadow: var(--el-box-shadow);
     background-color: var(--el-bg-color);
     pointer-events: auto;
-    -o-transition: all 0.3s;
-    -moz-transition: all 0.3s;
     transition: all 0.3s;
-    padding: 0 16px;
+    padding: 0 var(--slider-padding);
 
     .logo {
       display: flex;
@@ -129,5 +143,6 @@
 
   .hide {
     padding: 0 4px;
+    transition: all 0.3s;
   }
 </style>
