@@ -70,8 +70,9 @@
     flex-direction: row;
   }
   .page-container-right {
-    width: calc(100% - var(--main-width));
+    // width: calc(100% - var(--main-width));
     display: flex;
+    flex: 1;
     flex-direction: column;
     height: 100%;
 

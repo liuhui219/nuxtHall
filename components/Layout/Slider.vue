@@ -66,21 +66,15 @@
     width = !is_collapse.value ? "320px" : "72px";
     await nextTick();
 
-    if (!is_collapse.value) {
-      let timeout = setTimeout(() => {
-        document.documentElement.style.setProperty("--main-width", width);
-        timeout = null;
-      }, 300);
-    } else {
-      document.documentElement.style.setProperty("--main-width", width);
-    }
+    document.documentElement.style.setProperty("--main-width", width);
   };
 </script>
 
 <style lang="scss" scoped>
   .sider_menu {
     height: 100%;
-
+    width: var(--main-width);
+    min-width: var(--main-width);
     box-sizing: border-box;
     overflow: hidden;
     display: flex;
