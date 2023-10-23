@@ -42,7 +42,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid var(--el-border-color);
+    border-bottom: 1px solid var(--el-fill-color-lighter);
     // background-image: radial-gradient(transparent 1px, var(--bg-color) 1px);
     // background-size: 4px 4px;
     // backdrop-filter: saturate(50%) blur(4px);
@@ -51,7 +51,7 @@
 
   .navbar-wrapper {
     position: relative;
-    width: var(--header-width);
+    width: var(--container-width);
     height: var(--header-height);
     display: flex;
     flex-direction: row;

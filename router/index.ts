@@ -54,12 +54,6 @@ let routes = [
         meta: {title: "Rewards", icon: "Rewards"},
         children: [],
       },
-      {
-        path: "/Casino",
-        name: "Casino",
-        meta: {title: "Casino", icon: "Casino"},
-        children: [],
-      },
     ],
   },
 ];

@@ -6,7 +6,9 @@
       <div class="sysName" @click="isCollapseFn">
         <el-icon><component :is="is_collapse ? 'Expand' : 'Fold'"></component></el-icon>
       </div>
-      <div class="title" v-if="!is_collapse">logo</div>
+      <div class="title" v-if="!is_collapse">
+        <img class="h-[50px]" :src="$importImage('logo-h', 'avif', 'images/logo')" />
+      </div>
     </div>
     <div class="menu">
       <el-menu
@@ -35,6 +37,7 @@
 <script setup>
   import {computed, onMounted, ref, nextTick} from "vue";
   import router from "@/router";
+  const {$importImage} = useNuxtApp();
   const siderMenu = ref(null);
   const routers = useRouter();
   const route = useRoute();
@@ -97,8 +100,6 @@
 
       padding: 10px 0;
       img {
-        width: 24px;
-        padding-right: 6px;
       }
       .sysName {
         padding: 14px;
@@ -113,8 +114,9 @@
         justify-content: center;
       }
       .title {
-        font-size: 14px;
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
       }
     }

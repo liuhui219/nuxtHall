@@ -9,7 +9,9 @@
         <div class="page-container-right">
           <LayoutHeader />
 
-          <main class="page-container-main"><NuxtPage /></main>
+          <main class="page-container-main">
+            <div class="page-container-main-wrap"><NuxtPage /></div>
+          </main>
         </div>
       </div> </NuxtLayout
   ></client-only>
@@ -54,6 +56,9 @@
   nuxtApp.hook("page:finish", (vueApp) => {
     console.log("page:finish");
     pageLoading.value = false;
+    useHead({
+      title: "afun Apostas Esportivas | Plataforma de Cassino online",
+    });
   });
 </script>
 
@@ -73,7 +78,14 @@
     .page-container-main {
       width: 100%;
       height: calc(100% - var(--nav-height));
+      display: flex;
+      justify-content: center;
       overflow-x: hidden;
+      .page-container-main-wrap {
+        max-width: var(--container-width);
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 </style>
