@@ -1,11 +1,20 @@
 <!-- @format -->
 
 <template>
-  <el-button color="#373939" @click="slidePrev" :icon="ArrowLeft" :disabled="disabled && activeIndex === 0" />
   <el-button
+    class="sys-btn btn-home-next"
+    color="#373939"
+    @click="slidePrev"
+    :icon="ArrowLeft"
+    :class="{'swiper-button-disabled': disabled && activeIndex === 0}"
+    :disabled="disabled && activeIndex === 0"
+  />
+  <el-button
+    class="sys-btn btn-home-next"
     color="#373939"
     @click="slideNext"
     :icon="ArrowRight"
+    :class="{'swiper-button-disabled': disabled && activeIndex === swiperLength}"
     :disabled="disabled && activeIndex === swiperLength"
   />
 </template>

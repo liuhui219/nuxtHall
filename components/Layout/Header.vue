@@ -4,7 +4,9 @@
   <header class="navbar">
     <div class="navbar-wrapper">
       <div class="header-left">
-        <el-button size="large" text><i class="iconfont" :class="`icon-Casino`"></i>CASINO</el-button>
+        <el-button size="large" @click="routerFn" text :bg="path === '/'"
+          ><i class="iconfont" :class="`icon-Casino`"></i>CASINO</el-button
+        >
       </div>
       <div class="header-right">
         <el-button size="large">SIGN IN</el-button>
@@ -30,6 +32,18 @@
 
 <script setup lang="ts">
   import {Search, Plus, CirclePlusFilled, CirclePlus, Check, CircleCheck} from "@element-plus/icons-vue";
+  const router = useRouter();
+  const route = useRoute();
+  const path = ref(route.path);
+  watch(
+    () => route.path,
+    (newValue) => {
+      path.value = newValue;
+    }
+  );
+  const routerFn = () => {
+    router.push({path: "/"});
+  };
 </script>
 
 <style lang="scss">

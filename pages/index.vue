@@ -1,8 +1,6 @@
 <!-- @format -->
 
-<template>
-  <NuxtWelcome></NuxtWelcome>
-</template>
+<template>123</template>
 
 <script setup>
   definePageMeta({

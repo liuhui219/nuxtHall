@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "2564725",
+      "name": "menu",
+      "font_class": "menu",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "1327479",
+      "name": "fire",
+      "font_class": "fire",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "4354105",
+      "name": "home",
+      "font_class": "home",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "21681505",
+      "name": "Coupon Rebate",
+      "font_class": "CouponRebate",
+      "unicode": "e687",
+      "unicode_decimal": 59015
+    },
+    {
       "icon_id": "8727201",
       "name": "星星",
       "font_class": "Mygame",
