@@ -49,6 +49,12 @@
 
   nuxtApp.hook("page:finish", (vueApp) => {
     console.log("page:finish");
+    if (useNuxtApp().$device.isMobile) {
+      document.addEventListener("gesturestart", function (event) {
+        event.preventDefault();
+      });
+    }
+
     // pageLoading.value = false;
     // useHead({
     //   title: "afun Apostas Esportivas | Plataforma de Cassino online",
