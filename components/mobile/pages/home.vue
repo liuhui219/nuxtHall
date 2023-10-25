@@ -34,7 +34,7 @@
           </div>
         </swiper>
         <div v-if="list.length > 1" class="home-nl-p">
-          <div v-for="(item, index) in list.length" :key="item" :class="{'vip-nl-p-a': index == activeIndex}" />
+          <div v-for="(item, index) in list.length" :key="item" :class="{'home-nl-p-a': index == activeIndex}" />
         </div>
       </div>
     </div>
@@ -113,7 +113,7 @@
             border: 1px solid var(--el-text-color-disabled);
           }
 
-          .vip-nl-p-a {
+          .home-nl-p-a {
             background: var(--el-color-primary);
             border: 1px solid var(--el-text-color-primary);
           }
