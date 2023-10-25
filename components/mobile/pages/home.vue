@@ -36,6 +36,18 @@
         <div v-if="list.length > 1" class="home-nl-p">
           <div v-for="(item, index) in list.length" :key="item" :class="{'home-nl-p-a': index == activeIndex}" />
         </div>
+
+        <div class="home-tab">
+          <div
+            class="home-tab-btn"
+            :class="{active: index === activeTabIndex}"
+            v-for="(item, index) in tabList"
+            :key="index"
+            @click="tabClick(index)"
+          >
+            {{ item.text }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -63,9 +75,29 @@
     },
   ];
 
+  const tabList = [
+    {
+      value: 1,
+      text: "All Games",
+    },
+    {
+      value: 2,
+      text: "Slots",
+    },
+    {
+      value: 3,
+      text: "Roulette",
+    },
+  ];
+
   const activeIndex = ref(0);
+  const activeTabIndex = ref(0);
   const slideChange = (event: {realIndex: number}) => {
     activeIndex.value = event.realIndex;
+  };
+
+  const tabClick = (index: number) => {
+    activeTabIndex.value = index;
   };
 </script>
 <style lang="scss" scoped>
@@ -94,7 +126,7 @@
 
         .home-nl-p {
           width: 100%;
-          margin: 12px auto 0;
+          margin: 8px auto 0;
           height: 6px;
           border-radius: 3px;
           display: flex;
@@ -117,6 +149,32 @@
             background: var(--el-color-primary);
             border: 1px solid var(--el-text-color-primary);
           }
+        }
+      }
+
+      .home-tab {
+        width: 100%;
+        height: 35px;
+        border: 1px solid var(--el-text-color-disabled);
+        border-radius: var(--border-radius);
+        margin-top: 24px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 2px;
+        .active {
+          background: var(--el-color-primary);
+          border-radius: var(--border-radius);
+        }
+        .home-tab-btn {
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0 16px;
+          font-size: 12px;
         }
       }
     }
