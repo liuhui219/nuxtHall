@@ -2,7 +2,7 @@
 
 <template>
   <div class="app-loading">
-    <img class="loading-base-img" src="~/assets/images/load/loading.avif" />
+    <base-img class="loading-base-img" name="loading" type="avif" path="images/load" />
   </div>
 </template>
 <script setup lang="ts">
@@ -10,10 +10,6 @@
     size: {
       type: Number,
       default: 80,
-    },
-    childColor: {
-      type: String,
-      default: "$second",
     },
   });
 </script>

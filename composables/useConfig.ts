@@ -27,21 +27,20 @@ export function isPageInSome(current: string, path = "") {
 }
 
 export const closePopup = (name?: string | undefined) => {
-  const menuDrawer = useMenuDrawer();
   const route = useRoute();
   let {params, query, path, hash} = route;
   let nextHash = hash;
   nextHash = nextHash.replace("/" + name, "");
   navigateTo({path, params, hash: nextHash, query});
-  menuDrawer.value = false;
 };
 
 export const openPopup = (name?: string | undefined) => {
-  const menuDrawer = useMenuDrawer();
   const route = useRoute();
   let {params, query, path, hash} = route;
+  if (!useNuxtApp().$device.isDesktop && name != "menu") {
+    hash = hash.replace("/menu", "");
+  }
   let nextHash = "";
   nextHash = "#/" + name;
   navigateTo({path, params, hash: nextHash, query});
-  menuDrawer.value = true;
 };

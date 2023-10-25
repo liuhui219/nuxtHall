@@ -1,12 +1,13 @@
 <!-- @format -->
 
-<template>123</template>
+<template>
+  <LazyDesktopPagesHome v-if="$device.isDesktop" />
+  <LazyMobilePagesHome v-else />
+</template>
 
 <script setup>
   definePageMeta({
-    title: "Torneio",
     name: "首页",
-    icon: "StarFilled",
   });
 </script>
 

@@ -10,7 +10,7 @@
     :before-close="handleClose"
   >
     <div class="mobile-navigation-header relative">
-      <img class="h-[40px]" :src="$importImage('logo-h', 'avif', 'images/logo')" />
+      <base-img class="h-[40px]" name="logo-h" type="avif" path="images/logo" />
 
       <div
         class="closeBtn absolute -right-[12px] top-[0] bottom-0 m-auto z-[1] pr-[16px] pl-[16px]"

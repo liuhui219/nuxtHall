@@ -3,14 +3,15 @@
 <template>
   <baseLoading v-if="pageLoading"></baseLoading>
   <client-only
-    ><NuxtLayout> <desktopHome v-if="$device.isDesktop" /><mobileHome v-if="$device.isMobile" /> </NuxtLayout
+    ><NuxtLayout> <desktopHome v-if="isDesktop" /><mobileHome v-if="isMobile" /> </NuxtLayout
   ></client-only>
 </template>
 
 <script setup lang="ts">
   import * as ElementPlusIconsVue from "@element-plus/icons-vue";
-
+  const {isMobile, isDesktop} = useDevice();
   const nuxtApp = useNuxtApp();
+
   const pageLoading = usePageLoading();
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     nuxtApp.vueApp.component(key, component);

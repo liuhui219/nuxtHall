@@ -10,10 +10,13 @@
         class="w-[24px] mr-[8px]"
         :src="`_nuxt/assets/images/${item.meta.icon}.png`"
       /> -->
-      <img
+
+      <base-img
         v-if="item.meta.type === 'image'"
         class="w-[24px] mr-[8px]"
-        :src="$importImage(item.meta.icon, 'png', 'images/menu')"
+        :name="item.meta.icon"
+        type="png"
+        path="images/menu"
       />
       <el-icon v-else class="menuIcon"><i class="iconfont" :class="`icon-${item.meta.icon}`"></i></el-icon>
 
@@ -33,7 +36,6 @@
 
 <script setup>
   const {t} = useI18n();
-  const {$importImage} = useNuxtApp();
   const props = defineProps({
     item: {
       type: Object,

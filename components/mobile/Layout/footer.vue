@@ -23,7 +23,7 @@
   const list = ref([
     {name: "menu", text: "Menu", hash: "menu", title: "H0018"},
     {name: "Casino", text: "Casino", path: "casino", title: "H0023"},
-    {name: "Mygame", text: "Vip", path: "vip", title: "TR0001"},
+    // {name: "Mygame", text: "Vip", path: "vip", title: "TR0001"},
     {name: "home", text: "Home", path: "", title: "H0052"},
     {name: "Rewards", text: "bonus-center", path: "bonus-center", title: "BC0001"},
     // { name: 'member', text: 'userInfo', hash: 'userInfo', title: 'H0048' },
@@ -105,7 +105,7 @@
         font-size: 18px;
       }
       &.current {
-        color: #aad110;
+        color: var(--el-color-primary);
       }
     }
   }
