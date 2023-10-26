@@ -188,9 +188,9 @@
   };
 
   const tabClick = (index: number) => {
-    setTimeout(() => {
-      activeTabIndex.value = index;
-    }, 1000);
+    // setTimeout(() => {
+    //   activeTabIndex.value = index;
+    // }, 1000);
 
     const targetPosition = document.querySelectorAll(".game-classification-box")[index].offsetTop - 110;
 
@@ -205,28 +205,29 @@
     // });
   };
 
-  onMounted(() => {
-    document.querySelectorAll(".mobile-container-main")[0].addEventListener("scroll", function (event) {
-      const scrollItems = document.querySelectorAll(".game-classification-box");
-      let index = activeTabIndex.value;
-      for (let i = scrollItems.length - 1; i >= 0; i--) {
-        // 判断滚动条滚动距离是否大于当前滚动项可滚动距离
-        let judge = event.target.scrollTop > scrollItems[i].offsetTop;
-        if (judge) {
-          index = i + 1;
-          break;
-        } else {
-          index = 0;
-        }
+  const scrollFn = (event: {target: {scrollTop: number}}) => {
+    const scrollItems = document.querySelectorAll(".game-classification-box");
+    let index = activeTabIndex.value;
+    for (let i = scrollItems.length - 1; i >= 0; i--) {
+      // 判断滚动条滚动距离是否大于当前滚动项可滚动距离
+      let judge = event.target.scrollTop > scrollItems[i].offsetTop;
+      if (judge) {
+        index = i + 1;
+        break;
+      } else {
+        index = 0;
       }
+    }
+    activeTabIndex.value = index;
+  };
 
-      setTimeout(() => {
-        activeTabIndex.value = index;
-      }, 10);
-    });
+  onMounted(() => {
+    document.querySelectorAll(".mobile-container-main")[0].addEventListener("scroll", scrollFn);
   });
 
-  watchEffect(() => {});
+  onUnmounted(() => {
+    document.querySelectorAll(".mobile-container-main")[0].removeEventListener("scroll", scrollFn);
+  });
 </script>
 <style lang="scss" scoped>
   .mobile-home-container {
