@@ -188,7 +188,9 @@
   };
 
   const tabClick = (index: number) => {
-    activeTabIndex.value = index;
+    setTimeout(() => {
+      activeTabIndex.value = index;
+    }, 1000);
 
     const targetPosition = document.querySelectorAll(".game-classification-box")[index].offsetTop - 110;
 
@@ -203,21 +205,26 @@
     // });
   };
 
-  // onMounted(() => {
-  //   document.querySelectorAll(".mobile-container-main")[0].addEventListener("scroll", function (event) {
-  //     const scrollItems = document.querySelectorAll(".game-classification-box");
+  onMounted(() => {
+    document.querySelectorAll(".mobile-container-main")[0].addEventListener("scroll", function (event) {
+      const scrollItems = document.querySelectorAll(".game-classification-box");
+      let index = activeTabIndex.value;
+      for (let i = scrollItems.length - 1; i >= 0; i--) {
+        // 判断滚动条滚动距离是否大于当前滚动项可滚动距离
+        let judge = event.target.scrollTop > scrollItems[i].offsetTop;
+        if (judge) {
+          index = i + 1;
+          break;
+        } else {
+          index = 0;
+        }
+      }
 
-  //     for (let i = scrollItems.length - 1; i >= 0; i--) {
-  //       // 判断滚动条滚动距离是否大于当前滚动项可滚动距离
-  //       let judge = event.target.scrollTop > scrollItems[i].offsetTop;
-  //       if (judge) {
-  //         activeTabIndex.value = i + 1;
-  //         break;
-  //       } else {
-  //         activeTabIndex.value = 0
-  //     }
-  //   });
-  // });
+      setTimeout(() => {
+        activeTabIndex.value = index;
+      }, 10);
+    });
+  });
 
   watchEffect(() => {});
 </script>
