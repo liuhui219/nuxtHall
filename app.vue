@@ -2,8 +2,9 @@
 
 <template>
   <baseLoading v-if="pageLoading"></baseLoading>
-  <client-only
-    ><NuxtLayout> <desktopHome v-if="isDesktop" /><mobileHome v-if="isMobile" /> </NuxtLayout
+
+  <client-only>
+    <NuxtLayout><desktopHome v-if="isDesktop" /><mobileHome v-if="isMobile" /> </NuxtLayout
   ></client-only>
 </template>
 

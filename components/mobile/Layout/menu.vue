@@ -10,7 +10,7 @@
     :before-close="handleClose"
   >
     <div class="mobile-navigation-header relative">
-      <base-img class="h-[40px]" name="logo-h" type="avif" path="images/logo" />
+      <base-img class="h-[40px] w-[104px]" name="logo-h" type="avif" path="images/logo" />
 
       <div
         class="closeBtn absolute -right-[12px] top-[0] bottom-0 m-auto z-[1] pr-[16px] pl-[16px]"
@@ -44,7 +44,6 @@
 </template>
 
 <script setup lang="ts">
-  import {computed, onMounted, ref, nextTick} from "vue";
   import router from "@/router";
   const {$importImage} = useNuxtApp();
   const siderMenu = ref(null);

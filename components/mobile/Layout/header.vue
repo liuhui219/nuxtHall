@@ -6,7 +6,7 @@ import { Header } from 'element-plus/es/components/table-v2/src/components'; imp
   <header class="mobile-header fixed">
     <section class="flex justify-between w-full px-[15px] h-full">
       <div class="left flex justify-center items-center">
-        <base-img class="h-[40px] logo" name="logo-h" type="avif" path="images/logo" />
+        <base-img class="h-[40px] w-[104px] logo" name="logo-h" type="avif" path="images/logo" />
       </div>
       <div class="right tools-login">
         <el-button @click="openLoginDialog" size="large" type="primary" text>SIGN IN</el-button>
@@ -37,6 +37,9 @@ import { Header } from 'element-plus/es/components/table-v2/src/components'; imp
     .logo {
       cursor: pointer;
       flex-shrink: 0;
+      .el-image__inner {
+        height: 40px;
+      }
     }
     .tools-login {
       align-items: center;

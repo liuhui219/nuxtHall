@@ -1,10 +1,29 @@
 <!-- @format -->
 
 <template>
-  <img :src="$importImage(name, type, path)" :alt="alt" @error="renderError" @load="renderImage" @click="handleClick" />
+  <el-image
+    :src="$importImage(name, type, path)"
+    :alt="alt"
+    loading="lazy"
+    :lazy="lazy"
+    :scroll-container="scrollContainer"
+    @error="renderError"
+    @load="renderImage"
+    @click="handleClick"
+  >
+    <template #error>
+      <div class="image-slot">
+        <el-icon><icon-picture /></el-icon>
+      </div>
+    </template>
+    <template #placeholder>
+      <div class="image-slot">Loading</div>
+    </template>
+  </el-image>
 </template>
 
 <script setup lang="ts">
+  import {Picture as IconPicture} from "@element-plus/icons-vue";
   const {$importImage} = useNuxtApp();
   const propsConf = defineProps({
     src: {
@@ -12,6 +31,14 @@
       default: "",
     },
     name: {
+      type: String,
+      default: "",
+    },
+    lazy: {
+      type: Boolean,
+      default: false,
+    },
+    scrollContainer: {
       type: String,
       default: "",
     },
@@ -46,4 +73,18 @@
   };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+  .image-slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: var(--el-fill-color-light);
+    color: var(--el-text-color-secondary);
+    font-size: 18px;
+  }
+  .image-slot .el-icon {
+    font-size: 30px;
+  }
+</style>

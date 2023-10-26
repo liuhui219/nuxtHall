@@ -2,10 +2,11 @@
 
 <template>
   <div class="app-loading">
-    <base-img class="loading-base-img" name="loading" type="avif" path="images/load" />
+    <img class="loading-base-img" :src="$importImage('loading', 'avif', 'images/load')" />
   </div>
 </template>
 <script setup lang="ts">
+  const {$importImage} = useNuxtApp();
   const propsConf = defineProps({
     size: {
       type: Number,
