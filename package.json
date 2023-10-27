@@ -26,6 +26,7 @@
     "@element-plus/icons-vue": "^2.1.0",
     "@nuxtjs/svg-sprite": "^1.0.2",
     "element-plus": "^2.4.0",
+    "lodash": "^4.17.21",
     "nuxt-swiper": "^1.2.2",
     "use-element-plus-theme": "^0.0.5"
   }

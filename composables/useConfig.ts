@@ -6,6 +6,8 @@ export const usePageLoading = () => useState("page-loading", () => true);
 export const useMenuDrawer = () => useState("menu-drawer", () => false);
 
 export const useLoginDialog = () => useState("login-dialog", () => false);
+export const useResetDialog = () => useState("reset-dialog", () => false);
+export const useRegisterDialog = () => useState("register-dialog", () => false);
 
 //判断当前是否在某个页面(current必须以【/】开头)或弹窗(不带【/】开头则是弹窗)
 export function isPageInSome(current: string, path = "") {

@@ -1,11 +1,21 @@
 <!-- @format -->
 
+<!--
+ * @Author: liuhui219 liuhui219@126.com
+ * @Date: 2023-10-25 15:37:11
+ * @LastEditors: liuhui219 liuhui219@126.com
+ * @LastEditTime: 2023-10-27 11:45:18
+ * @FilePath: \hall\components\base\img.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!-- @format -->
+
 <template>
   <el-image
-    :src="$importImage(name, type, path)"
+    :src="src ? src : $importImage(name, type, path)"
     :alt="alt"
-    loading="lazy"
     :lazy="lazy"
+    loading="lazy"
     :scroll-container="scrollContainer"
     @error="renderError"
     @load="renderImage"
@@ -60,17 +70,9 @@
     emits("click");
   };
 
-  const renderError = (event: Event) => {
-    (event.target as HTMLElement).setAttribute("lazy", "error");
-    (event.target as HTMLElement).setAttribute(
-      "src",
-      "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="
-    );
-  };
+  const renderError = (event: Event) => {};
 
-  const renderImage = (event: Event) => {
-    (event.target as HTMLElement).setAttribute("lazy", "");
-  };
+  const renderImage = (event: Event) => {};
 </script>
 
 <style lang="scss" scoped>

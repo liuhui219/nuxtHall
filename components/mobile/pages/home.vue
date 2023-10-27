@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="container-banner-box w-full">
-              <base-img class="w-full banner-image" :name="item.img" type="png" path="images/home" />
+              <Lazy-base-img class="w-full banner-image" :name="item.img" type="png" path="images/home" />
             </div>
           </swiper-slide>
           <div class="mobile-home-sign absolute">
@@ -42,7 +42,7 @@
       <!-- 滚动播放站内通知 -->
       <div class="mobile-home-container-header w-full h-[30px]"></div>
       <!-- 游戏分类导航栏 -->
-      <div class="home-tab">
+      <div class="home-tab" ref="homeTab">
         <div
           class="home-tab-btn"
           :class="{active: index === activeTabIndex}"
@@ -56,7 +56,7 @@
 
       <div class="hot-games w-full">
         <div class="games-item" v-for="(item, index) in hotGamesList" :key="index">
-          <base-game-component :game="item"></base-game-component>
+          <Lazy-base-game-component :game="item"></Lazy-base-game-component>
         </div>
       </div>
       <!-- 游戏分类 -->
@@ -68,7 +68,7 @@
           <template v-if="item.children">
             <div class="w-full game-classification-wrap">
               <div v-for="(child, i) in item.children" :key="i" class="games-item">
-                <base-game-component :game="child"></base-game-component>
+                <Lazy-base-game-component :game="child"></Lazy-base-game-component>
               </div>
             </div>
             <el-button class="game-classification-btn w-full">View All</el-button>
@@ -80,8 +80,10 @@
 </template>
 
 <script setup lang="ts">
+  import {throttle} from "lodash";
   const {$importImage} = useNuxtApp();
   const homeContainer = ref(null);
+  const homeTab = ref(null);
   const list = [
     {
       value: 1,
@@ -192,7 +194,8 @@
     //   activeTabIndex.value = index;
     // }, 1000);
 
-    const targetPosition = document.querySelectorAll(".game-classification-box")[index].offsetTop - 110;
+    const element = document.querySelectorAll(".game-classification-box")[index] as HTMLDivElement;
+    const targetPosition = element.offsetTop - 110;
 
     document.querySelectorAll(".mobile-container-main")[0].scrollTo({
       top: targetPosition,
@@ -205,12 +208,12 @@
     // });
   };
 
-  const scrollFn = (event: {target: {scrollTop: number}}) => {
+  const scrollFn = throttle((event: {target: {scrollTop: number}}) => {
     const scrollItems = document.querySelectorAll(".game-classification-box");
     let index = activeTabIndex.value;
     for (let i = scrollItems.length - 1; i >= 0; i--) {
       // 判断滚动条滚动距离是否大于当前滚动项可滚动距离
-      let judge = event.target.scrollTop > scrollItems[i].offsetTop;
+      let judge = event.target.scrollTop > (scrollItems[i] as HTMLDivElement).offsetTop;
       if (judge) {
         index = i + 1;
         break;
@@ -219,14 +222,35 @@
       }
     }
     activeTabIndex.value = index;
-  };
+  }, 100);
+
+  watch(
+    () => activeTabIndex.value,
+    (newValue) => {
+      let tabElement = document.querySelectorAll(".home-tab-btn")[newValue] as HTMLDivElement;
+
+      let left = tabElement.offsetLeft - homeTab.value.offsetWidth / 2;
+      let scrollLeft = 0;
+      if (left > 0) {
+        scrollLeft = left + tabElement.offsetWidth / 2;
+      }
+      homeTab.value.scrollTo({
+        left: scrollLeft,
+        behavior: "smooth",
+      });
+    }
+  );
 
   onMounted(() => {
-    document.querySelectorAll(".mobile-container-main")[0].addEventListener("scroll", scrollFn);
+    document
+      .querySelectorAll(".mobile-container-main")[0]
+      .addEventListener("scroll", scrollFn as unknown as EventListener);
   });
 
   onUnmounted(() => {
-    document.querySelectorAll(".mobile-container-main")[0].removeEventListener("scroll", scrollFn);
+    document
+      .querySelectorAll(".mobile-container-main")[0]
+      .removeEventListener("scroll", scrollFn as unknown as EventListener);
   });
 </script>
 <style lang="scss" scoped>
