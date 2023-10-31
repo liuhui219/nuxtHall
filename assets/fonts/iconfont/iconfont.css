@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4296752 */
-  src: url('iconfont.woff2?t=1698120105531') format('woff2'),
-       url('iconfont.woff?t=1698120105531') format('woff'),
-       url('iconfont.ttf?t=1698120105531') format('truetype');
+  src: url('iconfont.woff2?t=1698655606984') format('woff2'),
+       url('iconfont.woff?t=1698655606984') format('woff'),
+       url('iconfont.ttf?t=1698655606984') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,30 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-instagram:before {
+  content: "\e608";
+}
+
+.icon-tuite:before {
+  content: "\e600";
+}
+
+.icon-discord:before {
+  content: "\e609";
+}
+
+.icon-telegram:before {
+  content: "\e7b5";
+}
+
+.icon-mail:before {
+  content: "\e707";
+}
+
+.icon-notifications:before {
+  content: "\e694";
 }
 
 .icon-menu:before {

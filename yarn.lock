@@ -1277,6 +1277,11 @@
   resolved "https://registry.npmjs.org/@types/web-bluetooth/-/web-bluetooth-0.0.16.tgz"
   integrity sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==
 
+"@types/web-bluetooth@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.npmjs.org/@types/web-bluetooth/-/web-bluetooth-0.0.18.tgz"
+  integrity sha512-v/ZHEj9xh82usl8LMR3GarzFY1IrbXJw5L4QfQhokjRV91q+SelFqxQWSep1ucXEZ22+dSTwLFkXeur25sPIbw==
+
 "@unhead/dom@^1.7.4", "@unhead/dom@1.7.4":
   version "1.7.4"
   resolved "https://registry.npmjs.org/@unhead/dom/-/dom-1.7.4.tgz"
@@ -1519,6 +1524,16 @@
     "@volar/typescript" "~1.10.4"
     "@vue/language-core" "1.8.19"
 
+"@vueuse/core@^10.5.0", "@vueuse/core@10.5.0":
+  version "10.5.0"
+  resolved "https://registry.npmjs.org/@vueuse/core/-/core-10.5.0.tgz"
+  integrity sha512-z/tI2eSvxwLRjOhDm0h/SXAjNm8N5ld6/SC/JQs6o6kpJ6Ya50LnEL8g5hoYu005i28L0zqB5L5yAl8Jl26K3A==
+  dependencies:
+    "@types/web-bluetooth" "^0.0.18"
+    "@vueuse/metadata" "10.5.0"
+    "@vueuse/shared" "10.5.0"
+    vue-demi ">=0.14.6"
+
 "@vueuse/core@^9.1.0":
   version "9.13.0"
   resolved "https://registry.npmjs.org/@vueuse/core/-/core-9.13.0.tgz"
@@ -1529,10 +1544,34 @@
     "@vueuse/shared" "9.13.0"
     vue-demi "*"
 
+"@vueuse/metadata@10.5.0":
+  version "10.5.0"
+  resolved "https://registry.npmjs.org/@vueuse/metadata/-/metadata-10.5.0.tgz"
+  integrity sha512-fEbElR+MaIYyCkeM0SzWkdoMtOpIwO72x8WsZHRE7IggiOlILttqttM69AS13nrDxosnDBYdyy3C5mR1LCxHsw==
+
 "@vueuse/metadata@9.13.0":
   version "9.13.0"
   resolved "https://registry.npmjs.org/@vueuse/metadata/-/metadata-9.13.0.tgz"
   integrity sha512-gdU7TKNAUVlXXLbaF+ZCfte8BjRJQWPCa2J55+7/h+yDtzw3vOoGQDRXzI6pyKyo6bXFT5/QoPE4hAknExjRLQ==
+
+"@vueuse/nuxt@^10.5.0":
+  version "10.5.0"
+  resolved "https://registry.npmjs.org/@vueuse/nuxt/-/nuxt-10.5.0.tgz"
+  integrity sha512-x1mpjwcPB5DGA3cTM29Hf3bralslrma3Jr0fXm3Js3dbUHdadC/iVMf831W+sKPjZBhiZxR0S94B8gmGlvZ/1Q==
+  dependencies:
+    "@nuxt/kit" "^3.7.4"
+    "@vueuse/core" "10.5.0"
+    "@vueuse/metadata" "10.5.0"
+    local-pkg "^0.5.0"
+    nuxt "^3.7.4"
+    vue-demi ">=0.14.6"
+
+"@vueuse/shared@10.5.0":
+  version "10.5.0"
+  resolved "https://registry.npmjs.org/@vueuse/shared/-/shared-10.5.0.tgz"
+  integrity sha512-18iyxbbHYLst9MqU1X1QNdMHIjks6wC7XTVf0KNOv5es/Ms6gjVFCAAWTVP2JStuGqydg3DT+ExpFORUEi9yhg==
+  dependencies:
+    vue-demi ">=0.14.6"
 
 "@vueuse/shared@9.13.0":
   version "9.13.0"
@@ -6768,6 +6807,11 @@ util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
+uuid@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.npmjs.org/uuid/-/uuid-9.0.1.tgz"
+  integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
+
 validate-npm-package-license@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npmjs.org/validate-npm-package-license/-/validate-npm-package-license-3.0.4.tgz"
@@ -6950,6 +6994,11 @@ vue-demi@^0.13.5:
   integrity sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==
 
 vue-demi@^0.14.5:
+  version "0.14.6"
+  resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.14.6.tgz"
+  integrity sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==
+
+vue-demi@>=0.14.6:
   version "0.14.6"
   resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.14.6.tgz"
   integrity sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==

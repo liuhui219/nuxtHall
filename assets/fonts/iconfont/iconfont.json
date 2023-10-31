@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "3876071",
+      "name": "instagram",
+      "font_class": "instagram",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "5814701",
+      "name": "推特",
+      "font_class": "tuite",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "29765560",
+      "name": "discord",
+      "font_class": "discord",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "37830551",
+      "name": "Telegram_telegram",
+      "font_class": "telegram",
+      "unicode": "e7b5",
+      "unicode_decimal": 59317
+    },
+    {
+      "icon_id": "5379906",
+      "name": "mail",
+      "font_class": "mail",
+      "unicode": "e707",
+      "unicode_decimal": 59143
+    },
+    {
+      "icon_id": "1999026",
+      "name": "通知",
+      "font_class": "notifications",
+      "unicode": "e694",
+      "unicode_decimal": 59028
+    },
+    {
       "icon_id": "2564725",
       "name": "menu",
       "font_class": "menu",

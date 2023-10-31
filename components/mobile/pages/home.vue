@@ -40,7 +40,19 @@
         </div>
       </div>
       <!-- 滚动播放站内通知 -->
-      <div class="mobile-home-container-header w-full h-[30px]"></div>
+      <div class="mobile-home-container-header flex w-full h-[30px] overflow-y-hidden">
+        <BaseIcon name="notifications" />
+        <div class="mobile-home-container-news flex h-full">
+          <div class="mobile-home-container-news-main flex h-full">
+            <div ref="containerNews" class="mobile-home-container-news-box flex h-full">
+              <span v-for="(item, index) in newsList" :key="index">{{ item.text }}</span>
+            </div>
+            <div ref="containerNews" class="mobile-home-container-news-box flex h-full">
+              <span v-for="(item, index) in newsList" :key="index">{{ item.text }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- 游戏分类导航栏 -->
       <div class="home-tab" ref="homeTab">
         <div
@@ -76,6 +88,7 @@
         </div>
       </div>
     </div>
+    <LazyMobilePagesFooter />
   </div>
 </template>
 
@@ -83,7 +96,23 @@
   import {throttle} from "lodash";
   const {$importImage} = useNuxtApp();
   const homeContainer = ref(null);
-  const homeTab = ref(null);
+  const homeTab = <any>ref(null);
+  const containerNews = <any>ref(null);
+  const containerNewsWidth = <any>ref(null);
+  onMounted(() => {
+    containerNewsWidth.value = 0 - containerNews.value.offsetWidth + "px";
+  });
+
+  // message_notifications
+  const newsList = [
+    {
+      text: "1现成梵蒂冈电饭锅发的尴尬代发给代发更大更代发给代发",
+    },
+    {
+      text: "2现成梵蒂冈电饭锅发的尴尬代发给代发更大更代发给代发",
+    },
+  ];
+  const duration = `${newsList.length * 10}s`;
   const list = [
     {
       value: 1,
@@ -190,10 +219,6 @@
   };
 
   const tabClick = (index: number) => {
-    // setTimeout(() => {
-    //   activeTabIndex.value = index;
-    // }, 1000);
-
     const element = document.querySelectorAll(".game-classification-box")[index] as HTMLDivElement;
     const targetPosition = element.offsetTop - 110;
 
@@ -216,6 +241,9 @@
       let judge = event.target.scrollTop > (scrollItems[i] as HTMLDivElement).offsetTop;
       if (judge) {
         index = i + 1;
+        if (index > scrollItems.length - 1) {
+          index = scrollItems.length - 1;
+        }
         break;
       } else {
         index = 0;
@@ -229,7 +257,7 @@
     (newValue) => {
       let tabElement = document.querySelectorAll(".home-tab-btn")[newValue] as HTMLDivElement;
 
-      let left = tabElement.offsetLeft - homeTab.value.offsetWidth / 2;
+      let left = tabElement && tabElement.offsetLeft - homeTab.value.offsetWidth / 2;
       let scrollLeft = 0;
       if (left > 0) {
         scrollLeft = left + tabElement.offsetWidth / 2;
@@ -254,6 +282,7 @@
   });
 </script>
 <style lang="scss" scoped>
+  $end-position: v-bind(containerNewsWidth);
   .mobile-home-container {
     background-color: var(--el-bg-color);
     box-sizing: border-box;
@@ -314,6 +343,55 @@
             background: var(--el-color-primary);
             border: 1px solid var(--el-text-color-primary);
           }
+        }
+      }
+
+      .mobile-home-container-header {
+        flex-direction: row;
+        align-items: center;
+        margin-top: 20px;
+        pointer-events: none;
+        i {
+          font-size: 20px;
+        }
+      }
+
+      .mobile-home-container-news {
+        flex: 1;
+        overflow-y: hidden;
+        margin-left: 6px;
+      }
+
+      .mobile-home-container-news-main {
+        white-space: nowrap;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 12px;
+        width: 100%;
+        animation-name: scroll-left;
+        animation-duration: v-bind(duration);
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+
+        .mobile-home-container-news-box {
+          white-space: nowrap;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          & > span {
+            display: block;
+            padding: 0 20px;
+          }
+        }
+      }
+
+      @keyframes scroll-left {
+        0% {
+          transform: translateX(0px);
+        }
+        100% {
+          transform: translateX($end-position);
         }
       }
 

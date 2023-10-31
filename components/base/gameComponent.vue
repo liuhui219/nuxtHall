@@ -1,13 +1,14 @@
 <!-- @format -->
 <template>
   <div class="game-component w-full">
-    <div class="game-cover relative z-[1]" :style="{backgroundImage: loaded ? `url(${game.src})` : ''}"></div>
-    <div v-if="!isRemove" class="game-cover game-cover-copy" />
+    <div class="game-cover relative z-[1]" :style="{backgroundImage: !isLoading ? `url(${game.src})` : ''}"></div>
+    <div v-if="isLoading" class="game-cover game-cover-copy" />
   </div>
 </template>
 
 <script setup lang="ts">
   const {$importImage} = useNuxtApp();
+  import {useImage} from "@vueuse/core";
   const propsConf = defineProps({
     game: {
       type: Object,
@@ -36,17 +37,17 @@
   });
   const loaded = ref(false);
   const isRemove = ref(false);
-
-  onMounted(() => {
-    var img = document.createElement("img");
-    img.src = propsConf.game.src;
-    img.onload = function () {
-      loaded.value = true;
-      setTimeout(() => {
-        isRemove.value = true;
-      }, 2000);
-    };
-  });
+  const {isLoading} = useImage({src: propsConf.game.src});
+  // onMounted(() => {
+  //   var img = document.createElement("img");
+  //   img.src = propsConf.game.src;
+  //   img.onload = function () {
+  //     loaded.value = true;
+  //     setTimeout(() => {
+  //       isRemove.value = true;
+  //     }, 2000);
+  //   };
+  // });
 </script>
 
 <style lang="scss" scoped>
