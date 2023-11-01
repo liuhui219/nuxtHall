@@ -4,7 +4,7 @@
  * @Author: liuhui219 liuhui219@126.com
  * @Date: 2023-10-24 11:09:08
  * @LastEditors: liuhui219 liuhui219@126.com
- * @LastEditTime: 2023-10-27 15:01:28
+ * @LastEditTime: 2023-10-31 15:16:06
  * @FilePath: \hall\components\mobile\Layout\header.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -19,19 +19,16 @@ import { Header } from 'element-plus/es/components/table-v2/src/components'; imp
         <base-img class="h-[40px] w-[104px] logo" name="logo-h" type="avif" path="images/logo" />
       </div>
       <div class="right tools-login">
-        <el-button @click="openLoginDialog" size="large" type="primary" text>{{ $t("L1001") }}</el-button>
-        <el-button class="el-button-sign-up" size="large" type="primary">{{ $t("L1002") }}</el-button>
+        <el-button @click="openPopup('login')" size="large" type="primary" text>{{ $t("L1001") }}</el-button>
+        <el-button @click="openPopup('register')" class="el-button-sign-up" size="large" type="primary">{{
+          $t("L1002")
+        }}</el-button>
       </div>
     </section>
   </header>
 </template>
 
-<script setup lang="ts">
-  const loginDialog = useLoginDialog();
-  const openLoginDialog = () => {
-    openPopup("login");
-  };
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
   .mobile-header {

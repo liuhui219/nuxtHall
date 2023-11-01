@@ -21,11 +21,11 @@
 
 <script setup lang="ts">
   const list = ref([
-    {name: "menu", text: "Menu", hash: "menu", title: "H0018"},
-    {name: "Casino", text: "Casino", path: "casino", title: "H0023"},
+    {name: "menu", text: "Menu", hash: "menu", title: "H0001"},
+    {name: "Casino", text: "Casino", path: "casino", title: "H0002"},
     // {name: "Mygame", text: "Vip", path: "vip", title: "TR0001"},
-    {name: "home", text: "Home", path: "", title: "H0052"},
-    {name: "Rewards", text: "bonus-center", path: "bonus-center", title: "BC0001"},
+    {name: "home", text: "Home", path: "", title: "H0003"},
+    {name: "Rewards", text: "bonus-center", path: "bonus-center", title: "H0004"},
     // { name: 'member', text: 'userInfo', hash: 'userInfo', title: 'H0048' },
     // {name: "chatb", text: "Chat", hash: "chat", title: "Chat", isTranslation: true},
   ]);

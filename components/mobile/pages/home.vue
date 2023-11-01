@@ -31,7 +31,9 @@
             </div>
           </swiper-slide>
           <div class="mobile-home-sign absolute">
-            <el-button class="mobile-home-sign-btn w-[267px]"><span class="font-black">SIGN UP</span></el-button>
+            <el-button @click="openPopup('detail-drawer')" class="mobile-home-sign-btn w-[267px]"
+              ><span class="font-black">SIGN UP</span></el-button
+            >
           </div>
         </swiper>
 
@@ -93,12 +95,12 @@
 </template>
 
 <script setup lang="ts">
-  import {throttle} from "lodash";
+  import {useThrottleFn} from "@vueuse/core";
   const {$importImage} = useNuxtApp();
   const homeContainer = ref(null);
-  const homeTab = <any>ref(null);
-  const containerNews = <any>ref(null);
-  const containerNewsWidth = <any>ref(null);
+  const homeTab = ref<HTMLElement>(null);
+  const containerNews = ref<HTMLElement>(null);
+  const containerNewsWidth = ref<HTMLElement>(null);
   onMounted(() => {
     containerNewsWidth.value = 0 - containerNews.value.offsetWidth + "px";
   });
@@ -233,7 +235,7 @@
     // });
   };
 
-  const scrollFn = throttle((event: {target: {scrollTop: number}}) => {
+  const scrollFn = useThrottleFn((event: {target: {scrollTop: number}}) => {
     const scrollItems = document.querySelectorAll(".game-classification-box");
     let index = activeTabIndex.value;
     for (let i = scrollItems.length - 1; i >= 0; i--) {

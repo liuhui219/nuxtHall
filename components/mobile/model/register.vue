@@ -3,7 +3,7 @@
 <template>
   <el-dialog
     v-model="registerDialog"
-    modal-class="mobile-el-overlay-dialog"
+    modal-class="mobile-el-overlay-register-dialog"
     :show-close="false"
     title=""
     width="100%"
@@ -20,9 +20,9 @@
 
     <el-form ref="formRef" :model="ruleForm" :rules="rules" status-icon inline-message key="formRef">
       <el-tabs v-model="activeName" class="demo-tabs">
-        <el-tab-pane :label="$t('U0026')" name="first"
+        <el-tab-pane :label="$t('L1012')" name="first"
           ><el-form-item prop="account">
-            <el-input size="large" clearable v-model="ruleForm.account" :placeholder="t('L1006')"></el-input>
+            <el-input size="large" clearable v-model="ruleForm.account" :placeholder="$t('L1014')"></el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input
@@ -31,17 +31,17 @@
               show-password
               clearable
               v-model="ruleForm.password"
-              :placeholder="t('L1007')"
+              :placeholder="$t('L1006')"
             ></el-input>
           </el-form-item>
           <el-form-item prop="rememberCheck">
             <el-checkbox v-model="ruleForm.rememberCheck">{{ $t("L1003") }}</el-checkbox>
           </el-form-item></el-tab-pane
         >
-        <el-tab-pane :label="$t('U0027')" name="second"
-          ><el-form-item prop="account">
-            <el-input size="large" clearable v-model="ruleForm.account" :placeholder="t('L1008')">
-              <template #prepend>
+        <el-tab-pane :label="$t('L1013')" name="second"
+          ><el-form-item prop="phoneNumber">
+            <el-input size="large" type="tel" clearable v-model="ruleForm.phoneNumber" :placeholder="$t('L1015')">
+              <template #prefix>
                 <span>+55</span>
               </template>
             </el-input>
@@ -53,7 +53,7 @@
               show-password
               clearable
               v-model="ruleForm.password"
-              :placeholder="t('L1007')"
+              :placeholder="$t('L1006')"
             ></el-input>
           </el-form-item>
           <el-form-item prop="rememberCheck">
@@ -87,6 +87,7 @@
   const ruleForm = reactive({
     account: "",
     password: "",
+    phoneNumber: "",
     rememberCheck: false,
   });
   const rules = computed(() => {
@@ -94,14 +95,21 @@
       account: [
         {
           required: true,
-          message: t("L1020"),
+          message: t("L1014"),
+          trigger: ["blur", "change"],
+        },
+      ],
+      phoneNumber: [
+        {
+          required: true,
+          message: t("H0010"),
           trigger: ["blur", "change"],
         },
       ],
       password: [
         {
           required: true,
-          message: t("L1007"),
+          message: t("H0011", {min: "6", max: "30"}),
           trigger: ["blur", "change"],
         },
       ],
@@ -124,7 +132,7 @@
 </script>
 
 <style lang="scss">
-  .mobile-el-overlay-dialog {
+  .mobile-el-overlay-register-dialog {
     backdrop-filter: blur(12px);
     .el-dialog {
       width: calc(100% - 40px);
@@ -137,14 +145,13 @@
     .el-form .el-form-item__content {
       .el-input {
         --el-input-height: 50px;
-        .el-input__wrapper,
-        .el-input-group__prepend {
+        .el-input__wrapper {
           border-radius: 8px;
+          font-weight: bold;
         }
-        .el-input-group__prepend {
-          border-right: 0;
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
+        .el-input__prefix {
+          color: var(--el-text-color-primary);
+          font-weight: 500;
         }
       }
       .el-form-item__error {
@@ -156,10 +163,7 @@
         --el-button-size: 50px;
       }
     }
-    .el-input-group--prepend > .el-input__wrapper {
-      border-top-left-radius: 0 !important;
-      border-bottom-left-radius: 0 !important;
-    }
+
     .el-dialog__body,
     .el-form,
     .el-tabs,
@@ -195,6 +199,9 @@
       justify-content: center;
       font-size: 12px;
       color: var(--el-text-color-regular);
+    }
+    .login-main {
+      color: var(--el-color-primary);
     }
   }
 </style>
