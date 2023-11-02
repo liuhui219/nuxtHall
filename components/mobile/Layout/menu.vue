@@ -1,46 +1,47 @@
 <!-- @format -->
 
 <template>
-  <el-drawer
-    v-model="menuDrawer"
-    modal-class="mobile-el-overlay"
-    direction="ltr"
-    :with-header="false"
-    :size="'100%'"
-    :before-close="handleClose"
-  >
-    <div class="mobile-navigation-header relative">
-      <base-img class="h-[40px] w-[104px]" name="logo-h" type="avif" path="images/logo" />
+  <client-only
+    ><el-drawer
+      v-model="menuDrawer"
+      modal-class="mobile-el-overlay"
+      direction="ltr"
+      :with-header="false"
+      :size="'100%'"
+      :before-close="handleClose"
+    >
+      <div class="mobile-navigation-header relative">
+        <base-img class="h-[40px] w-[104px]" name="logo-h" type="avif" path="images/logo" />
 
-      <div
-        class="closeBtn absolute -right-[12px] top-[0] bottom-0 m-auto z-[1] pr-[16px] pl-[16px]"
-        @click="handleClose"
-      >
-        <el-icon><component is="CloseBold"></component></el-icon>
-      </div>
-    </div>
-    <div class="navigation-body">
-      <div class="navigation-group-wrap">
-        <el-menu
-          :default-active="activeMenu"
-          class="el-menu-vertical-demo"
-          router
-          :unique-opened="false"
-          mode="vertical"
-          :collapse-transition="true"
+        <div
+          class="closeBtn absolute -right-[12px] top-[0] bottom-0 m-auto z-[1] pr-[16px] pl-[16px]"
+          @click="handleClose"
         >
-          <template v-for="routes in menus">
-            <el-menu-item-group v-if="routes.itemGroup"
-              ><LayoutItem v-for="route in routes.itemGroup" :key="route.path" :item="route" :base-path="route.path"
-            /></el-menu-item-group>
-            <template v-else>
-              <LayoutItem :key="routes.path" :item="routes" :base-path="routes.path" />
-            </template>
-          </template>
-        </el-menu>
+          <el-icon><component is="CloseBold"></component></el-icon>
+        </div>
       </div>
-    </div>
-  </el-drawer>
+      <div class="navigation-body">
+        <div class="navigation-group-wrap">
+          <el-menu
+            :default-active="activeMenu"
+            class="el-menu-vertical-demo"
+            router
+            :unique-opened="false"
+            mode="vertical"
+            :collapse-transition="true"
+          >
+            <template v-for="routes in menus">
+              <el-menu-item-group v-if="routes.itemGroup"
+                ><LayoutItem v-for="route in routes.itemGroup" :key="route.path" :item="route" :base-path="route.path"
+              /></el-menu-item-group>
+              <template v-else>
+                <LayoutItem :key="routes.path" :item="routes" :base-path="routes.path" />
+              </template>
+            </template>
+          </el-menu>
+        </div>
+      </div> </el-drawer
+  ></client-only>
 </template>
 
 <script setup lang="ts">

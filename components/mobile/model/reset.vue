@@ -11,48 +11,50 @@
 <!-- @format -->
 
 <template>
-  <el-dialog
-    v-model="resetDialog"
-    modal-class="mobile-el-overlay-reset-dialog"
-    :show-close="false"
-    title=""
-    width="100%"
-    destroy-on-close
-    center
-    align-center
-    @close="closeDialog"
+  <client-only
+    ><el-dialog
+      v-model="resetDialog"
+      modal-class="mobile-el-overlay-reset-dialog"
+      :show-close="false"
+      title=""
+      width="100%"
+      destroy-on-close
+      center
+      align-center
+      @close="closeDialog"
+    >
+      <template #header>
+        <div @click="closeLogin" class="login-close p-[15px] absolute right-0 top-0 z-[1] text-[14px]">
+          <el-icon><component is="CloseBold"></component></el-icon>
+        </div>
+      </template>
+      <div class="pb-[25px] shrink-0 text-[20px] login-white">{{ $t("L1008") }}</div>
+      <el-form ref="formRef" :model="ruleForm" :rules="rules" status-icon inline-message key="formRef">
+        <el-form-item prop="account">
+          <el-input size="large" type="tel" clearable v-model="ruleForm.account" :placeholder="$t('L1015')"
+            ><template #prefix>
+              <span>+55</span>
+            </template></el-input
+          >
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input size="large" clearable v-model="ruleForm.password" :placeholder="$t('L1010')"
+            ><template #append>
+              <el-button class="min-w-[67px]" :disabled:boolean="countdown" @click="codeFn(formRef)"
+                ><span v-if="!countdown">{{ $t("L1017") }}</span
+                ><span v-else>{{ time }}S</span></el-button
+              >
+            </template></el-input
+          >
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm(formRef)" class="w-full h-[50px]" size="large">{{
+            t("L1011")
+          }}</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog></client-only
   >
-    <template #header>
-      <div @click="closeLogin" class="login-close p-[15px] absolute right-0 top-0 z-[1] text-[14px]">
-        <el-icon><component is="CloseBold"></component></el-icon>
-      </div>
-    </template>
-    <div class="pb-[25px] shrink-0 text-[20px] login-white">{{ $t("L1008") }}</div>
-    <el-form ref="formRef" :model="ruleForm" :rules="rules" status-icon inline-message key="formRef">
-      <el-form-item prop="account">
-        <el-input size="large" type="tel" clearable v-model="ruleForm.account" :placeholder="$t('L1015')"
-          ><template #prefix>
-            <span>+55</span>
-          </template></el-input
-        >
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input size="large" clearable v-model="ruleForm.password" :placeholder="$t('L1010')"
-          ><template #append>
-            <el-button class="min-w-[67px]" :disabled:boolean="countdown" @click="codeFn(formRef)"
-              ><span v-if="!countdown">{{ $t("L1017") }}</span
-              ><span v-else>{{ time }}S</span></el-button
-            >
-          </template></el-input
-        >
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm(formRef)" class="w-full h-[50px]" size="large">{{
-          t("L1011")
-        }}</el-button>
-      </el-form-item>
-    </el-form>
-  </el-dialog>
 </template>
 
 <script setup lang="ts">

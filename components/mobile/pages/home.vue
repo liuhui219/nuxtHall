@@ -85,7 +85,7 @@
                 <Lazy-base-game-component :game="child"></Lazy-base-game-component>
               </div>
             </div>
-            <el-button class="game-classification-btn w-full">View All</el-button>
+            <el-button @click="moreFn" class="game-classification-btn w-full">View All {{ info?.hello }}</el-button>
           </template>
         </div>
       </div>
@@ -97,10 +97,12 @@
 <script setup lang="ts">
   import {useThrottleFn} from "@vueuse/core";
   const {$importImage} = useNuxtApp();
+  const nuxtApp = useNuxtApp();
   const homeContainer = ref(null);
-  const homeTab = ref<HTMLElement>(null);
-  const containerNews = ref<HTMLElement>(null);
-  const containerNewsWidth = ref<HTMLElement>(null);
+  const homeTab = ref<any>(null);
+  const info = ref();
+  const containerNews = ref<any>(null);
+  const containerNewsWidth = ref<any>(null);
   onMounted(() => {
     containerNewsWidth.value = 0 - containerNews.value.offsetWidth + "px";
   });
@@ -271,17 +273,22 @@
     }
   );
 
-  onMounted(() => {
+  const moreFn = async () => {
+    const {data} = await useFetch("/api/hello");
+
+    info.value = data.value;
+    console.log(data.value);
+  };
+
+  moreFn();
+
+  onMounted(async () => {
     document
       .querySelectorAll(".mobile-container-main")[0]
       .addEventListener("scroll", scrollFn as unknown as EventListener);
   });
 
-  onUnmounted(() => {
-    document
-      .querySelectorAll(".mobile-container-main")[0]
-      .removeEventListener("scroll", scrollFn as unknown as EventListener);
-  });
+  onUnmounted(() => {});
 </script>
 <style lang="scss" scoped>
   $end-position: v-bind(containerNewsWidth);

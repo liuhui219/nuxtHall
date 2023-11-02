@@ -1,79 +1,81 @@
 <!-- @format -->
 
 <template>
-  <el-dialog
-    v-model="registerDialog"
-    modal-class="mobile-el-overlay-register-dialog"
-    :show-close="false"
-    title=""
-    width="100%"
-    destroy-on-close
-    center
-    align-center
-    @close="closeDialog"
-  >
-    <template #header>
-      <div @click="closeLogin" class="login-close p-[15px] absolute right-0 top-0 z-[1] text-[14px]">
-        <el-icon><component is="CloseBold"></component></el-icon>
-      </div>
-    </template>
-
-    <el-form ref="formRef" :model="ruleForm" :rules="rules" status-icon inline-message key="formRef">
-      <el-tabs v-model="activeName" class="demo-tabs">
-        <el-tab-pane :label="$t('L1012')" name="first"
-          ><el-form-item prop="account">
-            <el-input size="large" clearable v-model="ruleForm.account" :placeholder="$t('L1014')"></el-input>
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input
-              size="large"
-              type="password"
-              show-password
-              clearable
-              v-model="ruleForm.password"
-              :placeholder="$t('L1006')"
-            ></el-input>
-          </el-form-item>
-          <el-form-item prop="rememberCheck">
-            <el-checkbox v-model="ruleForm.rememberCheck">{{ $t("L1003") }}</el-checkbox>
-          </el-form-item></el-tab-pane
-        >
-        <el-tab-pane :label="$t('L1013')" name="second"
-          ><el-form-item prop="phoneNumber">
-            <el-input size="large" type="tel" clearable v-model="ruleForm.phoneNumber" :placeholder="$t('L1015')">
-              <template #prefix>
-                <span>+55</span>
-              </template>
-            </el-input>
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input
-              size="large"
-              type="password"
-              show-password
-              clearable
-              v-model="ruleForm.password"
-              :placeholder="$t('L1006')"
-            ></el-input>
-          </el-form-item>
-          <el-form-item prop="rememberCheck">
-            <el-checkbox v-model="ruleForm.rememberCheck">{{ $t("L1003") }}</el-checkbox>
-          </el-form-item></el-tab-pane
-        >
-      </el-tabs>
-
-      <el-form-item>
-        <el-button type="primary" class="w-full h-[50px]" size="large">{{ t("L1002") }}</el-button>
-      </el-form-item>
-
-      <div class="quick-link quick-link-center w-full">
-        <div>
-          {{ $t("L1016") }}
-          <span class="login-main pointer" @click="openPopup('login')">{{ $t("L1001") }}</span>
+  <client-only
+    ><el-dialog
+      v-model="registerDialog"
+      modal-class="mobile-el-overlay-register-dialog"
+      :show-close="false"
+      title=""
+      width="100%"
+      destroy-on-close
+      center
+      align-center
+      @close="closeDialog"
+    >
+      <template #header>
+        <div @click="closeLogin" class="login-close p-[15px] absolute right-0 top-0 z-[1] text-[14px]">
+          <el-icon><component is="CloseBold"></component></el-icon>
         </div>
-      </div>
-    </el-form>
-  </el-dialog>
+      </template>
+
+      <el-form ref="formRef" :model="ruleForm" :rules="rules" status-icon inline-message key="formRef">
+        <el-tabs v-model="activeName" class="demo-tabs">
+          <el-tab-pane :label="$t('L1012')" name="first"
+            ><el-form-item prop="account">
+              <el-input size="large" clearable v-model="ruleForm.account" :placeholder="$t('L1014')"></el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input
+                size="large"
+                type="password"
+                show-password
+                clearable
+                v-model="ruleForm.password"
+                :placeholder="$t('L1006')"
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="rememberCheck">
+              <el-checkbox v-model="ruleForm.rememberCheck">{{ $t("L1003") }}</el-checkbox>
+            </el-form-item></el-tab-pane
+          >
+          <el-tab-pane :label="$t('L1013')" name="second"
+            ><el-form-item prop="phoneNumber">
+              <el-input size="large" type="tel" clearable v-model="ruleForm.phoneNumber" :placeholder="$t('L1015')">
+                <template #prefix>
+                  <span>+55</span>
+                </template>
+              </el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input
+                size="large"
+                type="password"
+                show-password
+                clearable
+                v-model="ruleForm.password"
+                :placeholder="$t('L1006')"
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="rememberCheck">
+              <el-checkbox v-model="ruleForm.rememberCheck">{{ $t("L1003") }}</el-checkbox>
+            </el-form-item></el-tab-pane
+          >
+        </el-tabs>
+
+        <el-form-item>
+          <el-button type="primary" class="w-full h-[50px]" size="large">{{ t("L1002") }}</el-button>
+        </el-form-item>
+
+        <div class="quick-link quick-link-center w-full">
+          <div>
+            {{ $t("L1016") }}
+            <span class="login-main pointer" @click="openPopup('login')">{{ $t("L1001") }}</span>
+          </div>
+        </div>
+      </el-form>
+    </el-dialog></client-only
+  >
 </template>
 
 <script setup lang="ts">

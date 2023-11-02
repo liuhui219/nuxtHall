@@ -20,9 +20,14 @@ import { Header } from 'element-plus/es/components/table-v2/src/components'; imp
       </div>
       <div class="right tools-login">
         <el-button @click="openPopup('login')" size="large" type="primary" text>{{ $t("L1001") }}</el-button>
-        <el-button @click="openPopup('register')" class="el-button-sign-up" size="large" type="primary">{{
-          $t("L1002")
-        }}</el-button>
+        <el-button
+          @click="openPopup('register')"
+          @mousedown="(e) => e.preventDefault()"
+          class="el-button-sign-up"
+          size="large"
+          type="primary"
+          >{{ $t("L1002") }}</el-button
+        >
       </div>
     </section>
   </header>

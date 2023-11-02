@@ -1,17 +1,12 @@
 <!-- @format -->
 
-<!--
- * @Author: liuhui219 liuhui219@126.com
- * @Date: 2023-10-24 10:59:16
- * @LastEditors: liuhui219 liuhui219@126.com
- * @LastEditTime: 2023-11-01 19:03:46
- * @FilePath: \hall\components\mobile\home.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
+/* * @Author: liuhui * @Date: 2023-11-02 10:04:14 * @Last Modified by: liuhui * @Last Modified time: 2023-11-02 10:04:14
+*/
 <!-- @format -->
 
 <template>
   <LazyMobileLayoutHeader />
+
   <LazyMobileLayoutMenu />
   <main class="mobile-container-main">
     <NuxtPage />
@@ -20,24 +15,22 @@
   <LazyMobileModelLogin />
   <LazyMobileModelReset />
   <LazyMobileModelRegister />
-  <component v-for="item in components" :key="item" :is="item" />
+
+  <component v-for="(item, index) in components" :key="index" :is="item" />
 </template>
 
 <script setup lang="ts">
-  const components = ref<any>([]);
+  const components = shallowRef<any>([]);
   onMounted(() => {
-    const modulesFiles = import.meta.glob("~/components/mobile/drawer/*.vue", {
-      eager: true,
+    const modulesFiles = import.meta.glob("~/components/mobile/drawer/*.vue");
+
+    const modules: Array<any> = [];
+    Object.keys(modulesFiles).forEach((modulePath) => {
+      const value: any = modulesFiles[modulePath];
+      modules.push(defineAsyncComponent(value));
     });
 
-    const modules = Object.keys(modulesFiles).reduce((modules: any, modulePath) => {
-      const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, "$1");
-      const value: any = modulesFiles[modulePath];
-      modules[moduleName] = value.default;
-      return modules;
-    }, {});
-
-    components.value = Object.values({...modules});
+    components.value = [...modules];
   });
 </script>
 

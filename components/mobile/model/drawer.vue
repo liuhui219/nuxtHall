@@ -1,39 +1,30 @@
 <!-- @format -->
 
-<!--
- * @Author: liuhui219 liuhui219@126.com
- * @Date: 2023-11-01 16:18:47
- * @LastEditors: liuhui219 liuhui219@126.com
- * @LastEditTime: 2023-11-01 18:50:02
- * @FilePath: \hall\components\mobile\model\drawer.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-<!-- @format -->
-
 <template>
-  <el-drawer
-    v-model="drawer"
-    modal-class="mobile-drawer-el-overlay"
-    title="I am the title"
-    :with-header="false"
-    :close-on-press-escape="false"
-    :destroy-on-close="true"
-    :modal="false"
-    :size="'100%'"
-  >
-    <div class="mobile-modal-content">
-      <header class="mobile-modal-content-header">
-        <button @click="closeAllPopup()" class="back-btn"><BaseIcon name="back" class="text-[18px]" /></button>
-        <h1 class="header-title">{{ title }}</h1>
-        <div class="header-right">
-          <slot name="header"></slot>
-        </div>
-      </header>
-      <main class="mobile-modal-content-main">
-        <slot name="body"></slot>
-      </main>
-    </div>
-  </el-drawer>
+  <client-only
+    ><el-drawer
+      v-model="drawer"
+      modal-class="mobile-drawer-el-overlay"
+      title="I am the title"
+      :with-header="false"
+      :close-on-press-escape="false"
+      :destroy-on-close="true"
+      :modal="true"
+      :size="'100%'"
+    >
+      <div class="mobile-modal-content">
+        <header class="mobile-modal-content-header">
+          <button @click="closeAllPopup()" class="back-btn"><BaseIcon name="back" class="text-[18px]" /></button>
+          <h1 class="header-title">{{ title }}</h1>
+          <div class="header-right">
+            <slot name="header"></slot>
+          </div>
+        </header>
+        <main class="mobile-modal-content-main">
+          <slot name="body"></slot>
+        </main>
+      </div> </el-drawer
+  ></client-only>
 </template>
 
 <script setup lang="ts">

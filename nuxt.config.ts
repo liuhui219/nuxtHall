@@ -10,13 +10,28 @@
 
 /** @format */
 
+import viteCompression from "vite-plugin-compression";
+import {ViteImageOptimizer} from "vite-plugin-image-optimizer";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: {enabled: false},
+
   devServer: {
     port: 8888,
     host: "0.0.0.0",
   },
+  // routeRules: {
+  //   // 针对路径进行接口转发
+  //   "/dev-api/**": {
+  //     // https://cnodejs.org/api/v1 是个公共接口api前缀，将其替换为后端写好的接口调用地址就好
+  //     proxy: `https://dummyjson.com/**`,
+  //   },
+  // },
+
+  build: {
+    analyze: true,
+  },
+
   app: {
     rootId: "root-p",
     keepalive: true,
@@ -53,6 +68,47 @@ export default defineNuxtConfig({
     vueI18n: "./i18n.config.ts",
   },
   vite: {
+    plugins: [
+      ViteImageOptimizer({
+        /* pass your config */
+      }),
+      // ...
+      viteCompression({
+        verbose: true,
+        disable: false,
+        threshold: 1024,
+        algorithm: "gzip",
+        ext: ".gz",
+      }),
+    ],
+    external: ["vue", "element-plus"],
+    build: {
+      target: "es2015",
+      cssTarget: "chrome80",
+      minify: "terser", // 必须开启：使用terserOptions才有效果
+      terserOptions: {
+        compress: {
+          keep_infinity: true, // 防止 Infinity 被压缩成 1/0，这可能会导致 Chrome 上的性能问题
+          drop_console: true, // 生产环境去除 console
+          drop_debugger: true, // 生产环境去除 debugger
+        },
+      },
+
+      brotliSize: false, // 进行压缩计算
+      chunkSizeWarningLimit: 2000, // chunk 大小警告的限制（以 kbs 为单位）
+      rollupOptions: {
+        treeshake: true,
+        output: {
+          // 分包
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              return id.toString().split("node_modules/")[1].split("/")[0].toString();
+            }
+          },
+        },
+      },
+    },
+
     css: {
       preprocessorOptions: {
         scss: {
