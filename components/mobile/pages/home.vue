@@ -85,7 +85,7 @@
                 <Lazy-base-game-component :game="child"></Lazy-base-game-component>
               </div>
             </div>
-            <el-button @click="moreFn" class="game-classification-btn w-full">View All {{ info?.hello }}</el-button>
+            <el-button @click="moreFn" class="game-classification-btn w-full">View All {{ info }}</el-button>
           </template>
         </div>
       </div>
@@ -273,14 +273,19 @@
     }
   );
 
-  const moreFn = async () => {
-    const {data} = await useFetch("/api/hello");
+  const id = ref(1);
 
-    info.value = data.value;
-    console.log(data.value);
+  const moreFn = () => {
+    id.value++;
   };
 
-  moreFn();
+  const moreFns = async () => {
+    //
+    const {data, pending, error, refresh} = await useDefaultRequest.get("/mountains", null, {param1: id});
+    info.value = data.value[0]?.title;
+  };
+
+  moreFns();
 
   onMounted(async () => {
     document
@@ -464,6 +469,7 @@
       .game-classification-btn {
         margin-top: 10px;
         height: 40px;
+        color: var(--el-text-color-primary);
         background: linear-gradient(to right, #80d693, #34aa4e);
       }
     }

@@ -1,17 +1,13 @@
-/**
- * @format
- * @Author: liuhui219 liuhui219@126.com
- * @Date: 2023-10-25 09:35:22
- * @LastEditors: liuhui219 liuhui219@126.com
- * @LastEditTime: 2023-10-30 18:12:28
- * @FilePath: \hall\nuxt.config.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-
 /** @format */
-
+import {loadEnv} from "vite";
 import viteCompression from "vite-plugin-compression";
-import {ViteImageOptimizer} from "vite-plugin-image-optimizer";
+const envScript = (process.env.npm_lifecycle_script as string).split(" ");
+const envName = envScript[envScript.length - 1]; // 通过启动命令区分环境
+const envData: any = loadEnv(envName, process.cwd());
+
+console.log(666, envName, envData);
+
+const CompressionPlugin = require("compression-webpack-plugin");
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: {enabled: false},
@@ -20,16 +16,89 @@ export default defineNuxtConfig({
     port: 8888,
     host: "0.0.0.0",
   },
-  // routeRules: {
-  //   // 针对路径进行接口转发
-  //   "/dev-api/**": {
-  //     // https://cnodejs.org/api/v1 是个公共接口api前缀，将其替换为后端写好的接口调用地址就好
-  //     proxy: `https://dummyjson.com/**`,
+  routeRules: {
+    // 针对路径进行接口转发
+    "/dev-api/**": {
+      // https://cnodejs.org/api/v1 是个公共接口api前缀，将其替换为后端写好的接口调用地址就好
+      proxy: `https://api.nuxtjs.dev/**`,
+    },
+  },
+
+  // nitro: {
+  //   devProxy: {
+  //     "/dev-api/": {
+  //       target: "https://api.nuxtjs.dev/",
+  //       changeOrigin: true,
+  //     },
   //   },
   // },
 
+  runtimeConfig: {
+    public: {
+      apiBase: envData?.VITE_PUBLIC_API_BASE,
+    },
+  },
+
   build: {
     analyze: true,
+    plugins: [
+      new CompressionPlugin({
+        test: /\.js$|\.html$|\.css/, // 匹配文件名
+        threshold: 10240, // 对超过10kb的数据进行压缩
+        deleteOriginalAssets: false, // 是否删除原文件
+      }),
+    ],
+
+    optimization: {
+      minimize: true,
+      minimizer: [
+        // new CssMinimizerPlugin(),
+      ],
+      splitChunks: {
+        // 生成 chunk 的最小体积（以 bytes 为单位）
+        chunks: "all",
+        automaticNameDelimiter: "-",
+        minSize: 10000,
+        maxSize: 250000,
+        cacheGroups: {
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10, //优先级
+            reuseExistingChunk: true,
+          },
+          common: {
+            minChunks: 2,
+            priority: -20, //优先级
+            reuseExistingChunk: true,
+          },
+        },
+      },
+    },
+  },
+
+  nuxtPrecompress: {
+    enabled: true, // Enable in production
+    report: false, // set true to turn one console messages during module init
+    test: /\.(js|css|html|txt|xml|svg)$/, // files to compress on build
+    middleware: {
+      enabled: true,
+      enabledStatic: true,
+      encodingsPriority: ["br", "gzip"],
+    },
+    gzip: {
+      enabled: true,
+      filename: "[path].gz[query]", // middleware will look for this filename
+      threshold: 10240,
+      minRatio: 0.8,
+      compressionOptions: {level: 9},
+    },
+    brotli: {
+      enabled: true,
+      filename: "[path].br[query]", // middleware will look for this filename
+      compressionOptions: {level: 11},
+      threshold: 10240,
+      minRatio: 0.8,
+    },
   },
 
   app: {
@@ -41,8 +110,7 @@ export default defineNuxtConfig({
         {name: "keywords", content: "关键词"},
         {
           name: "viewport",
-          content:
-            "width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=yes,initial-scale=1.0,viewport-fit=cover",
+          content: "width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0",
         },
         {name: "apple-mobile-web-app-capable", content: "yes"},
         {name: "render", content: "webkit"},
@@ -67,11 +135,9 @@ export default defineNuxtConfig({
   i18n: {
     vueI18n: "./i18n.config.ts",
   },
+
   vite: {
     plugins: [
-      ViteImageOptimizer({
-        /* pass your config */
-      }),
       // ...
       viteCompression({
         verbose: true,
@@ -93,20 +159,7 @@ export default defineNuxtConfig({
           drop_debugger: true, // 生产环境去除 debugger
         },
       },
-
-      brotliSize: false, // 进行压缩计算
-      chunkSizeWarningLimit: 2000, // chunk 大小警告的限制（以 kbs 为单位）
-      rollupOptions: {
-        treeshake: true,
-        output: {
-          // 分包
-          manualChunks(id) {
-            if (id.includes("node_modules")) {
-              return id.toString().split("node_modules/")[1].split("/")[0].toString();
-            }
-          },
-        },
-      },
+      sourcemap: false,
     },
 
     css: {

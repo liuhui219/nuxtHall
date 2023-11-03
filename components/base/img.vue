@@ -15,7 +15,6 @@
     :src="src ? src : $importImage(name, type, path)"
     :alt="alt"
     :lazy="lazy"
-    loading="lazy"
     :scroll-container="scrollContainer"
     @error="renderError"
     @load="renderImage"
