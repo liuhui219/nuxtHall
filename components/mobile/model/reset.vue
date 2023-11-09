@@ -31,7 +31,13 @@
       <div class="pb-[25px] shrink-0 text-[20px] login-white">{{ $t("L1008") }}</div>
       <el-form ref="formRef" :model="ruleForm" :rules="rules" status-icon inline-message key="formRef">
         <el-form-item prop="account">
-          <el-input size="large" type="tel" clearable v-model="ruleForm.account" :placeholder="$t('L1015')"
+          <el-input
+            size="large"
+            type="tel"
+            clearable
+            v-model.number="ruleForm.account"
+            autocomplete="off"
+            :placeholder="$t('L1015')"
             ><template #prefix>
               <span>+55</span>
             </template></el-input
@@ -40,7 +46,7 @@
         <el-form-item prop="password">
           <el-input size="large" clearable v-model="ruleForm.password" :placeholder="$t('L1010')"
             ><template #append>
-              <el-button class="min-w-[67px]" :disabled:boolean="countdown" @click="codeFn(formRef)"
+              <el-button class="min-w-[67px]" :disabled="countdown" @click="codeFn(formRef)"
                 ><span v-if="!countdown">{{ $t("L1017") }}</span
                 ><span v-else>{{ time }}S</span></el-button
               >
@@ -62,7 +68,7 @@
   import {FormInstance} from "element-plus";
 
   interface RuleForm {
-    account: any;
+    account: number | "";
     password: string;
   }
   const {locale, t} = useI18n();
@@ -84,6 +90,7 @@
           message: t("L1015"),
           trigger: ["blur", "change"],
         },
+        {type: "number", message: "Phone Number must be a number"},
       ],
       password: [
         {
@@ -99,11 +106,13 @@
 
   const closeDialog = () => {
     closePopup("reset");
+    formRef.value?.resetFields();
   };
 
   const closeLogin = () => {
     closePopup("reset");
     openPopup("login");
+    formRef.value?.resetFields();
   };
 
   onMounted(() => {

@@ -1,39 +1,56 @@
 <!-- @format -->
 
-<!--
- * @Author: liuhui219 liuhui219@126.com
- * @Date: 2023-10-24 11:09:08
- * @LastEditors: liuhui219 liuhui219@126.com
- * @LastEditTime: 2023-10-31 15:16:06
- * @FilePath: \hall\components\mobile\Layout\header.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-<!-- @format -->
-
-import { Header } from 'element-plus/es/components/table-v2/src/components'; import { Header } from
-'element-plus/es/components/table-v2/src/components';
 <template>
   <header class="mobile-header fixed">
     <section class="flex justify-between w-full px-[15px] h-full">
-      <div class="left flex justify-center items-center">
-        <base-img class="h-[40px] w-[104px] logo" name="logo-h" type="avif" path="images/logo" />
+      <div class="left flex justify-center items-center" @click="goHome">
+        <base-img class="h-[40px] w-[104px] logo" name="logo-h" type="png" path="images/logo" />
       </div>
       <div class="right tools-login">
-        <el-button @click="openPopup('login')" size="large" type="primary" text>{{ $t("L1001") }}</el-button>
-        <el-button
-          @click="openPopup('register')"
-          @mousedown="(e) => e.preventDefault()"
-          class="el-button-sign-up"
-          size="large"
-          type="primary"
-          >{{ $t("L1002") }}</el-button
+        <template v-if="isLogin"
+          ><el-button @click="openPopup('login')" size="large" type="primary" text>{{ $t("L1001") }}</el-button>
+          <el-button @click="openPopup('register')" class="el-button-sign-up" size="large" type="primary">{{
+            $t("L1002")
+          }}</el-button></template
         >
+        <template v-else>
+          <el-button @click="openPopup('login')" size="large" type="primary" text>{{ $t("L1001") }}</el-button>
+          <el-dropdown trigger="click" placement="bottom-end" popper-class="el-mobile-dropdown-popper">
+            <span class="el-dropdown-link">
+              <el-badge is-dot
+                ><el-avatar
+                  fit="fit"
+                  :size="35"
+                  alt=""
+                  src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                >
+                  <base-img class="h-[35px] w-[35px]" name="error" type="png" path="images/load" /></el-avatar
+              ></el-badge>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item :icon="Plus">Action 1</el-dropdown-item>
+                <el-dropdown-item :icon="CirclePlusFilled"> Action 2 </el-dropdown-item>
+                <el-dropdown-item :icon="CirclePlus">Action 3</el-dropdown-item>
+                <el-dropdown-item :icon="Check">Action 4</el-dropdown-item>
+                <el-dropdown-item divided :icon="CircleCheck">{{ $t("L1018") }}</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </template>
       </div>
     </section>
   </header>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import {Search, Plus, CirclePlusFilled, CirclePlus, Check, CircleCheck} from "@element-plus/icons-vue";
+  const goHome = () => {
+    navigateTo("/");
+  };
+
+  const isLogin = useLogin();
+</script>
 
 <style lang="scss" scoped>
   .mobile-header {
@@ -75,6 +92,15 @@ import { Header } from 'element-plus/es/components/table-v2/src/components'; imp
         z-index: 1;
         filter: blur(20px);
       }
+    }
+  }
+
+  .el-mobile-dropdown-popper {
+    .el-scrollbar {
+      width: 175px;
+    }
+    .el-dropdown-menu__item {
+      height: 43px;
     }
   }
 </style>

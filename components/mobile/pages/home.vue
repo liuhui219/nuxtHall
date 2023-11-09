@@ -18,20 +18,20 @@
           @slide-change="slideChange"
         >
           <swiper-slide v-for="(item, index) in list" :key="index" class="flex justify-center">
-            <div class="carousel-nl-container w-full flex flex-col items-center absolute top-[36px] px-[20px]">
+            <!-- <div class="carousel-nl-container w-full flex flex-col items-center absolute top-[36px] px-[20px]">
               <div class="flex flex-col items-center justify-center w-[267px]">
                 <div class="font-black text-[24px]">Best Crypto Casino</div>
                 <p class="text-center text-[12px] mt-[10px]">
                   With our subscription, you’ll get much more bonuses and extra rewards.
                 </p>
               </div>
-            </div>
+            </div> -->
             <div class="container-banner-box w-full">
-              <Lazy-base-img class="w-full banner-image" :name="item.img" type="png" path="images/home" />
+              <base-img class="w-full banner-image" :name="item.img" type="jpg" path="images/home" />
             </div>
           </swiper-slide>
           <div class="mobile-home-sign absolute">
-            <el-button @click="openPopup('detail-drawer')" class="mobile-home-sign-btn w-[267px]"
+            <el-button @click="openPopupFn" class="mobile-home-sign-btn w-[267px]"
               ><span class="font-black">SIGN UP</span></el-button
             >
           </div>
@@ -69,8 +69,8 @@
       </div>
 
       <div class="hot-games w-full">
-        <div class="games-item" v-for="(item, index) in hotGamesList" :key="index">
-          <Lazy-base-game-component :game="item"></Lazy-base-game-component>
+        <div class="games-item" v-for="(item, index) in hotGamesList" :key="index" @click="openGame(item)">
+          <base-game-component :game="item"></base-game-component>
         </div>
       </div>
       <!-- 游戏分类 -->
@@ -82,7 +82,7 @@
           <template v-if="item.children">
             <div class="w-full game-classification-wrap">
               <div v-for="(child, i) in item.children" :key="i" class="games-item">
-                <Lazy-base-game-component :game="child"></Lazy-base-game-component>
+                <base-game-component :game="child"></base-game-component>
               </div>
             </div>
             <el-button @click="moreFn" class="game-classification-btn w-full">View All {{ info }}</el-button>
@@ -106,6 +106,8 @@
   onMounted(() => {
     containerNewsWidth.value = 0 - containerNews.value.offsetWidth + "px";
   });
+  const url = games.gameURL();
+  const openPopupFn = () => {};
 
   // message_notifications
   const newsList = [
@@ -122,58 +124,73 @@
       value: 1,
       text: "V0033",
       title: "V0030",
-      img: "banner1",
+      img: "hby111",
     },
     {
       value: 2,
       text: "V0033",
       title: "V0030",
-      img: "banner1",
+      img: "jc1103",
     },
     {
       value: 3,
       text: "V0033",
       title: "V0030",
-      img: "banner1",
+      img: "kuisunlun1",
+    },
+    {
+      value: 4,
+      text: "V0033",
+      title: "V0030",
+      img: "phb11-6",
     },
   ];
+
+  const openGame = (item) => {
+    url.value = item.url;
+    openPopup("game-drawer");
+  };
 
   const hotGamesList = [
     {
       value: 1,
       text: "V0033",
       title: "V0030",
-      src: $importImage("r_bonus", "avif", "images/vip"),
+      url: "https://mobile.easygamehome.com/4900/?account_name=613382_101085247&account_id=101085247&platform_token=cJwcMLuWXHf4JzodzSGxSirvnH99sQrK&rate=1&roomID=4900&lang=BR&apimode=1",
+      src: $importImage("111902008", "jpg", "images/games"),
     },
     {
       value: 2,
       text: "V0034",
       title: "V0031",
-      src: $importImage("r_rebate", "avif", "images/vip"),
+      url: "https://mobile.easygamehome.com/27200/?account_name=613382_101085247&account_id=101085247&platform_token=VSUfauRHtTaihbuzVyR5dF8yuttgMHsR&rate=1&roomID=27200&lang=BR&apimode=1",
+      src: $importImage("111902051", "jpg", "images/games"),
     },
     {
       value: 3,
       text: "V0035",
       title: "V0032",
-      src: $importImage("r_weekly", "avif", "images/vip"),
+      url: "https://mobile.easygamehome.com/4300/?account_name=613382_101085247&account_id=101085247&platform_token=s1ucgorP40YwQBcF0CRt0pzncEu3sP84&rate=1&roomID=4300&lang=BR&apimode=1",
+      src: $importImage("111902053", "jpg", "images/games"),
     },
     {
       value: 4,
       text: "V0035",
       title: "V0032",
-      src: $importImage("r_roulette_3", "avif", "images/vip"),
+      url: "",
+      src: $importImage("111902075", "jpg", "images/games"),
     },
     {
       value: 5,
       text: "V0035",
       title: "V0032",
-      src: $importImage("r_host", "avif", "images/vip"),
+      src: $importImage("111902076", "jpg", "images/games"),
     },
     {
       value: 6,
       text: "V0035",
       title: "V0032",
-      src: $importImage("r_exclusive", "avif", "images/vip"),
+      src: $importImage("111902079", "jpg", "images/games"),
     },
   ];
 
@@ -224,7 +241,7 @@
 
   const tabClick = (index: number) => {
     const element = document.querySelectorAll(".game-classification-box")[index] as HTMLDivElement;
-    const targetPosition = element.offsetTop - 110;
+    const targetPosition = element.offsetTop - 120;
 
     document.querySelectorAll(".mobile-container-main")[0].scrollTo({
       top: targetPosition,
@@ -285,7 +302,7 @@
     info.value = data.value[0]?.title;
   };
 
-  moreFns();
+  //moreFns();
 
   onMounted(async () => {
     document
@@ -303,12 +320,15 @@
     .mobile-home-container-main {
       height: 100%;
       box-sizing: border-box;
-      .container-banner {
+      .container-banner,
+      .swiper {
         border-radius: var(--border-radius);
         .container-banner-box {
           position: relative;
           height: 0;
-          padding-bottom: 54.6%;
+          padding-bottom: 51.6%;
+          border-radius: var(--border-radius);
+          overflow: hidden;
         }
         .banner-image {
           position: relative;
@@ -411,16 +431,16 @@
 
       .home-tab {
         width: 100%;
-        height: 40px;
-        border: 1px solid var(--el-text-color-disabled);
-        border-radius: var(--border-radius);
+        height: 60px;
+        //border: 1px solid var(--el-text-color-disabled);
+        //border-radius: var(--border-radius);
         margin-top: 24px;
         overflow-x: auto;
         overflow-y: hidden;
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding: 2px;
+        padding: 12px 0px;
         position: sticky;
         top: 0px;
         background: var(--el-bg-color);
@@ -454,7 +474,7 @@
 
     .game-classification {
       .game-classification-box {
-        margin-top: 40px;
+        margin-top: 20px;
       }
       margin-top: 20px;
       .game-classification-wrap {

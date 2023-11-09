@@ -1,19 +1,12 @@
 <!-- @format -->
 
-<!--
- * @Author: liuhui219 liuhui219@126.com
- * @Date: 2023-10-25 09:35:22
- * @LastEditors: liuhui219 liuhui219@126.com
- * @LastEditTime: 2023-11-01 15:28:40
- * @FilePath: \hall\app.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-<!-- @format -->
-
 <template>
   <baseLoading v-if="pageLoading"></baseLoading>
 
-  <NuxtLayout><desktopHome v-if="isDesktop" /><mobileHome v-if="isMobile" /> </NuxtLayout>
+  <NuxtLayout
+    ><desktopHome v-if="isDesktop" /><mobileHome v-if="isMobile" />
+    <baseLoading :http="true" v-if="httpLoading"></baseLoading
+  ></NuxtLayout>
 </template>
 
 <script setup lang="ts">
@@ -23,6 +16,7 @@
   setUid();
 
   const pageLoading = usePageLoading();
+  const httpLoading = useHttpLoading();
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     nuxtApp.vueApp.component(key, component);
   }
@@ -56,11 +50,26 @@
     pageLoading.value = false;
     useHead({
       title: "afun Apostas Esportivas | Plataforma de Cassino online",
+
+      script: [
+        {
+          innerHTML: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N3Z58T3V');`,
+        },
+      ],
     });
+  });
+
+  onMounted(() => {
+    window.addEventListener("message", games.handleIframeMsg);
   });
 
   nuxtApp.hook("page:finish", (vueApp) => {
     console.log("page:finish");
+    pageLoading.value = false;
     if (isMobile) {
       document.addEventListener("gesturestart", function (event) {
         event.preventDefault();

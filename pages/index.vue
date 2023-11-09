@@ -1,8 +1,8 @@
 <!-- @format -->
 
 <template>
-  <LazyDesktopPagesHome v-if="$device.isDesktop" />
-  <LazyMobilePagesHome v-else />
+  <DesktopPagesHome v-if="$device.isDesktop" />
+  <MobilePagesHome v-else />
 </template>
 
 <script setup>

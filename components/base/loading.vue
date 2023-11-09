@@ -1,8 +1,8 @@
 <!-- @format -->
 
 <template>
-  <div class="app-loading">
-    <img class="loading-base-img" :src="$importImage('loading', 'avif', 'images/load')" />
+  <div class="app-loading" :class="{'http-loading': http}">
+    <img class="loading-base-img" :src="$importImage('loading', 'png', 'images/load')" />
   </div>
 </template>
 <script setup lang="ts">
@@ -11,6 +11,10 @@
     size: {
       type: Number,
       default: 80,
+    },
+    http: {
+      type: Boolean,
+      default: false,
     },
   });
 </script>
@@ -28,6 +32,9 @@
     gap: 8px;
     width: 100%;
     height: 100%;
+  }
+  .app-loading.http-loading {
+    background-color: var(--el-mask-color);
   }
   .loading-base-img {
     width: 48px;

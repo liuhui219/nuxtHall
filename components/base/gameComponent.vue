@@ -1,14 +1,17 @@
 <!-- @format -->
 <template>
-  <div class="game-component w-full">
-    <div class="game-cover relative z-[1]" :style="{backgroundImage: !isLoading ? `url(${game.src})` : ''}"></div>
-    <div v-if="isLoading" class="game-cover game-cover-copy" />
+  <div ref="target" class="game-component w-full">
+    <div
+      class="game-cover relative z-[1]"
+      :style="{backgroundImage: !isLoading && loaded ? `url(${game.src})` : ''}"
+    ></div>
+    <div v-if="isLoading || !loaded" class="game-cover game-cover-copy" />
   </div>
 </template>
 
 <script setup lang="ts">
   const {$importImage} = useNuxtApp();
-  import {useImage} from "@vueuse/core";
+  import {useImage, useIntersectionObserver} from "@vueuse/core";
   const propsConf = defineProps({
     game: {
       type: Object,
@@ -37,7 +40,14 @@
   });
   const loaded = ref(false);
   const isRemove = ref(false);
+  const target = ref(null);
   const {isLoading} = useImage({src: propsConf.game.src});
+
+  const {stop} = useIntersectionObserver(target, ([{isIntersecting}], observerElement) => {
+    if (isIntersecting) {
+      loaded.value = isIntersecting;
+    }
+  });
   // onMounted(() => {
   //   var img = document.createElement("img");
   //   img.src = propsConf.game.src;
@@ -92,7 +102,7 @@
         left: 0;
         width: 100%;
         padding-bottom: 100%;
-        background-image: url("~/assets/images/load/game_back.avif");
+        background-image: url("~/assets/images/load/game_back.png");
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;

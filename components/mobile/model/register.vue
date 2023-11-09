@@ -126,6 +126,7 @@
 
   const closeLogin = () => {
     closePopup("register");
+    formRef.value?.resetFields();
   };
 
   watchEffect(() => {

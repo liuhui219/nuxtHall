@@ -11,7 +11,7 @@
 <!-- @format -->
 
 <template>
-  <LazyMobileModelDrawer :title="'setting'" :drawer="drawerSetting">
+  <LazyMobileModelDrawer :title="'setting'" :drawer="drawerSetting" :hash="'setting-drawer'">
     <template #header> </template>
   </LazyMobileModelDrawer>
 </template>

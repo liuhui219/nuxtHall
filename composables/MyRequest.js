@@ -54,7 +54,7 @@ const request = async (url, method, body, query, headers, options) => {
       return response._data;
     },
     onResponseError({request, response, options}) {
-      console.log("🚀 ~ file: MyRequest.ts:42 ~ onResponseError ~ request:", request);
+      console.log(request);
       // Handle the response errors
     },
   });

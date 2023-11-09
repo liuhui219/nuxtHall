@@ -5,7 +5,7 @@
 <!-- @format -->
 
 <template>
-  <LazyMobileModelDrawer :title="'detail'" :drawer="drawerDetail">
+  <LazyMobileModelDrawer :title="'detail'" :drawer="drawerDetail" :hash="'detail-drawer'">
     <template #header>
       <h1>title</h1>
     </template>

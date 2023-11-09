@@ -7,39 +7,55 @@
       modal-class="mobile-drawer-el-overlay"
       title="I am the title"
       :with-header="false"
+      :direction="direction"
       :close-on-press-escape="false"
       :destroy-on-close="true"
       :modal="true"
       :size="'100%'"
     >
       <div class="mobile-modal-content">
-        <header class="mobile-modal-content-header">
-          <button @click="closeAllPopup()" class="back-btn"><BaseIcon name="back" class="text-[18px]" /></button>
+        <header v-if="header" class="mobile-modal-content-header">
+          <button @click="closePopup(hash)" class="back-btn"><BaseIcon name="back" class="text-[18px]" /></button>
           <h1 class="header-title">{{ title }}</h1>
           <div class="header-right">
             <slot name="header"></slot>
           </div>
         </header>
-        <main class="mobile-modal-content-main">
+        <main class="mobile-modal-content-main" :style="{height: !header ? '100%' : 'calc(100% - 60px)'}">
           <slot name="body"></slot>
         </main>
       </div> </el-drawer
   ></client-only>
 </template>
 
-<script setup lang="ts">
+<script setup>
   const props = defineProps({
     title: {
       type: String,
       default: "",
     },
+    direction: {
+      type: String,
+      default: "rtl",
+    },
     drawer: {
       type: Boolean,
       default: false,
     },
+    header: {
+      type: Boolean,
+      default: true,
+    },
+    hash: {
+      type: String,
+      default: "",
+    },
   });
+  const httpLoading = useHttpLoading();
+
   const drawer = ref(false);
   watchEffect(() => {
+    httpLoading.value = props.drawer;
     drawer.value = props.drawer;
   });
 </script>
@@ -48,6 +64,7 @@
   .mobile-drawer-el-overlay {
     .el-drawer__body {
       padding: 0;
+      background-color: var(--el-bg-color);
     }
     .mobile-modal-content {
       background-color: var(--el-bg-color);
@@ -94,7 +111,6 @@
 
       .mobile-modal-content-main {
         width: 100%;
-        height: calc(100% - 60px);
         overflow-x: hidden;
         background: var(--el-bg-color);
       }

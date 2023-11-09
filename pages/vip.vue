@@ -2,7 +2,7 @@
 
 <template>
   <div class="vip-nl-container">
-    <div class="vip-nl-banner" :style="{backgroundImage: `url(${$importImage('banner_pc', 'avif', 'images/vip')})`}">
+    <div class="vip-nl-banner" :style="{backgroundImage: `url(${$importImage('banner_pc', 'png', 'images/vip')})`}">
       <div class="vip-nl-banner-title">
         <div class="vip-nl-club">
           {{ $t("V0026") }}
@@ -100,19 +100,19 @@
       value: 1,
       text: "V0033",
       title: "V0030",
-      img: $importImage("setup_1_pc", "avif", "images/vip"),
+      img: $importImage("setup_1_pc", "png", "images/vip"),
     },
     {
       value: 2,
       text: "V0034",
       title: "V0031",
-      img: $importImage("setup_2_pc", "avif", "images/vip"),
+      img: $importImage("setup_2_pc", "png", "images/vip"),
     },
     {
       value: 3,
       text: "V0035",
       title: "V0032",
-      img: $importImage("setup_3_pc", "avif", "images/vip"),
+      img: $importImage("setup_3_pc", "png", "images/vip"),
     },
   ];
 
@@ -121,43 +121,43 @@
       value: 1,
       text: "V0033",
       title: "V0030",
-      img: $importImage("r_bonus", "avif", "images/vip"),
+      img: $importImage("r_bonus", "png", "images/vip"),
     },
     {
       value: 2,
       text: "V0034",
       title: "V0031",
-      img: $importImage("r_rebate", "avif", "images/vip"),
+      img: $importImage("r_rebate", "png", "images/vip"),
     },
     {
       value: 3,
       text: "V0035",
       title: "V0032",
-      img: $importImage("r_weekly", "avif", "images/vip"),
+      img: $importImage("r_weekly", "png", "images/vip"),
     },
     {
       value: 4,
       text: "V0035",
       title: "V0032",
-      img: $importImage("r_roulette_3", "avif", "images/vip"),
+      img: $importImage("r_roulette_3", "png", "images/vip"),
     },
     {
       value: 5,
       text: "V0035",
       title: "V0032",
-      img: $importImage("r_host", "avif", "images/vip"),
+      img: $importImage("r_host", "png", "images/vip"),
     },
     {
       value: 6,
       text: "V0035",
       title: "V0032",
-      img: $importImage("r_exclusive", "avif", "images/vip"),
+      img: $importImage("r_exclusive", "png", "images/vip"),
     },
     {
       value: 7,
       text: "V0035",
       title: "V0032",
-      img: $importImage("r_luxury", "avif", "images/vip"),
+      img: $importImage("r_luxury", "png", "images/vip"),
     },
   ];
 </script>

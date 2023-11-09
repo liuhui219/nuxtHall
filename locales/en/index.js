@@ -28,6 +28,8 @@ export default {
   L1015: "Enter Phone Number",
   L1016: "Already have account?",
   L1017: "Code",
+  L1018: "Sign Out",
+  L1019: "Back Home",
 
   H0001: "Menu",
   H0002: "Casino",
@@ -40,4 +42,6 @@ export default {
   H0009: "Rewards",
   H0010: "Incorrect mobile number",
   H0011: `{min} to {max} characters long,number or letter\r\nLetters are case sensitive`,
+
+  E0001: "Can't find this page",
 };

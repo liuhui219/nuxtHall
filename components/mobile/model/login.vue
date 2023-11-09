@@ -11,7 +11,8 @@
       destroy-on-close
       center
       align-center
-      @close="closeDialog"
+      @close="closeLogin"
+      @open="openDialog"
     >
       <template #header>
         <div @click="closeLogin" class="login-close p-[15px] absolute right-0 top-0 z-[1] text-[14px]">
@@ -21,7 +22,13 @@
       <div class="pb-[25px] shrink-0 text-[20px] login-white">{{ $t("L1001") }}</div>
       <el-form ref="formRef" :model="ruleForm" :rules="rules" status-icon inline-message key="formRef">
         <el-form-item prop="account">
-          <el-input size="large" type="tel" clearable v-model="ruleForm.account" :placeholder="$t('L1015')"
+          <el-input
+            size="large"
+            type="tel"
+            autoComplete="off"
+            clearable
+            v-model="ruleForm.account"
+            :placeholder="$t('L1015')"
             ><template #prefix>
               <span>+55</span>
             </template></el-input
@@ -92,13 +99,12 @@
     return rule;
   });
 
-  const closeDialog = () => {
-    closePopup("login");
-  };
-
   const closeLogin = () => {
     closePopup("login");
+    formRef.value?.resetFields();
   };
+
+  const openDialog = () => {};
 
   const submitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return;

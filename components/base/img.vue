@@ -1,20 +1,11 @@
 <!-- @format -->
 
-<!--
- * @Author: liuhui219 liuhui219@126.com
- * @Date: 2023-10-25 15:37:11
- * @LastEditors: liuhui219 liuhui219@126.com
- * @LastEditTime: 2023-10-27 11:45:18
- * @FilePath: \hall\components\base\img.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-<!-- @format -->
-
 <template>
-  <el-image
-    :src="src ? src : $importImage(name, type, path)"
+  <ElImage
+    ref="img"
+    :src="image"
     :alt="alt"
-    :lazy="lazy"
+    loading="lazy"
     :scroll-container="scrollContainer"
     @error="renderError"
     @load="renderImage"
@@ -28,10 +19,11 @@
     <template #placeholder>
       <div class="image-slot">Loading</div>
     </template>
-  </el-image>
+  </ElImage>
 </template>
 
 <script setup lang="ts">
+  import {useImage, useIntersectionObserver} from "@vueuse/core";
   import {Picture as IconPicture} from "@element-plus/icons-vue";
   const {$importImage} = useNuxtApp();
   const propsConf = defineProps({
@@ -63,6 +55,16 @@
       type: String,
       default: "",
     },
+  });
+  const img = ref(null);
+  const loaded = ref(false);
+  const image = ref(propsConf.src ? propsConf.src : $importImage(propsConf.name, propsConf.type, propsConf.path));
+
+  const {isLoading} = useImage({src: image.value});
+  const {stop} = useIntersectionObserver(img, ([{isIntersecting}], observerElement) => {
+    if (isIntersecting) {
+      loaded.value = isIntersecting;
+    }
   });
   const emits = defineEmits(["click"]);
   const handleClick = () => {
