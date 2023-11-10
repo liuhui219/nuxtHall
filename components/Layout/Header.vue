@@ -9,7 +9,7 @@
         >
       </div>
       <div class="header-right">
-        <el-button size="large">SIGN IN</el-button>
+        <el-button @click="openPopup('login')" size="large">SIGN IN</el-button>
         <el-button size="large">SIGN UP</el-button>
         <el-dropdown trigger="click" placement="bottom-end" popper-class="el-dropdown-popper">
           <span class="el-dropdown-link">

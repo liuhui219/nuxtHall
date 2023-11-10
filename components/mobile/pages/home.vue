@@ -64,6 +64,7 @@
           :key="index"
           @click="tabClick(index)"
         >
+          <i class="iconfont" :class="`icon-${item.icon}`"></i>
           {{ item.text }}
         </div>
       </div>
@@ -199,36 +200,49 @@
       value: 1,
       text: "All Games",
       length: 6,
+      icon: "lobby",
       children: hotGamesList,
     },
     {
       value: 2,
       text: "Slots",
       length: 6,
+      icon: "fire",
       children: hotGamesList,
     },
     {
       value: 3,
       text: "Roulette",
       length: 6,
+      icon: "cherry1",
       children: hotGamesList,
     },
     {
       value: 4,
       text: "All Games1",
       length: 6,
+      icon: "play1",
       children: hotGamesList,
     },
     {
       value: 5,
-      text: "Slots1",
+      text: "Lazer",
       length: 6,
+      icon: "badge1",
       children: hotGamesList,
     },
     {
       value: 6,
-      text: "Roulette1",
+      text: "Shows",
       length: 6,
+      icon: "tv-one",
+      children: hotGamesList,
+    },
+    {
+      value: 7,
+      text: "Esportes",
+      length: 6,
+      icon: "baseball",
       children: hotGamesList,
     },
   ];
@@ -309,8 +323,6 @@
       .querySelectorAll(".mobile-container-main")[0]
       .addEventListener("scroll", scrollFn as unknown as EventListener);
   });
-
-  onUnmounted(() => {});
 </script>
 <style lang="scss" scoped>
   $end-position: v-bind(containerNewsWidth);
@@ -445,10 +457,7 @@
         top: 0px;
         background: var(--el-bg-color);
         z-index: 100;
-        .active {
-          background: var(--el-color-primary);
-          border-radius: var(--border-radius);
-        }
+
         .home-tab-btn {
           height: 100%;
           display: flex;
@@ -458,6 +467,16 @@
           font-size: 12px;
           flex-shrink: 0;
           font-weight: 700;
+          color: var(--el-text-color-placeholder);
+        }
+        .active {
+          background: var(--el-color-primary);
+          border-radius: var(--border-radius);
+          color: var(--el-text-color-primary);
+        }
+        .iconfont {
+          padding-right: 5px;
+          font-weight: bold;
         }
       }
     }

@@ -47,17 +47,18 @@
       required: true,
     },
   });
+
   watch(
-    () => props.swiper?.$el.swiper.activeIndex,
-    (newValue) => {
-      activeIndex.value = newValue;
+    () => props.swiper?.$el.swiper,
+    (newValue, oldValue) => {
+      console.log("watch 已触发", newValue);
     }
   );
 
   onMounted(() => {
     nextTick(() => {
       activeIndex.value = props.swiper?.$el.swiper.activeIndex;
-      swiperLength.value = props.swiper?.$el.swiper.slides.length - props.swiper?.slidesPerView;
+      swiperLength.value = props.swiper?.$el.swiper.slidesGrid.length - props.swiper?.slidesPerView;
     });
   });
 
@@ -68,6 +69,8 @@
     } else {
       props.swiper?.$el.swiper.slideNext();
     }
+
+    activeIndex.value = props.swiper?.$el.swiper.activeIndex;
   };
   const slidePrev = () => {
     if (props.type === "slideTo") {
@@ -76,6 +79,7 @@
     } else {
       props.swiper?.$el.swiper.slidePrev();
     }
+    activeIndex.value = props.swiper?.$el.swiper.activeIndex;
   };
 </script>
 

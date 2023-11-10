@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4296752 */
-  src: url('iconfont.woff2?t=1698828690096') format('woff2'),
-       url('iconfont.woff?t=1698828690096') format('woff'),
-       url('iconfont.ttf?t=1698828690096') format('truetype');
+  src: url('iconfont.woff2?t=1699588404779') format('woff2'),
+       url('iconfont.woff?t=1699588404779') format('woff'),
+       url('iconfont.ttf?t=1699588404779') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,50 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-badge1:before {
+  content: "\e62e";
+}
+
+.icon-badge2:before {
+  content: "\e601";
+}
+
+.icon-cherry1:before {
+  content: "\ec17";
+}
+
+.icon-tv-one:before {
+  content: "\e696";
+}
+
+.icon-lobby:before {
+  content: "\e826";
+}
+
+.icon-badge:before {
+  content: "\e89b";
+}
+
+.icon-play:before {
+  content: "\e60f";
+}
+
+.icon-tvroom:before {
+  content: "\e6ff";
+}
+
+.icon-cherry:before {
+  content: "\e610";
+}
+
+.icon-play1:before {
+  content: "\e62d";
+}
+
+.icon-baseball:before {
+  content: "\e8a2";
 }
 
 .icon-back:before {

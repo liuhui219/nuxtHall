@@ -7,13 +7,30 @@
       <LayoutHeader />
 
       <main class="page-container-main">
-        <div class="page-container-main-wrap"><NuxtPage /></div>
+        <div class="page-container-main-wrap">
+          <NuxtPage />
+        </div>
+        <el-backtop :bottom="100" :right="50" target=".page-container-main" />
       </main>
     </div>
+    <component v-for="(item, index) in components" :key="index" :is="item" />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  const components = shallowRef<any>([]);
+  onMounted(() => {
+    const modulesFiles = import.meta.glob("~/components/desktop/model/*.vue");
+
+    const modules: Array<any> = [];
+    Object.keys(modulesFiles).forEach((modulePath) => {
+      const value: any = modulesFiles[modulePath];
+      modules.push(defineAsyncComponent(value));
+    });
+
+    components.value = [...modules];
+  });
+</script>
 <style lang="scss" scoped>
   .page-container {
     width: 100%;

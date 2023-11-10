@@ -13,7 +13,8 @@
 
       <base-img
         v-if="item.meta.type === 'image'"
-        class="w-[24px] mr-[8px]"
+        class="w-[24px]"
+        :class="{'mr-[8px]': !is_collapse}"
         :name="item.meta.icon"
         type="png"
         path="images/menu"
@@ -36,6 +37,7 @@
 
 <script setup>
   const {t} = useI18n();
+  const is_collapse = useIsCollapse();
   const props = defineProps({
     item: {
       type: Object,
