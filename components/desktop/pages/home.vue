@@ -146,7 +146,7 @@
       value: 1,
       text: "V0033",
       title: "V0030",
-      url: "https://mobile.easygamehome.com/12500/?account_name=613382_101085247&account_id=101085247&platform_token=ApoHn8Lnfopdmn6bzG8Av9yq19jow7RQ&rate=1&roomID=12500&lang=BR&apimode=1",
+      url: "https://mobile.easygamehome.com/12500/?account_name=613382_101085247&account_id=101085247&platform_token=XqNKaOsMhBQHNbF7weW6OnQf3lFo0vV0&rate=1&roomID=12500&lang=BR&apimode=1",
       src: $importImage("111902008", "jpg", "images/games"),
     },
     {
