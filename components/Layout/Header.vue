@@ -9,8 +9,8 @@
         >
       </div>
       <div class="header-right">
-        <el-button @click="openPopup('login')" size="large">SIGN IN</el-button>
-        <el-button size="large">SIGN UP</el-button>
+        <el-button @click="openPopup('login')" size="large">{{ $t("L1001") }}</el-button>
+        <el-button @click="openPopup('register')" class="el-button-sign-up" size="large">{{ $t("L1002") }}</el-button>
         <el-dropdown trigger="click" placement="bottom-end" popper-class="el-dropdown-popper">
           <span class="el-dropdown-link">
             <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
@@ -91,6 +91,25 @@
     }
     .el-dropdown-menu__item {
       height: 43px;
+    }
+  }
+
+  .el-button-sign-up {
+    background: linear-gradient(to right, #80d693, #34aa4e);
+    position: relative;
+    &::after {
+      content: "";
+      background-color: var(--el-color-primary);
+      position: absolute;
+      left: -16%;
+      top: -7%;
+      width: 132%;
+      height: 114%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      opacity: 0.7;
+      z-index: 1;
+      filter: blur(20px);
     }
   }
 </style>

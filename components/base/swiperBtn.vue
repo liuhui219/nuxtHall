@@ -36,12 +36,6 @@
       default: true,
     },
 
-    type: {
-      type: String,
-      required: true,
-      default: "slideTo",
-    },
-
     swiper: {
       type: Object,
       required: true,
@@ -49,10 +43,11 @@
   });
 
   watch(
-    () => props.swiper?.$el.swiper,
+    () => props.swiper?.$el.swiper.activeIndex,
     (newValue, oldValue) => {
-      console.log("watch 已触发", newValue);
-    }
+      activeIndex.value = newValue;
+    },
+    {deep: true, immediate: true}
   );
 
   onMounted(() => {
@@ -63,23 +58,10 @@
   });
 
   const slideNext = () => {
-    if (props.type === "slideTo") {
-      activeIndex.value = props.swiper?.$el.swiper.activeIndex + props.index;
-      props.swiper?.$el.swiper[props.type](activeIndex.value);
-    } else {
-      props.swiper?.$el.swiper.slideNext();
-    }
-
-    activeIndex.value = props.swiper?.$el.swiper.activeIndex;
+    props.swiper?.$el.swiper.slideNext();
   };
   const slidePrev = () => {
-    if (props.type === "slideTo") {
-      activeIndex.value = props.swiper?.$el.swiper.activeIndex - props.index;
-      props.swiper?.$el.swiper[props.type](activeIndex.value);
-    } else {
-      props.swiper?.$el.swiper.slidePrev();
-    }
-    activeIndex.value = props.swiper?.$el.swiper.activeIndex;
+    props.swiper?.$el.swiper.slidePrev();
   };
 </script>
 

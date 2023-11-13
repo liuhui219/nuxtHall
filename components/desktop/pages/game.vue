@@ -1,0 +1,89 @@
+<!-- @format -->
+
+<template>
+  <div class="game-breadcrumb mt-[36px]">
+    <el-breadcrumb :separator-icon="ArrowRight">
+      <el-breadcrumb-item :to="{path: '/'}">homepage</el-breadcrumb-item>
+      <el-breadcrumb-item>promotion</el-breadcrumb-item>
+    </el-breadcrumb>
+  </div>
+  <div class="game-iframe-cont">
+    <div class="game-iframe">
+      <iframe
+        ref="iframe"
+        :src="url"
+        frameborder="0"
+        allowtransparency="true"
+        allow="autoplay"
+        auto=" "
+        allowfullscreen
+        @load="iFrameLoad"
+      />
+    </div>
+    <div class="flex justify-between items-center px-6 py-4">
+      <div class="screen">
+        <button @click="toggle"><i class="iconfont icon-full-screen1"></i></button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+  import {ArrowRight} from "@element-plus/icons-vue";
+  import {useFullscreen} from "@vueuse/core";
+  const iframe = ref(null);
+
+  const {toggle} = useFullscreen(iframe);
+
+  const url = games.gameURL();
+  const httpLoading = useHttpLoading();
+  const iFrameLoad = () => {
+    if (url.value != "") {
+      httpLoading.value = false;
+    } else {
+      setTimeout(() => {
+        closePopup("game-drawer");
+      }, 3000);
+    }
+  };
+</script>
+
+<style lang="scss" scoped>
+  .game-breadcrumb {
+    width: 100%;
+    margin-bottom: 16px;
+    .el-breadcrumb {
+      font-size: 16px;
+    }
+  }
+  .game-iframe-cont {
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 48px;
+    overflow: hidden;
+    background: var(--el-bg-color-overlay);
+    .game-iframe {
+      position: relative;
+      display: flex;
+
+      width: 100%;
+      height: 720px;
+
+      iframe {
+        width: 100%;
+        flex: 1;
+        background: var(--el-bg-color);
+      }
+    }
+    .screen {
+      button:hover {
+        color: var(--el-color-primary);
+      }
+      .iconfont {
+        font-size: 36px;
+      }
+    }
+  }
+</style>

@@ -8,7 +8,8 @@ export const games = {
     if (typeof data == "string") {
       if (data == "ToCloseWebView") {
         //EASYGAME
-        closePopup("game-drawer");
+        // closePopup("game-drawer");
+        navigateTo({path: "/"});
       }
     }
   },

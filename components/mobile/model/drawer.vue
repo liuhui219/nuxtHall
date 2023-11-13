@@ -55,7 +55,7 @@
 
   const drawer = ref(false);
   watchEffect(() => {
-    httpLoading.value = props.drawer;
+    //httpLoading.value = props.drawer;
     drawer.value = props.drawer;
   });
 </script>

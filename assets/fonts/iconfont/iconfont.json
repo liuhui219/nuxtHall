@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1857397",
+      "name": "play",
+      "font_class": "play2",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "26608024",
+      "name": "full-screen",
+      "font_class": "full-screen1",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "1433751",
+      "name": "full-screen",
+      "font_class": "full-screen",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
       "icon_id": "4844790",
       "name": "badge",
       "font_class": "badge1",

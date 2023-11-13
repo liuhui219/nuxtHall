@@ -2,16 +2,15 @@
 
 <template>
   <el-dialog
-    v-model="loginDialog"
-    modal-class="pc-el-overlay-dialog"
+    v-model="registerDialog"
+    modal-class="pc-el-register-dialog"
     :show-close="false"
     title=""
     destroy-on-close
     center
     width="800"
     align-center
-    @close="closeLogin"
-    @open="openDialog"
+    @close="closeDialog"
   >
     <div class="login-modal-content">
       <base-close-btn class="p-[15px] absolute right-0 top-0 z-[1] text-[22px]" @click="closeLogin"></base-close-btn>
@@ -19,20 +18,14 @@
         <base-img class="w-full banner-image" name="banner_pc" type="jpg" path="images/show" />
       </div>
       <div class="modal-content-form">
-        <div class="shrink-0 text-[20px] pt-[67px] pb-[40px] login-white">{{ $t("L1001") }}</div>
+        <div class="shrink-0 text-[20px] pt-[67px] pb-[40px] login-white">{{ $t("L1002") }}</div>
         <el-form ref="formRef" :model="ruleForm" :rules="rules" status-icon inline-message key="formRef">
-          <el-form-item prop="account">
-            <el-input
-              size="large"
-              type="tel"
-              autoComplete="off"
-              clearable
-              v-model="ruleForm.account"
-              :placeholder="$t('L1015')"
-              ><template #prefix>
+          <el-form-item prop="phoneNumber">
+            <el-input size="large" type="tel" clearable v-model="ruleForm.phoneNumber" :placeholder="$t('L1015')">
+              <template #prefix>
                 <span>+55</span>
-              </template></el-input
-            >
+              </template>
+            </el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input
@@ -47,18 +40,15 @@
           <el-form-item prop="rememberCheck">
             <el-checkbox v-model="ruleForm.rememberCheck">{{ $t("L1003") }}</el-checkbox>
           </el-form-item>
+
           <el-form-item>
-            <el-button @click="submitForm(formRef)" type="primary" class="w-full h-[50px]" size="large">{{
-              t("L1001")
-            }}</el-button>
+            <el-button type="primary" class="w-full h-[50px]" size="large">{{ t("L1002") }}</el-button>
           </el-form-item>
-          <div class="quick-link quick-link-center mb-[20px] text-[12px] text-center">
-            <span class="pointer" @click="openPopup('reset')">{{ $t("L1004") }}</span>
-          </div>
+
           <div class="quick-link quick-link-center w-full text-[12px] text-center">
             <div>
-              {{ $t("L1007") }}
-              <span class="login-main pointer" @click="openPopup('register')">{{ $t("L1002") }}</span>
+              {{ $t("L1016") }}
+              <span class="login-main pointer" @click="openPopup('login')">{{ $t("L1001") }}</span>
             </div>
           </div>
         </el-form>
@@ -69,14 +59,15 @@
 
 <script setup lang="ts">
   import {FormInstance} from "element-plus";
-  import {useDebounceFn} from "@vueuse/core";
   const {locale, t} = useI18n();
-  const loginDialog = useLoginDialog();
+  const registerDialog = useRegisterDialog();
+  const activeName = ref("first");
   const formRef = ref<FormInstance>();
   const route = useRoute();
   const ruleForm = reactive({
     account: "",
     password: "",
+    phoneNumber: "",
     rememberCheck: false,
   });
   const rules = computed(() => {
@@ -84,14 +75,21 @@
       account: [
         {
           required: true,
-          message: t("L1015"),
+          message: t("L1014"),
+          trigger: ["blur", "change"],
+        },
+      ],
+      phoneNumber: [
+        {
+          required: true,
+          message: t("H0010"),
           trigger: ["blur", "change"],
         },
       ],
       password: [
         {
           required: true,
-          message: t("L1006"),
+          message: t("H0011", {min: "6", max: "30"}),
           trigger: ["blur", "change"],
         },
       ],
@@ -99,33 +97,23 @@
 
     return rule;
   });
+
+  const closeDialog = () => {
+    closePopup("register");
+  };
+
   const closeLogin = () => {
-    closePopup("login");
+    closePopup("register");
+    formRef.value?.resetFields();
   };
-  const openDialog = () => {};
-
-  const submitForm = async (formEl: FormInstance | undefined) => {
-    if (!formEl) return;
-
-    await formEl.validate((valid, fields) => {
-      if (valid) {
-        submitFn();
-        console.log("submit!");
-      } else {
-        console.log("error submit!", fields);
-      }
-    });
-  };
-
-  const submitFn = useDebounceFn(() => {}, 1000);
 
   watchEffect(() => {
-    loginDialog.value = route.hash.includes("login");
+    registerDialog.value = route.hash.includes("register");
   });
 </script>
 
 <style lang="scss">
-  .pc-el-overlay-dialog {
+  .pc-el-register-dialog {
     .el-dialog__header {
       display: none;
     }
@@ -171,6 +159,35 @@
             }
           }
         }
+      }
+    }
+
+    .el-dialog__body,
+    .el-form,
+    .el-tabs,
+    .el-tabs__header,
+    .el-tabs__nav-wrap,
+    .el-tabs__nav-scroll,
+    .el-tabs__nav {
+      width: 100%;
+    }
+
+    .el-tabs__header {
+      margin-bottom: 30px;
+    }
+
+    .el-tabs__nav-scroll {
+      width: 100%;
+      .el-tabs__nav {
+        padding-bottom: 20px;
+      }
+      .el-tabs__active-bar {
+        width: 50% !important;
+      }
+      .el-tabs__item {
+        flex: 1;
+        font-size: 16px;
+        font-weight: 700;
       }
     }
     .login-main {

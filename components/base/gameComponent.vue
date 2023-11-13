@@ -1,10 +1,15 @@
 <!-- @format -->
 <template>
   <div ref="target" class="game-component w-full">
-    <div
-      class="game-cover relative z-[1]"
-      :style="{backgroundImage: !isLoading && loaded ? `url(${game.src})` : ''}"
-    ></div>
+    <div class="game-cover relative z-[1]" :style="{backgroundImage: !isLoading && loaded ? `url(${game.src})` : ''}">
+      <div v-if="mask" class="game-mask">
+        <div class="game-mask-content">
+          <div class="game-play pointer">
+            <i class="iconfont icon-play2"></i>
+          </div>
+        </div>
+      </div>
+    </div>
     <div v-if="isLoading || !loaded" class="game-cover game-cover-copy" />
   </div>
 </template>
@@ -34,6 +39,10 @@
       default: false,
     },
     imageRadius: {
+      type: Boolean,
+      default: false,
+    },
+    mask: {
       type: Boolean,
       default: false,
     },
@@ -79,6 +88,44 @@
         padding-bottom: 100%;
         position: absolute;
         width: 100%;
+      }
+
+      .game-mask {
+        width: 100%;
+        height: 100%;
+        display: none;
+        backdrop-filter: blur(1.5px);
+        background-color: #242424b3;
+        opacity: 1;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        justify-content: center;
+        transition: all 0.2s;
+        .game-mask-content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          transition: all 0.3s;
+          width: 100%;
+          .game-play {
+            flex-shrink: 0;
+            width: 50.42px;
+            height: 50.42px;
+            border-radius: 50%;
+            // border: 3px solid rgba(255, 255, 255, 0.15);
+            background: var(--el-color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+
+      &:hover .game-mask {
+        display: flex;
       }
     }
 

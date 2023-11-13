@@ -38,16 +38,16 @@
       <div class="section-title mb-[12px] p-[0!important] flex justify-between">
         <div data-v-5af0f1b2="" class="flex items-center justify-start">Grandes Vitórias Recentes</div>
         <div class="shrink-0 flex items-center">
-          <BaseSwiperBtn :swiper="rewardRef" :disabled="false" :type="'other'"></BaseSwiperBtn>
+          <BaseSwiperBtn :swiper="rewardRef" :disabled="false"></BaseSwiperBtn>
         </div>
       </div>
       <div>
         <swiper
           ref="rewardRef"
           :modules="[SwiperAutoplay, SwiperNavigation, SwiperEffectCoverflow, SwiperPagination, SwiperEffectCreative]"
-          :slides-per-view="7"
+          :slides-per-view="6.7"
           :space-between="24"
-          :slides-per-group="1"
+          :slides-per-group="2"
           :loop="true"
           :autoplay="{
             delay: 5000,
@@ -68,17 +68,12 @@
       <div class="section-title mb-[12px] p-[0!important] flex justify-between">
         <div data-v-5af0f1b2="" class="flex items-center justify-start">{{ item.text }}</div>
         <div class="shrink-0 flex items-center">
-          <BaseSwiperBtn :swiper="nodes[index]" :disabled="true" :type="'other'" :index="index"></BaseSwiperBtn>
+          <LazyBaseSwiperBtn v-if="nodes[index]" :swiper="nodes[index]" :disabled="true"></LazyBaseSwiperBtn>
         </div>
       </div>
       <div>
         <swiper
-          :ref="
-            (el) => {
-              nodes[index] = el;
-            }
-          "
-          :index="index"
+          :ref="setRef"
           :modules="[SwiperAutoplay, SwiperNavigation, SwiperEffectCoverflow]"
           :slides-per-view="6"
           :space-between="24"
@@ -86,8 +81,8 @@
         >
           <swiper-slide v-for="count in Math.ceil(item.children.length / 2)" :key="count" class="flex justify-center">
             <div class="w-full flex flex-col gap-y-[24px]">
-              <base-game-component :game="item.children[(count - 1) * 2]"></base-game-component>
-              <base-game-component :game="item.children[(count - 1) * 2 + 1]"></base-game-component>
+              <base-game-component mask :game="item.children[(count - 1) * 2]"></base-game-component>
+              <base-game-component mask :game="item.children[(count - 1) * 2 + 1]"></base-game-component>
             </div>
           </swiper-slide>
         </swiper>
@@ -100,7 +95,12 @@
   import {useThrottleFn} from "@vueuse/core";
   const {$importImage} = useNuxtApp();
   const rewardRef = ref();
-  const nodes = ref<any>({});
+  const nodes = reactive<any>([]);
+  const setRef = (el: any) => {
+    if (el) {
+      nodes.push(el);
+    }
+  };
   const list = [
     {
       value: 1,
@@ -302,7 +302,7 @@
 
   const activeIndex = ref(0);
   const activeTabIndex = ref(0);
-  const slideChange = (event) => {
+  const slideChange = (event: {realIndex: number}) => {
     activeIndex.value = event.realIndex;
   };
 
@@ -333,7 +333,7 @@
       }
     }
     activeTabIndex.value = index;
-  }, 10);
+  }, 50);
 
   onMounted(async () => {
     document.querySelectorAll(".page-container-main") &&
@@ -371,7 +371,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      padding: 15px 12px;
+      padding: 15px 0px;
       position: sticky;
       top: 0px;
       background-color: var(--el-bg-color);
@@ -390,6 +390,8 @@
         margin-right: 15px;
         cursor: pointer;
         color: var(--el-text-color-placeholder);
+        background-color: var(--el-bg-color-overlay);
+        border-radius: var(--border-radius);
         &:hover {
           color: var(--el-text-color-primary);
         }
