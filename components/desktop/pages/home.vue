@@ -81,8 +81,16 @@
         >
           <swiper-slide v-for="count in Math.ceil(item.children.length / 2)" :key="count" class="flex justify-center">
             <div class="w-full flex flex-col gap-y-[24px]">
-              <base-game-component mask :game="item.children[(count - 1) * 2]"></base-game-component>
-              <base-game-component mask :game="item.children[(count - 1) * 2 + 1]"></base-game-component>
+              <base-game-component
+                @click="openGame(item.children[(count - 1) * 2])"
+                mask
+                :game="item.children[(count - 1) * 2]"
+              ></base-game-component>
+              <base-game-component
+                @click="openGame(item.children[(count - 1) * 2 + 1])"
+                mask
+                :game="item.children[(count - 1) * 2 + 1]"
+              ></base-game-component>
             </div>
           </swiper-slide>
         </swiper>
@@ -100,6 +108,14 @@
     if (el) {
       nodes.push(el);
     }
+  };
+  const url = games.gameURL();
+  const httpLoading = useHttpLoading();
+  const openGame = (item) => {
+    url.value = item.url;
+    httpLoading.value = true;
+    //openPopup("game-drawer");
+    navigateTo({path: "/game"});
   };
   const list = [
     {
@@ -130,7 +146,7 @@
       value: 1,
       text: "V0033",
       title: "V0030",
-      url: "https://mobile.easygamehome.com/4900/?account_name=613382_101085247&account_id=101085247&platform_token=cJwcMLuWXHf4JzodzSGxSirvnH99sQrK&rate=1&roomID=4900&lang=BR&apimode=1",
+      url: "https://mobile.easygamehome.com/12500/?account_name=613382_101085247&account_id=101085247&platform_token=ApoHn8Lnfopdmn6bzG8Av9yq19jow7RQ&rate=1&roomID=12500&lang=BR&apimode=1",
       src: $importImage("111902008", "jpg", "images/games"),
     },
     {

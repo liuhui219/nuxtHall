@@ -64,7 +64,7 @@ export default defineNuxtConfig({
       charset: "utf-8",
       htmlAttrs: {
         class: "dark",
-        lang: "zh-CN",
+        lang: "en",
       },
     },
   },
@@ -98,7 +98,7 @@ export default defineNuxtConfig({
     ],
     build: {
       target: "es2015",
-      assetsInlineLimit: "10240",
+      assetsInlineLimit: 10240,
       cssCodeSplit: true,
       minify: "terser", // 必须开启：使用terserOptions才有效果
       terserOptions: {
