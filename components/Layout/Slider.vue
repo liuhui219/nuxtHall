@@ -7,29 +7,28 @@
         <el-icon><component :is="is_collapse ? 'Expand' : 'Fold'"></component></el-icon>
       </div>
       <div class="title" v-if="!is_collapse">
-        <img class="h-[50px]" :src="$importImage('logo-h', 'png', 'images/logo')" />
+        <base-img class="h-[50px] w-[130px]" name="logo-h" type="png" path="images/logo" />
       </div>
     </div>
     <div class="menu">
-      <el-menu
-        :default-active="activeMenu"
-        class="el-menu-vertical-demo"
-        router
-        :unique-opened="false"
-        :popper-effect="light"
-        mode="vertical"
-        :collapse-transition="true"
-        :collapse="is_collapse"
-      >
-        <template v-for="routes in menus">
-          <el-menu-item-group v-if="routes.itemGroup"
-            ><LayoutItem v-for="route in routes.itemGroup" :key="route.path" :item="route" :base-path="route.path"
-          /></el-menu-item-group>
-          <template v-else>
-            <LayoutItem :key="routes.path" :item="routes" :base-path="routes.path" />
-          </template>
-        </template>
-      </el-menu>
+      <client-only
+        ><el-menu
+          :default-active="activeMenu"
+          class="el-menu-vertical-demo"
+          :unique-opened="false"
+          mode="vertical"
+          :collapse-transition="true"
+          :collapse="is_collapse"
+        >
+          <template v-for="routes in menus">
+            <el-menu-item-group v-if="routes.itemGroup"
+              ><LayoutItem v-for="route in routes.itemGroup" :key="route.path" :item="route" :base-path="route.path"
+            /></el-menu-item-group>
+            <template v-else>
+              <LayoutItem :key="routes.path" :item="routes" :base-path="routes.path" />
+            </template>
+          </template> </el-menu
+      ></client-only>
     </div>
   </div>
 </template>
@@ -93,12 +92,10 @@
       height: var(--header-height);
 
       padding: 10px 0;
-      img {
-      }
+
       .sysName {
         padding: 14px;
         display: flex;
-        background-color: var(--el-fill-color);
         font-size: 30px;
         color: var(--el-text-color-primary);
         cursor: pointer;

@@ -12,11 +12,13 @@
       <iframe
         ref="iframe"
         :src="url"
-        frameborder="0"
-        allowtransparency="true"
+        title="game"
+        allowpaymentrequest="true"
+        allowTransparency="true"
         allow="autoplay"
         auto=" "
         allowfullscreen
+        style="color-scheme: light"
         @load="iFrameLoad"
       />
     </div>
@@ -42,7 +44,7 @@
       httpLoading.value = false;
     } else {
       setTimeout(() => {
-        closePopup("game-drawer");
+        httpLoading.value = false;
       }, 3000);
     }
   };
@@ -67,15 +69,9 @@
     .game-iframe {
       position: relative;
       display: flex;
-
+      background: var(--el-bg-color);
       width: 100%;
       height: 720px;
-
-      iframe {
-        width: 100%;
-        flex: 1;
-        background: var(--el-bg-color);
-      }
     }
     .screen {
       button:hover {
@@ -85,5 +81,12 @@
         font-size: 36px;
       }
     }
+  }
+
+  iframe {
+    width: 100%;
+    flex: 1;
+    background: #000000;
+    border: none;
   }
 </style>

@@ -17,10 +17,12 @@
   <LazyMobileModelRegister />
 
   <component v-for="(item, index) in components" :key="index" :is="item" />
+  <baseLoading :http="true" v-if="httpLoading"></baseLoading>
 </template>
 
 <script setup lang="ts">
   const components = shallowRef<any>([]);
+  const httpLoading = useHttpLoading();
   onMounted(() => {
     const modulesFiles = import.meta.glob("~/components/mobile/drawer/*.vue");
 

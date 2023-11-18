@@ -13,7 +13,10 @@ const CompressionPlugin = require("compression-webpack-plugin");
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: {enabled: false},
-
+  sourcemap: {
+    server: false,
+    client: true,
+  },
   devServer: {
     port: 8888,
     host: "0.0.0.0",
@@ -77,7 +80,23 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "dayjs-nuxt",
     "nuxt-delay-hydration",
+    "@zadigetvoltaire/nuxt-gtm",
   ],
+
+  gtm: {
+    id: "GTM-N3Z58T3V",
+
+    defer: false, // Script can be set to `defer` to speed up page load at the cost of less accurate results (in case visitor leaves before script is loaded, which is unlikely but possible). Defaults to false, so the script is loaded `async` by default
+    compatibility: false, // Will add `async` and `defer` to the script tag to not block requests for old browsers that do not support `async`
+
+    enabled: true, // defaults to true. Plugin can be disabled by setting this to false for Ex: enabled: !!GDPR_Cookie (optional)
+    debug: true, // Whether or not display console logs debugs (optional)
+    loadScript: true, // Whether or not to load the GTM Script (Helpful if you are including GTM manually, but need the dataLayer functionality in your components) (optional)
+    enableRouterSync: false, // Pass the router instance of your app to automatically sync with router (optional)
+
+    trackOnNextTick: false, // Whether or not call trackView in Vue.nextTick
+    devtools: true, // (optional)
+  },
 
   delayHydration: {
     mode: "init",

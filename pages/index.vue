@@ -8,6 +8,7 @@
 <script setup>
   definePageMeta({
     name: "首页",
+    auth: false,
   });
 </script>
 

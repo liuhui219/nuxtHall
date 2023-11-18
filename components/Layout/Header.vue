@@ -5,23 +5,28 @@
     <div class="navbar-wrapper">
       <div class="header-left">
         <el-button size="large" @click="routerFn" text :bg="path === '/'"
-          ><i class="iconfont" :class="`icon-Casino`"></i>CASINO</el-button
+          ><i class="iconfont" :class="`icon-Casino`"></i>{{ $t("H0002") }}</el-button
         >
       </div>
       <div class="header-right">
         <el-button @click="openPopup('login')" size="large">{{ $t("L1001") }}</el-button>
         <el-button @click="openPopup('register')" class="el-button-sign-up" size="large">{{ $t("L1002") }}</el-button>
         <el-dropdown trigger="click" placement="bottom-end" popper-class="el-dropdown-popper">
-          <span class="el-dropdown-link">
-            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+          <span class="el-dropdown-link" aria-label="dropdown">
+            <el-badge is-dot
+              ><el-avatar fit="fit" :size="35" alt="" :src="avatar" @error="errorHandler">
+                <base-img class="h-[35px] w-[35px]" name="error" type="png" path="images/load" /></el-avatar
+            ></el-badge>
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item :icon="Plus">Action 1</el-dropdown-item>
-              <el-dropdown-item :icon="CirclePlusFilled"> Action 2 </el-dropdown-item>
-              <el-dropdown-item :icon="CirclePlus">Action 3</el-dropdown-item>
-              <el-dropdown-item :icon="Check">Action 4</el-dropdown-item>
-              <el-dropdown-item divided :icon="CircleCheck">Action 5</el-dropdown-item>
+              <el-dropdown-item
+                v-for="(item, index) in dropdownMenu"
+                :divided="item.divided"
+                :key="index"
+                @click="setLang(item)"
+                >{{ $t(item.text) }}</el-dropdown-item
+              >
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -32,9 +37,55 @@
 
 <script setup lang="ts">
   import {Search, Plus, CirclePlusFilled, CirclePlus, Check, CircleCheck} from "@element-plus/icons-vue";
+  import {useImage, useIntersectionObserver} from "@vueuse/core";
+  const {locale} = useI18n();
   const router = useRouter();
   const route = useRoute();
   const path = ref(route.path);
+  const avatar = ref("https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png");
+  const {isLoading} = useImage({src: avatar.value});
+
+  const dropdownMenu = [
+    {
+      text: "C1001",
+      icon: "",
+      code: "zh-cn",
+      divided: false,
+      lang: true,
+    },
+    {
+      text: "C1002",
+      icon: "",
+      code: "en",
+      divided: false,
+      lang: true,
+    },
+    {
+      text: "C1003",
+      icon: "",
+      code: "pt-br",
+      divided: false,
+      lang: true,
+    },
+    {
+      text: "L1018",
+      icon: "",
+      code: "out",
+      divided: true,
+      lang: false,
+    },
+  ];
+  const errorHandler = () => {
+    nextTick();
+    return isLoading.value;
+  };
+
+  const setLang = (item: {lang: boolean; code: string}) => {
+    if (item.lang) {
+      locale.value = item.code;
+    }
+  };
+
   watch(
     () => route.path,
     (newValue) => {

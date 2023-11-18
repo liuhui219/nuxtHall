@@ -2,9 +2,9 @@
 
 <template>
   <div class="page-container">
-    <LayoutSlider />
+    <LazyLayoutSlider />
     <div class="page-container-right">
-      <LayoutHeader />
+      <LazyLayoutHeader />
 
       <main class="page-container-main">
         <div class="page-container-main-wrap">
@@ -12,12 +12,14 @@
         </div>
         <el-backtop :bottom="100" :right="50" target=".page-container-main" />
       </main>
+      <baseLoading :http="true" v-if="httpLoading"></baseLoading>
     </div>
     <component v-for="(item, index) in components" :key="index" :is="item" />
   </div>
 </template>
 
 <script setup lang="ts">
+  const httpLoading = useHttpLoading();
   const components = shallowRef<any>([]);
   onMounted(() => {
     const modulesFiles = import.meta.glob("~/components/desktop/model/*.vue");
@@ -44,6 +46,7 @@
     flex: 1;
     flex-direction: column;
     height: 100%;
+    position: relative;
 
     .page-container-main {
       width: 100%;
@@ -51,6 +54,7 @@
       display: flex;
       justify-content: center;
       overflow-x: hidden;
+
       .page-container-main-wrap {
         max-width: var(--container-width);
         width: 100%;

@@ -1,6 +1,6 @@
 <!-- @format -->
 <template>
-  <div ref="target" class="game-component w-full">
+  <div ref="target" class="game-component w-full relative">
     <div class="game-cover relative z-[1]" :style="{backgroundImage: !isLoading && loaded ? `url(${game.src})` : ''}">
       <div v-if="mask" class="game-mask">
         <div class="game-mask-content">
@@ -54,7 +54,9 @@
 
   const {stop} = useIntersectionObserver(target, ([{isIntersecting}], observerElement) => {
     if (isIntersecting) {
-      loaded.value = isIntersecting;
+      setTimeout(() => {
+        loaded.value = isIntersecting;
+      }, 100);
     }
   });
   // onMounted(() => {

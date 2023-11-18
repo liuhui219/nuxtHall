@@ -35,6 +35,7 @@
   }
   .app-loading.http-loading {
     background-color: var(--el-mask-color);
+    position: absolute;
   }
   .loading-base-img {
     width: 48px;

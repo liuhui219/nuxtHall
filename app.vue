@@ -4,22 +4,38 @@
   <baseLoading v-if="pageLoading"></baseLoading>
 
   <NuxtLayout
-    ><desktopHome v-if="isDesktop" /><mobileHome v-if="isMobile" />
-    <baseLoading :http="true" v-if="httpLoading"></baseLoading
-  ></NuxtLayout>
+    ><el-config-provider :locale="locales" size="default"
+      ><desktopHome v-if="isDesktop" /><mobileHome v-if="isMobile"
+    /></el-config-provider>
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
   import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+  import {useOnline} from "@vueuse/core";
   const {isMobile, isDesktop} = useDevice();
+  const {locale, messages, t} = useI18n();
   const nuxtApp = useNuxtApp();
-  setUid();
-
-  const pageLoading = usePageLoading();
   const httpLoading = useHttpLoading();
+  const online = useOnline();
+  const locales = ref();
+  const pageLoading = usePageLoading();
+
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     nuxtApp.vueApp.component(key, component);
   }
+
+  watchEffect(() => {
+    locales.value = messages["value"][locale.value];
+    if (!online.value) {
+      ElMessage({
+        message: t("H0012"),
+        type: "warning",
+        showClose: true,
+        duration: 5000,
+      });
+    }
+  });
 
   // useStorage("LastUid", uuidv4());
   // Server & Client
@@ -50,26 +66,18 @@
     pageLoading.value = false;
     useHead({
       title: "afun Apostas Esportivas | Plataforma de Cassino online",
-
-      script: [
-        {
-          innerHTML: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-N3Z58T3V');`,
-        },
-      ],
     });
   });
 
   onMounted(() => {
+    setUid();
+    setLoginStatus();
     window.addEventListener("message", games.handleIframeMsg);
   });
 
   nuxtApp.hook("page:finish", (vueApp) => {
     console.log("page:finish");
-    pageLoading.value = false;
+    httpLoading.value = false;
     if (isMobile) {
       document.addEventListener("gesturestart", function (event) {
         event.preventDefault();

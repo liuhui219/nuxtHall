@@ -1,13 +1,3 @@
-/**
- * @format
- * @Author: liuhui219 liuhui219@126.com
- * @Date: 2023-10-21 10:09:25
- * @LastEditors: liuhui219 liuhui219@126.com
- * @LastEditTime: 2023-10-31 15:09:03
- * @FilePath: \hall\router\index.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-
 /** @format */
 
 let routes = [
@@ -16,13 +6,13 @@ let routes = [
       {
         path: "/Bonus",
         name: "Bonus",
-        meta: {title: "H0004", icon: "bonus", class: "menu-bonus", type: "image"},
+        meta: {title: "H0004", icon: "bonus", class: "menu-bonus", type: "image", auth: false},
         children: [],
       },
       {
         path: "/vip",
         name: "vip",
-        meta: {title: "H0005", icon: "vip", class: "menu-vip", type: "image"},
+        meta: {title: "H0005", icon: "vip", class: "menu-vip", type: "image", auth: true},
         children: [],
       },
     ],
@@ -33,19 +23,19 @@ let routes = [
       {
         path: "/Mygame",
         name: "Mygame",
-        meta: {title: "H0006", icon: "Mygame"},
+        meta: {title: "H0006", icon: "Mygame", auth: true},
         children: [],
       },
       {
         path: "/Recent",
         name: "Recent",
-        meta: {title: "H0007", icon: "Recent"},
+        meta: {title: "H0007", icon: "Recent", auth: true},
         children: [],
       },
       {
         path: "/Casino",
         name: "Casino",
-        meta: {title: "H0002", icon: "Casino"},
+        meta: {title: "H0002", icon: "Casino", auth: true},
         children: [],
       },
     ],
@@ -55,13 +45,13 @@ let routes = [
       {
         path: "/Affiliate",
         name: "Affiliate",
-        meta: {title: "H0008", icon: "Affiliate"},
+        meta: {title: "H0008", icon: "Affiliate", auth: true},
         children: [],
       },
       {
         path: "/Rewards",
         name: "Rewards",
-        meta: {title: "H0009", icon: "Rewards"},
+        meta: {title: "H0009", icon: "Rewards", auth: true},
         children: [],
       },
     ],

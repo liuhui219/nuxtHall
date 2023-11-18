@@ -1,13 +1,3 @@
-/**
- * @format
- * @Author: liuhui219 liuhui219@126.com
- * @Date: 2023-10-18 14:51:11
- * @LastEditors: liuhui219 liuhui219@126.com
- * @LastEditTime: 2023-10-31 14:30:25
- * @FilePath: \hall\locales\en\index.js
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-
 /** @format */
 
 export default {
@@ -31,6 +21,10 @@ export default {
   L1018: "Sign Out",
   L1019: "Back Home",
 
+  C1001: "Chinese",
+  C1002: "English",
+  C1003: "Brazil Portugal",
+
   H0001: "Menu",
   H0002: "Casino",
   H0003: "Home",
@@ -42,6 +36,7 @@ export default {
   H0009: "Rewards",
   H0010: "Incorrect mobile number",
   H0011: `{min} to {max} characters long,number or letter\r\nLetters are case sensitive`,
+  H0012: "The network has been disconnected, please check",
 
   E0001: "Can't find this page",
 };

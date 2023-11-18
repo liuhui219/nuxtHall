@@ -81,9 +81,7 @@
 <script setup>
   import {ArrowLeft, ArrowRight} from "@element-plus/icons-vue";
   definePageMeta({
-    title: "Meus Jogos",
-    name: "体育",
-    icon: "Grid",
+    auth: true,
   });
 
   const rewardRef = ref();

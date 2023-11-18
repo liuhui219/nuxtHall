@@ -2,7 +2,7 @@
 
 <template>
   <template v-if="hasOneShowingChild(item)">
-    <el-menu-item :index="item.path" :class="item.meta?.class">
+    <el-menu-item :index="item.path" :class="item.meta?.class" @click="routFn(item)">
       <!-- <el-icon class="menuIcon"><component :is="item.meta.icon"></component></el-icon>-->
       <!-- <el-icon class="menuIcon"><component :is="`svgo-${item.meta.icon}`" /></el-icon> -->
       <!-- <img
@@ -37,6 +37,7 @@
 
 <script setup>
   const {t} = useI18n();
+  const islogin = useLogin();
   const is_collapse = useIsCollapse();
   const props = defineProps({
     item: {
@@ -53,6 +54,10 @@
   //   const glob = import.meta.glob("@/assets/images/menu/*.png", {eager: true});
   //   return Object.fromEntries(Object.entries(glob).map(([key, value]) => [filename(key), value.default]));
   // };
+
+  const routFn = (item) => {
+    navigateTo({path: item.path});
+  };
 
   const hasOneShowingChild = (item) => {
     if (item.children) {

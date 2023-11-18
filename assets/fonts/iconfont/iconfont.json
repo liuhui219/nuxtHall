@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "12336012",
+      "name": "足球",
+      "font_class": "baseball",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "11982088",
+      "name": "sign_out",
+      "font_class": "sign_out",
+      "unicode": "e99d",
+      "unicode_decimal": 59805
+    },
+    {
+      "icon_id": "23655847",
+      "name": "中文",
+      "font_class": "zhongwen",
+      "unicode": "e7af",
+      "unicode_decimal": 59311
+    },
+    {
       "icon_id": "1857397",
       "name": "play",
       "font_class": "play2",
@@ -95,13 +116,6 @@
       "font_class": "play1",
       "unicode": "e62d",
       "unicode_decimal": 58925
-    },
-    {
-      "icon_id": "35335566",
-      "name": "baseball",
-      "font_class": "baseball",
-      "unicode": "e8a2",
-      "unicode_decimal": 59554
     },
     {
       "icon_id": "18332",

@@ -6,9 +6,13 @@ export const useHttpLoading = () => useState("http-loading", () => false);
 
 export const useMenuDrawer = () => useState("menu-drawer", () => false);
 
+export const useLang = () => useState("lang", () => "en");
+
 export const useLoginDialog = () => useState("login-dialog", () => false);
 export const useResetDialog = () => useState("reset-dialog", () => false);
 export const useRegisterDialog = () => useState("register-dialog", () => false);
+
+export const gameReload = () => useState("game-reload", () => 0);
 
 //判断当前是否在某个页面(current必须以【/】开头)或弹窗(不带【/】开头则是弹窗)
 export function isPageInSome(current: string, path = "") {

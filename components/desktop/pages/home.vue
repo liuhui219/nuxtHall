@@ -16,22 +16,31 @@
       >
         <swiper-slide v-for="(item, index) in list" :key="index" class="flex justify-center">
           <div class="container-banner-box w-full">
-            <base-img class="w-full banner-image" :name="item.img" :type="item.type" path="images/home" />
+            <base-img
+              class="w-full banner-image"
+              :scrollContainer="'.swiper'"
+              :name="item.img"
+              :type="item.type"
+              path="images/home"
+            />
           </div>
         </swiper-slide>
       </swiper>
     </div>
     <div class="home-tab w-full">
-      <div
-        class="home-tab-btn"
-        :class="{active: index === activeTabIndex}"
-        v-for="(item, index) in tabList"
-        :key="index"
-        @click="tabClick(index)"
+      <swiper
+        :modules="[SwiperNavigation, SwiperPagination]"
+        :slides-per-view="7"
+        :space-between="24"
+        @slide-change="slideChange"
       >
-        <i class="iconfont" :class="`icon-${item.icon}`"></i>
-        {{ item.text }}
-      </div>
+        <swiper-slide v-for="(item, index) in tabList" :key="index" class="flex justify-center">
+          <div class="home-tab-btn" :class="{active: index === activeTabIndex}" :key="index" @click="tabClick(index)">
+            <i class="iconfont" :class="`icon-${item.icon}`"></i>
+            {{ item.text }}
+          </div>
+        </swiper-slide>
+      </swiper>
     </div>
     <!-- hot -->
     <section class="hot-games w-full">
@@ -64,11 +73,11 @@
       </div>
     </section>
     <!-- 游戏分类 -->
-    <section class="game-classification w-full" v-for="(item, index) in tabList" :key="index">
-      <div class="section-title mb-[12px] p-[0!important] flex justify-between">
+    <section class="game-classification mb-[12px] w-full" v-for="(item, index) in tabList" :key="index">
+      <div class="section-title p-[0!important] flex justify-between">
         <div data-v-5af0f1b2="" class="flex items-center justify-start">{{ item.text }}</div>
         <div class="shrink-0 flex items-center">
-          <LazyBaseSwiperBtn v-if="nodes[index]" :swiper="nodes[index]" :disabled="true"></LazyBaseSwiperBtn>
+          <BaseSwiperBtn :swiper="nodes[index]" :disabled="true"></BaseSwiperBtn>
         </div>
       </div>
       <div>
@@ -82,11 +91,13 @@
           <swiper-slide v-for="count in Math.ceil(item.children.length / 2)" :key="count" class="flex justify-center">
             <div class="w-full flex flex-col gap-y-[24px]">
               <base-game-component
+                key="(count - 1) * 2"
                 @click="openGame(item.children[(count - 1) * 2])"
                 mask
                 :game="item.children[(count - 1) * 2]"
               ></base-game-component>
               <base-game-component
+                key="(count - 1) * 2 + 1"
                 @click="openGame(item.children[(count - 1) * 2 + 1])"
                 mask
                 :game="item.children[(count - 1) * 2 + 1]"
@@ -97,11 +108,14 @@
       </div>
     </section>
   </div>
+  <LazyDesktopPagesFooter />
 </template>
 
 <script setup lang="ts">
-  import {useThrottleFn} from "@vueuse/core";
+  import {useThrottleFn, useNetwork} from "@vueuse/core";
+  const {isOnline} = useNetwork();
   const {$importImage} = useNuxtApp();
+  const router = useRouter();
   const rewardRef = ref();
   const nodes = reactive<any>([]);
   const setRef = (el: any) => {
@@ -111,11 +125,15 @@
   };
   const url = games.gameURL();
   const httpLoading = useHttpLoading();
+  const gamereload = gameReload();
   const openGame = (item) => {
     url.value = item.url;
-    httpLoading.value = true;
+
     //openPopup("game-drawer");
-    navigateTo({path: "/game"});
+
+    navigateTo("/game");
+
+    gamereload.value++;
   };
   const list = [
     {
@@ -146,7 +164,7 @@
       value: 1,
       text: "V0033",
       title: "V0030",
-      url: "https://mobile.easygamehome.com/12500/?account_name=613382_101085247&account_id=101085247&platform_token=XqNKaOsMhBQHNbF7weW6OnQf3lFo0vV0&rate=1&roomID=12500&lang=BR&apimode=1",
+      url: "https://mobile.easygamehome.com/9100/?account_name=613382_101085247&account_id=101085247&platform_token=uX16IBlBo0TIHdk94GBw8WZYVl63XAXC&rate=1&roomID=9100&lang=BR&apimode=1",
       src: $importImage("111902008", "jpg", "images/games"),
     },
     {
@@ -174,6 +192,7 @@
       value: 5,
       text: "V0035",
       title: "V0032",
+      url: "",
       src: $importImage("111902076", "jpg", "images/games"),
     },
     {
@@ -317,7 +336,7 @@
   ];
 
   const activeIndex = ref(0);
-  const activeTabIndex = ref(0);
+  const activeTabIndex = ref(null);
   const slideChange = (event: {realIndex: number}) => {
     activeIndex.value = event.realIndex;
   };
@@ -352,6 +371,7 @@
   }, 50);
 
   onMounted(async () => {
+    activeTabIndex.value = 0;
     document.querySelectorAll(".page-container-main") &&
       document
         .querySelectorAll(".page-container-main")[0]
@@ -394,6 +414,11 @@
       // background-image: radial-gradient(transparent 1px, var(--el-fill-color) 1px);
       z-index: 100;
 
+      .swiper {
+        width: 100%;
+        height: 100%;
+      }
+
       .home-tab-btn {
         height: 100%;
         display: flex;
@@ -403,7 +428,6 @@
         font-size: 14px;
         flex-shrink: 0;
         font-weight: 700;
-        margin-right: 15px;
         cursor: pointer;
         color: var(--el-text-color-placeholder);
         background-color: var(--el-bg-color-overlay);

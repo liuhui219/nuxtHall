@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4296752 */
-  src: url('iconfont.woff2?t=1699868460564') format('woff2'),
-       url('iconfont.woff?t=1699868460564') format('woff'),
-       url('iconfont.ttf?t=1699868460564') format('truetype');
+  src: url('iconfont.woff2?t=1700297082856') format('woff2'),
+       url('iconfont.woff?t=1700297082856') format('woff'),
+       url('iconfont.ttf?t=1700297082856') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,18 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-baseball:before {
+  content: "\e61e";
+}
+
+.icon-sign_out:before {
+  content: "\e99d";
+}
+
+.icon-zhongwen:before {
+  content: "\e7af";
 }
 
 .icon-play2:before {
@@ -63,10 +75,6 @@
 
 .icon-play1:before {
   content: "\e62d";
-}
-
-.icon-baseball:before {
-  content: "\e8a2";
 }
 
 .icon-back:before {

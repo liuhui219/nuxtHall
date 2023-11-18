@@ -1,57 +1,59 @@
 <!-- @format -->
 
 <template>
-  <el-dialog
-    v-model="resetDialog"
-    modal-class="pc-el-reset-dialog"
-    :show-close="false"
-    title=""
-    destroy-on-close
-    center
-    width="800"
-    align-center
-    @close="closeDialog"
+  <client-only
+    ><el-dialog
+      v-model="resetDialog"
+      modal-class="pc-el-reset-dialog"
+      :show-close="false"
+      title=""
+      destroy-on-close
+      center
+      width="800"
+      align-center
+      @close="closeDialog"
+    >
+      <div class="login-modal-content">
+        <base-close-btn class="p-[15px] absolute right-0 top-0 z-[1] text-[22px]" @click="closeLogin"></base-close-btn>
+        <div class="modal-content-img w-[360px] h-[600px]">
+          <base-img class="w-full banner-image" name="banner_pc" type="jpg" path="images/show" />
+        </div>
+        <div class="modal-content-form">
+          <div class="shrink-0 text-[20px] pt-[67px] pb-[40px] login-white">{{ $t("L1008") }}</div>
+          <el-form ref="formRef" :model="ruleForm" :rules="rules" status-icon inline-message key="formRef">
+            <el-form-item prop="account">
+              <el-input
+                size="large"
+                type="tel"
+                clearable
+                v-model.number="ruleForm.account"
+                autocomplete="off"
+                :placeholder="$t('L1015')"
+                ><template #prefix>
+                  <span>+55</span>
+                </template></el-input
+              >
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input size="large" clearable v-model="ruleForm.password" :placeholder="$t('L1010')"
+                ><template #append>
+                  <el-button class="min-w-[67px]" :disabled="countdown" @click="codeFn(formRef)"
+                    ><span v-if="!countdown">{{ $t("L1017") }}</span
+                    ><span v-else>{{ time }}S</span></el-button
+                  >
+                </template></el-input
+              >
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm(formRef)" class="w-full h-[50px]" size="large">{{
+                t("L1011")
+              }}</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+    </el-dialog></client-only
   >
-    <div class="login-modal-content">
-      <base-close-btn class="p-[15px] absolute right-0 top-0 z-[1] text-[22px]" @click="closeLogin"></base-close-btn>
-      <div class="modal-content-img w-[360px] h-[600px]">
-        <base-img class="w-full banner-image" name="banner_pc" type="jpg" path="images/show" />
-      </div>
-      <div class="modal-content-form">
-        <div class="shrink-0 text-[20px] pt-[67px] pb-[40px] login-white">{{ $t("L1008") }}</div>
-        <el-form ref="formRef" :model="ruleForm" :rules="rules" status-icon inline-message key="formRef">
-          <el-form-item prop="account">
-            <el-input
-              size="large"
-              type="tel"
-              clearable
-              v-model.number="ruleForm.account"
-              autocomplete="off"
-              :placeholder="$t('L1015')"
-              ><template #prefix>
-                <span>+55</span>
-              </template></el-input
-            >
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input size="large" clearable v-model="ruleForm.password" :placeholder="$t('L1010')"
-              ><template #append>
-                <el-button class="min-w-[67px]" :disabled="countdown" @click="codeFn(formRef)"
-                  ><span v-if="!countdown">{{ $t("L1017") }}</span
-                  ><span v-else>{{ time }}S</span></el-button
-                >
-              </template></el-input
-            >
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm(formRef)" class="w-full h-[50px]" size="large">{{
-              t("L1011")
-            }}</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </div>
-  </el-dialog>
 </template>
 
 <script setup lang="ts">
