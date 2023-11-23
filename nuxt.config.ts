@@ -83,6 +83,7 @@ export default defineNuxtConfig({
     "dayjs-nuxt",
     "nuxt-delay-hydration",
     "@zadigetvoltaire/nuxt-gtm",
+    "@nuxtjs/robots",
   ],
 
   gtm: {
@@ -157,8 +158,18 @@ export default defineNuxtConfig({
           drop_debugger: true, // 生产环境去除 debugger
         },
       },
-
-      sourcemap: false,
+      rollupOptions: {
+        // 静态资源分类打包
+        output: {
+          globals: {},
+          manualChunks(id) {
+            // 静态资源分拆打包
+            if (id.includes("node_modules")) {
+              return id.toString().split("node_modules/")[1].split("/")[0].toString();
+            }
+          },
+        },
+      },
     },
 
     css: {

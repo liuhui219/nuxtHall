@@ -33,6 +33,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "@nuxt/image": "^1.0.0",
+    "@nuxtjs/robots": "^3.0.0",
     "@nuxtjs/svg-sprite": "^1.0.2",
     "compression-webpack-plugin": "^10.0.0",
     "element-plus": "^2.4.0",

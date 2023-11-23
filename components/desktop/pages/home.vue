@@ -16,9 +16,9 @@
       >
         <swiper-slide v-for="(item, index) in list" :key="index" class="flex justify-center">
           <div class="container-banner-box w-full">
-            <base-img
+            <LazyBaseImg
               class="w-full banner-image"
-              :scrollContainer="'.swiper'"
+              :scrollContainer="'.home-view-pc-banner .swiper'"
               :name="item.img"
               :type="item.type"
               path="images/home"
@@ -171,14 +171,14 @@
       value: 2,
       text: "V0034",
       title: "V0031",
-      url: "https://mobile.easygamehome.com/27200/?account_name=613382_101085247&account_id=101085247&platform_token=VSUfauRHtTaihbuzVyR5dF8yuttgMHsR&rate=1&roomID=27200&lang=BR&apimode=1",
+      url: "https://www.engames.com/hw/5018/index.html?ssl=1&currency=BRL&exchangerates=10000&lang=pt&levels=l0&route=api.engames.com&app=gMEn&svr=singleG&svrid=0&uid=56340&token=4zAEQnys%2BJVhvRwr%2FSGKIohFPTnBWZRkfe%2BpXaGkRkKPS7IsAL2I45fiVnPVLSmJ",
       src: $importImage("111902051", "jpg", "images/games"),
     },
     {
       value: 3,
       text: "V0035",
       title: "V0032",
-      url: "https://mobile.easygamehome.com/4300/?account_name=613382_101085247&account_id=101085247&platform_token=s1ucgorP40YwQBcF0CRt0pzncEu3sP84&rate=1&roomID=4300&lang=BR&apimode=1",
+      url: "https://www.engames.com/hw/5008/index.html?ssl=1&currency=BRL&exchangerates=10000&lang=pt&levels=l0&route=api.engames.com&app=gMEn&svr=singleG&svrid=0&uid=56342&token=OykZBFk0E7I%2BHebplnKqsX1c%2FDKZDGNZM8VxR2mMk7XvZwfIQpvsBBolZKBlWjpW",
       src: $importImage("111902053", "jpg", "images/games"),
     },
     {
