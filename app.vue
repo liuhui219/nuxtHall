@@ -1,7 +1,7 @@
 <!-- @format -->
 
 <template>
-  <baseLoading v-if="pageLoading"></baseLoading>
+  <transition name="el-fade-in-linear"><baseLoading v-if="pageLoading"></baseLoading></transition>
 
   <NuxtLayout
     ><el-config-provider :locale="locales" size="default"
@@ -62,17 +62,25 @@
 
   // Client
   nuxtApp.hook("app:mounted", (vueApp) => {
-    console.log("app:mounted");
     pageLoading.value = false;
+    const initfirebase = initialize();
+    console.log("app:mounted");
+
     useHead({
       title: "afun Apostas Esportivas | Plataforma de Cassino online",
     });
   });
 
   onMounted(() => {
+    pageLoading.value = false;
     setUid();
     setLoginStatus();
     window.addEventListener("message", games.handleIframeMsg);
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      window.dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
   });
 
   nuxtApp.hook("page:finish", (vueApp) => {
@@ -84,10 +92,7 @@
       });
     }
 
-    // pageLoading.value = false;
-    // useHead({
-    //   title: "afun Apostas Esportivas | Plataforma de Cassino online",
-    // });
+    pageLoading.value = false;
   });
 </script>
 

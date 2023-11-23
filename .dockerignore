@@ -1,0 +1,9 @@
+node_modules
+# 剔除掉 Dockerfile
+Dockerfile
+# 剔除 .dockerignore
+.dockerignore
+.output
+.nuxt
+.gitignore
+.git

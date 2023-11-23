@@ -8,7 +8,7 @@
       </div>
       <div class="right tools-login">
         <template v-if="isLogin"
-          ><el-button @click="openPopup('login')" size="large" type="primary" text>{{ $t("L1001") }}</el-button>
+          ><el-button @click="GoogleSign" size="large" type="primary" text>{{ $t("L1001") }}</el-button>
           <el-button @click="openPopup('register')" class="el-button-sign-up" size="large" type="primary">{{
             $t("L1002")
           }}</el-button></template

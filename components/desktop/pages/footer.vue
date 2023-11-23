@@ -34,7 +34,7 @@
       <Lazy-base-img
         v-for="(item, index) in ContactUs.images"
         :key="index"
-        class="w-[50px] mr-[8px]"
+        class="h-[50px] mr-[8px]"
         :name="item.name"
         :type="item.type"
         :path="item.path"

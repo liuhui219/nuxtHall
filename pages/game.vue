@@ -6,6 +6,9 @@
 </template>
 
 <script setup>
+  definePageMeta({
+    auth: false,
+  });
   const show = ref(true);
   const gamereload = gameReload();
 

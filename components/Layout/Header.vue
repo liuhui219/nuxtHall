@@ -9,7 +9,7 @@
         >
       </div>
       <div class="header-right">
-        <el-button @click="openPopup('login')" size="large">{{ $t("L1001") }}</el-button>
+        <el-button @click="GoogleSign" size="large">{{ $t("L1001") }}</el-button>
         <el-button @click="openPopup('register')" class="el-button-sign-up" size="large">{{ $t("L1002") }}</el-button>
         <el-dropdown trigger="click" placement="bottom-end" popper-class="el-dropdown-popper">
           <span class="el-dropdown-link" aria-label="dropdown">
@@ -38,6 +38,7 @@
 <script setup lang="ts">
   import {Search, Plus, CirclePlusFilled, CirclePlus, Check, CircleCheck} from "@element-plus/icons-vue";
   import {useImage, useIntersectionObserver} from "@vueuse/core";
+
   const {locale} = useI18n();
   const router = useRouter();
   const route = useRoute();

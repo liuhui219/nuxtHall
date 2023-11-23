@@ -2,14 +2,14 @@
 import {loadEnv} from "vite";
 import {compression} from "vite-plugin-compression2";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
-
+import {ViteImageOptimizer} from "vite-plugin-image-optimizer";
+import viteImagemin from "vite-plugin-imagemin";
 const envScript = (process.env.npm_lifecycle_script as string).split(" ");
 const envName = envScript[envScript.length - 1]; // 通过启动命令区分环境
 const envData: any = loadEnv(envName, process.cwd());
 
 console.log(666, envName, envData);
 
-const CompressionPlugin = require("compression-webpack-plugin");
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: {enabled: false},
@@ -67,10 +67,12 @@ export default defineNuxtConfig({
       charset: "utf-8",
       htmlAttrs: {
         class: "dark",
-        lang: "en",
+        lang: envData?.VITE_PUBLIC_LANG || "en",
       },
+      script: [{src: "https://www.googletagmanager.com/gtag/js?id=G-CPF0DDW6YE", async: true}],
     },
   },
+
   modules: [
     "nuxt-swiper",
     "@nuxtjs/i18n",
@@ -84,10 +86,10 @@ export default defineNuxtConfig({
   ],
 
   gtm: {
-    id: "GTM-N3Z58T3V",
+    id: "GTM-PG9LNMLJ",
 
     defer: false, // Script can be set to `defer` to speed up page load at the cost of less accurate results (in case visitor leaves before script is loaded, which is unlikely but possible). Defaults to false, so the script is loaded `async` by default
-    compatibility: false, // Will add `async` and `defer` to the script tag to not block requests for old browsers that do not support `async`
+    compatibility: true, // Will add `async` and `defer` to the script tag to not block requests for old browsers that do not support `async`
 
     enabled: true, // defaults to true. Plugin can be disabled by setting this to false for Ex: enabled: !!GDPR_Cookie (optional)
     debug: true, // Whether or not display console logs debugs (optional)
@@ -103,7 +105,8 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    vueI18n: "./i18n.config.ts",
+    defaultLocale: envData?.VITE_PUBLIC_LANG || "en",
+    vueI18n: "./locales/index.js",
   },
 
   vite: {
@@ -112,6 +115,33 @@ export default defineNuxtConfig({
       cssInjectedByJsPlugin({
         injectCode: (cssCode, options) => {
           return `try{if(typeof document != 'undefined'){var elementStyle = document.createElement('style');elementStyle.appendChild(document.createTextNode(${cssCode}));document.head.appendChild(elementStyle);}}catch(e){console.error('vite-plugin-css-injected-by-js', e);}`;
+        },
+      }),
+      viteImagemin({
+        gifsicle: {
+          optimizationLevel: 7,
+          interlaced: false,
+        },
+        optipng: {
+          optimizationLevel: 7,
+        },
+        mozjpeg: {
+          quality: 80,
+        },
+        pngquant: {
+          quality: [0.8, 0.9],
+          speed: 4,
+        },
+        svgo: {
+          plugins: [
+            {
+              name: "removeViewBox",
+            },
+            {
+              name: "removeEmptyAttrs",
+              active: false,
+            },
+          ],
         },
       }),
     ],

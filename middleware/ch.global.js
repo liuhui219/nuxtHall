@@ -5,7 +5,9 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   if (to.meta.auth && !~~islogin.value) {
     return navigateTo({
-      path: "/",
+      path: from.path,
+      query: from.query,
+      params: from.params,
       hash: "#/login",
     });
   }
@@ -15,6 +17,11 @@ export default defineNuxtRouteMiddleware((to, from) => {
       let hash = to.hash.replace("/login", "").replace("/register", "");
       return navigateTo({path: to.path, query: to.query, params: to.params, hash: hash});
     }
+  }
+
+  if (to.name == from.name && JSON.stringify(to.query) != JSON.stringify(from.query)) {
+    //相同页面下 特殊跳转 【替换页面】
+    return navigateTo({path: to.path, query: to.query, params: to.params, hash: to.hash, replace: true});
   }
 
   if (!to.name) {

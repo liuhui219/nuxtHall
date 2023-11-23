@@ -1,5 +1,5 @@
 /** @format */
-
+import ptBr from "element-plus/dist/locale/pt-br.mjs";
 export default {
   L1001: "Entrar",
   L1002: "Registrar",
@@ -38,4 +38,6 @@ export default {
   H0011: `{min} a {max} caracteres de comprimento, número ou letra\r\nAs letras são sensíveis a maiúsculas e minúsculas`,
 
   E0001: "Não é possível encontrar esta página",
+
+  ...ptBr,
 };

@@ -1,5 +1,5 @@
 /** @format */
-
+import en from "element-plus/dist/locale/en.mjs";
 export default {
   L1001: "Sign In",
   L1002: "Sign Up",
@@ -39,4 +39,6 @@ export default {
   H0012: "The network has been disconnected, please check",
 
   E0001: "Can't find this page",
+
+  ...en,
 };

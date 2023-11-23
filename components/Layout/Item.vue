@@ -20,7 +20,6 @@
         path="images/menu"
       />
       <el-icon v-else class="menuIcon"><i class="iconfont" :class="`icon-${item.meta.icon}`"></i></el-icon>
-
       <template #title v-if="item.meta.title">{{ t(item.meta.title) }}</template>
     </el-menu-item>
   </template>
@@ -30,7 +29,6 @@
       <el-icon class="menuIcon"><component :is="item.meta.icon"></component></el-icon>
       <span v-if="item.meta.title">{{ t(item.meta.title) }}</span>
     </template>
-
     <LayoutItem v-for="child in item.children" :key="child.path" :item="child" :base-path="child.path" />
   </el-sub-menu>
 </template>

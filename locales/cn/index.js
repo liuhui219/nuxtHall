@@ -1,5 +1,5 @@
 /** @format */
-
+import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 export default {
   L1001: "登录",
   L1002: "注册",
@@ -38,4 +38,6 @@ export default {
   H0011: "{min}至{max}个字符，可以是数字或字母\n字母区分大小写",
 
   E0001: "找不到此页面",
+
+  ...zhCn,
 };
