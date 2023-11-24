@@ -8,7 +8,7 @@
           ><i class="iconfont" :class="`icon-Casino`"></i>{{ $t("H0002") }}</el-button
         >
       </div>
-      <div class="header-right">
+      <div class="header-right flex items-center">
         <el-button @click="GoogleSign" size="large">{{ $t("L1001") }}</el-button>
         <el-button @click="openPopup('register')" class="el-button-sign-up" size="large">{{ $t("L1002") }}</el-button>
         <el-dropdown trigger="click" placement="bottom-end" popper-class="el-dropdown-popper">

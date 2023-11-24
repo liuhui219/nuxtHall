@@ -2,7 +2,7 @@
 <template>
   <div ref="target" class="game-component w-full relative">
     <div class="game-cover relative z-[1]" :style="{backgroundImage: !isLoading && loaded ? `url(${game.src})` : ''}">
-      <div v-if="mask" class="game-mask">
+      <div v-if="mask && show" class="game-mask">
         <div class="game-mask-content">
           <div class="game-play pointer">
             <i class="iconfont icon-play2"></i>
@@ -48,12 +48,13 @@
     },
   });
   const loaded = ref(false);
-  const isRemove = ref(false);
+  const show = ref(false);
   const target = ref(null);
   const {isLoading} = useImage({src: propsConf.game.src});
 
   const {stop} = useIntersectionObserver(target, ([{isIntersecting}], observerElement) => {
     if (isIntersecting) {
+      show.value = isIntersecting;
       setTimeout(() => {
         loaded.value = isIntersecting;
       }, 100);
@@ -75,7 +76,6 @@
   .game-component {
     cursor: pointer;
     .game-cover {
-      background-position: 50%;
       background-repeat: no-repeat;
       background-size: cover;
       border-radius: 4px;

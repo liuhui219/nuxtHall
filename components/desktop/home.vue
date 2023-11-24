@@ -15,7 +15,9 @@
       <baseLoading :http="true" v-if="httpLoading"></baseLoading>
     </div>
 
-    <template v-for="(item, index) in components"><component :is="item.component" /></template>
+    <template v-for="(item, index) in components"
+      ><component :is="item.component" v-if="route.hash.includes(item.name)"
+    /></template>
   </div>
 </template>
 

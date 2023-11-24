@@ -5,10 +5,11 @@
   <div class="home-view-pc flex flex-col gap-[30px] pb-[32px]">
     <div class="home-view-pc-banner w-full">
       <swiper
-        :modules="[SwiperAutoplay, SwiperNavigation, SwiperEffectCoverflow, SwiperPagination, SwiperEffectCreative]"
+        :modules="[SwiperAutoplay, SwiperNavigation, SwiperParallax]"
         :slides-per-view="1"
         :slides-per-group="1"
         :loop="true"
+        :parallax="true"
         :autoplay="{
           delay: 5000,
           disableOnInteraction: false,
@@ -66,7 +67,7 @@
         >
           <swiper-slide v-for="(item, index) in hotGamesList" :key="index" class="flex justify-center">
             <div class="hot-games-box w-full">
-              <base-game-component :game="item"></base-game-component>
+              <Lazy-base-game-component :game="item"></Lazy-base-game-component>
             </div>
           </swiper-slide>
         </swiper>
@@ -90,18 +91,18 @@
         >
           <swiper-slide v-for="count in Math.ceil(item.children.length / 2)" :key="count" class="flex justify-center">
             <div class="w-full flex flex-col gap-y-[24px]">
-              <base-game-component
+              <Lazy-base-game-component
                 key="(count - 1) * 2"
                 @click="openGame(item.children[(count - 1) * 2])"
                 mask
                 :game="item.children[(count - 1) * 2]"
-              ></base-game-component>
-              <base-game-component
+              ></Lazy-base-game-component>
+              <Lazy-base-game-component
                 key="(count - 1) * 2 + 1"
                 @click="openGame(item.children[(count - 1) * 2 + 1])"
                 mask
                 :game="item.children[(count - 1) * 2 + 1]"
-              ></base-game-component>
+              ></Lazy-base-game-component>
             </div>
           </swiper-slide>
         </swiper>

@@ -12,7 +12,13 @@ console.log(666, envName, envData);
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: {enabled: false},
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true,
+    },
+  },
   sourcemap: {
     server: false,
     client: true,

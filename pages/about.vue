@@ -4,9 +4,7 @@
 
 <script setup>
   definePageMeta({
-    title: "Originais",
-    name: "详情",
-    icon: "Checked",
+    auth: true,
   });
 </script>
 
