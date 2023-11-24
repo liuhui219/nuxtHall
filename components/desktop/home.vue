@@ -14,26 +14,24 @@
       </main>
       <baseLoading :http="true" v-if="httpLoading"></baseLoading>
     </div>
-    <template v-for="(item, index) in components"><component :is="item" /></template>
+
+    <template v-for="(item, index) in components"><component :is="item.component" /></template>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
   const httpLoading = useHttpLoading();
-  const components = shallowRef<any>([]);
+  const components = shallowRef([]);
   const route = useRoute();
   onMounted(() => {
     const modulesFiles = import.meta.glob("~/components/desktop/model/*.vue");
 
-    const modules: Array<any> = [];
+    const modules = [];
     Object.keys(modulesFiles).forEach((modulePath) => {
-      const value: any = modulesFiles[modulePath];
-      modules.push(defineAsyncComponent(value));
+      const result = modulePath.match(/.*\/(.+).vue$/);
+      const value = modulesFiles[modulePath];
+      modules.push({component: defineAsyncComponent(value), name: result[1]});
     });
-
-    console.log("====================================");
-    console.log(modules);
-    console.log("====================================");
 
     components.value = [...modules];
   });
