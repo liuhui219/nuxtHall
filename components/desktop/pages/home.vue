@@ -67,7 +67,7 @@
         >
           <swiper-slide v-for="(item, index) in hotGamesList" :key="index" class="flex justify-center">
             <div class="hot-games-box w-full">
-              <Lazy-base-game-component :game="item"></Lazy-base-game-component>
+              <base-game-component :game="item"></base-game-component>
             </div>
           </swiper-slide>
         </swiper>
@@ -91,18 +91,18 @@
         >
           <swiper-slide v-for="count in Math.ceil(item.children.length / 2)" :key="count" class="flex justify-center">
             <div class="w-full flex flex-col gap-y-[24px]">
-              <Lazy-base-game-component
+              <base-game-component
                 key="(count - 1) * 2"
                 @click="openGame(item.children[(count - 1) * 2])"
                 mask
                 :game="item.children[(count - 1) * 2]"
-              ></Lazy-base-game-component>
-              <Lazy-base-game-component
+              ></base-game-component>
+              <base-game-component
                 key="(count - 1) * 2 + 1"
                 @click="openGame(item.children[(count - 1) * 2 + 1])"
                 mask
                 :game="item.children[(count - 1) * 2 + 1]"
-              ></Lazy-base-game-component>
+              ></base-game-component>
             </div>
           </swiper-slide>
         </swiper>

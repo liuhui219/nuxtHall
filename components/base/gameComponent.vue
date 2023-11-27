@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-  const {$importImage} = useNuxtApp();
   import {useImage, useIntersectionObserver} from "@vueuse/core";
   const propsConf = defineProps({
     game: {

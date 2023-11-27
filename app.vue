@@ -13,6 +13,7 @@
 <script setup lang="ts">
   import * as ElementPlusIconsVue from "@element-plus/icons-vue";
   import {useOnline} from "@vueuse/core";
+  import {getAnalytics, logEvent} from "firebase/analytics";
   const {isMobile, isDesktop} = useDevice();
   const {locale, messages, t} = useI18n();
   const nuxtApp = useNuxtApp();
@@ -64,6 +65,7 @@
   nuxtApp.hook("app:mounted", (vueApp) => {
     pageLoading.value = false;
     const initfirebase = initialize();
+    getAnalytics(initfirebase.app);
     console.log("app:mounted");
 
     useHead({
