@@ -5,6 +5,7 @@
     ref="img"
     :src="image"
     :alt="alt"
+    loading="lazy"
     :scroll-container="scrollContainer"
     @error="renderError"
     @load="renderImage"

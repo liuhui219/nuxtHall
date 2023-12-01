@@ -44,7 +44,7 @@
   ></client-only>
 </template>
 
-<script setup lang="ts">
+<script setup>
   import router from "@/router";
   const {$importImage} = useNuxtApp();
   const siderMenu = ref(null);

@@ -6,7 +6,7 @@
       <!-- 轮播图 -->
       <div class="container-banner w-full">
         <swiper
-          :modules="[SwiperAutoplay, SwiperNavigation, SwiperEffectCoverflow, SwiperPagination, SwiperEffectCreative]"
+          :modules="[SwiperAutoplay, SwiperNavigation]"
           :slides-per-view="1"
           :space-between="16"
           :slides-per-group="1"
@@ -27,7 +27,7 @@
               </div>
             </div> -->
             <div class="container-banner-box w-full">
-              <base-img class="w-full banner-image" :name="item.img" type="jpg" path="images/home" />
+              <LazyBaseImg class="w-full banner-image" :name="item.img" type="jpg" path="images/home" />
             </div>
           </swiper-slide>
           <!-- <div class="mobile-home-sign absolute">

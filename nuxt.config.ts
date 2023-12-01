@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     enabled: false,
 
     timeline: {
-      enabled: true,
+      enabled: false,
     },
   },
   sourcemap: {
@@ -53,7 +53,7 @@ export default defineNuxtConfig({
   },
 
   build: {
-    analyze: true,
+    analyze: false,
   },
 
   app: {
@@ -77,7 +77,7 @@ export default defineNuxtConfig({
         class: "dark",
         lang: envData?.VITE_PUBLIC_LANG || "en",
       },
-      script: [{src: "https://www.googletagmanager.com/gtag/js?id=G-CPF0DDW6YE", async: true}],
+      script: [{src: "https://www.googletagmanager.com/gtag/js?id=G-CPF0DDW6YE", defer: true}],
     },
   },
 
@@ -97,7 +97,7 @@ export default defineNuxtConfig({
   gtm: {
     id: "GTM-PG9LNMLJ",
 
-    defer: false, // Script can be set to `defer` to speed up page load at the cost of less accurate results (in case visitor leaves before script is loaded, which is unlikely but possible). Defaults to false, so the script is loaded `async` by default
+    defer: true, // Script can be set to `defer` to speed up page load at the cost of less accurate results (in case visitor leaves before script is loaded, which is unlikely but possible). Defaults to false, so the script is loaded `async` by default
     compatibility: true, // Will add `async` and `defer` to the script tag to not block requests for old browsers that do not support `async`
 
     enabled: true, // defaults to true. Plugin can be disabled by setting this to false for Ex: enabled: !!GDPR_Cookie (optional)

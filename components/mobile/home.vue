@@ -5,13 +5,13 @@
 <!-- @format -->
 
 <template>
-  <MobileLayoutHeader />
+  <LazyMobileLayoutHeader />
 
-  <MobileLayoutMenu />
+  <LazyMobileLayoutMenu />
   <main class="mobile-container-main">
     <NuxtPage />
   </main>
-  <MobileLayoutFooter />
+  <LazyMobileLayoutFooter />
   <LazyMobileModelLogin />
   <LazyMobileModelReset />
   <LazyMobileModelRegister />

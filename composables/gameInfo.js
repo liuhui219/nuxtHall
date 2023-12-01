@@ -36,5 +36,7 @@ export const games = {
     return url;
   },
 
-  leaveGame: () => {},
+  leaveGame: () => {
+    console.log("离开页面");
+  },
 };

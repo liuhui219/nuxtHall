@@ -69,7 +69,6 @@
 
   // Client
   nuxtApp.hook("app:mounted", (vueApp) => {
-    pageLoading.value = false;
     const initfirebase = initialize();
     getAnalytics(initfirebase.app);
     console.log("app:mounted");
@@ -100,7 +99,6 @@
   nuxtApp.hook("page:finish", (vueApp) => {
     console.log("page:finish");
     httpLoading.value = false;
-    pageLoading.value = false;
   });
 </script>
 

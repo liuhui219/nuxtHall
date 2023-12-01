@@ -45,7 +45,8 @@
     url.value = gameURL;
   });
 
-  onUnmounted(() => {
+  onUnmounted(() => {});
+  onDeactivated(() => {
     games.leaveGame();
   });
 
