@@ -1,14 +1,15 @@
 <!-- @format -->
 
 <template>
-  <DesktopPagesHome v-if="$device.isDesktop" />
-  <MobilePagesHome v-else />
+  <LazyDesktopPagesHome v-if="$device.isDesktop" />
+  <LazyMobilePagesHome v-else />
 </template>
 
 <script setup>
   definePageMeta({
     name: "首页",
     auth: false,
+    pageIndex: 1,
   });
 </script>
 

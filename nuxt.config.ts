@@ -13,7 +13,7 @@ console.log(666, envName, envData);
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: {
-    enabled: true,
+    enabled: false,
 
     timeline: {
       enabled: true,
@@ -24,7 +24,7 @@ export default defineNuxtConfig({
     client: true,
   },
   devServer: {
-    port: 8888,
+    port: 6789,
     host: "0.0.0.0",
   },
 
@@ -48,6 +48,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: envData?.VITE_PUBLIC_API_BASE,
+      locale: envData?.VITE_PUBLIC_LANG || "en",
     },
   },
 
@@ -58,6 +59,7 @@ export default defineNuxtConfig({
   app: {
     rootId: "root-p",
     keepalive: true,
+    buildAssetsDir: "/hall/",
     head: {
       meta: [
         {
@@ -75,7 +77,7 @@ export default defineNuxtConfig({
         class: "dark",
         lang: envData?.VITE_PUBLIC_LANG || "en",
       },
-      script: [{src: "https://www.googletagmanager.com/gtag/js?id=G-CPF0DDW6YE"}],
+      script: [{src: "https://www.googletagmanager.com/gtag/js?id=G-CPF0DDW6YE", async: true}],
     },
   },
 
@@ -96,7 +98,7 @@ export default defineNuxtConfig({
     id: "GTM-PG9LNMLJ",
 
     defer: false, // Script can be set to `defer` to speed up page load at the cost of less accurate results (in case visitor leaves before script is loaded, which is unlikely but possible). Defaults to false, so the script is loaded `async` by default
-    compatibility: false, // Will add `async` and `defer` to the script tag to not block requests for old browsers that do not support `async`
+    compatibility: true, // Will add `async` and `defer` to the script tag to not block requests for old browsers that do not support `async`
 
     enabled: true, // defaults to true. Plugin can be disabled by setting this to false for Ex: enabled: !!GDPR_Cookie (optional)
     debug: true, // Whether or not display console logs debugs (optional)

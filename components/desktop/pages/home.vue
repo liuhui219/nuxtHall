@@ -125,14 +125,19 @@
     }
   };
   const url = games.gameURL();
-  const httpLoading = useHttpLoading();
   const gamereload = gameReload();
-  const openGame = (item) => {
-    url.value = item.url;
+  const openGame = (item: {roomId: string}) => {
+    // url.value = item.url;
 
     //openPopup("game-drawer");
 
-    navigateTo("/game");
+    //navigateTo("/game");
+    navigateTo({
+      path: "/game",
+      query: {
+        roomId: item.roomId,
+      },
+    });
 
     gamereload.value++;
   };
@@ -165,27 +170,31 @@
       value: 1,
       text: "V0033",
       title: "V0030",
-      url: "https://mobile.easygamehome.com/9100/?account_name=613382_101085247&account_id=101085247&platform_token=uX16IBlBo0TIHdk94GBw8WZYVl63XAXC&rate=1&roomID=9100&lang=BR&apimode=1",
+      roomId: "5200",
+      url: "",
       src: $importImage("111902008", "jpg", "images/games"),
     },
     {
       value: 2,
       text: "V0034",
       title: "V0031",
-      url: "https://www.engames.com/hw/5018/index.html?ssl=1&currency=BRL&exchangerates=10000&lang=pt&levels=l0&route=api.engames.com&app=gMEn&svr=singleG&svrid=0&uid=56340&token=4zAEQnys%2BJVhvRwr%2FSGKIohFPTnBWZRkfe%2BpXaGkRkKPS7IsAL2I45fiVnPVLSmJ",
+      roomId: "12000",
+      url: "",
       src: $importImage("111902051", "jpg", "images/games"),
     },
     {
       value: 3,
       text: "V0035",
       title: "V0032",
-      url: "https://www.engames.com/hw/5008/index.html?ssl=1&currency=BRL&exchangerates=10000&lang=pt&levels=l0&route=api.engames.com&app=gMEn&svr=singleG&svrid=0&uid=56342&token=OykZBFk0E7I%2BHebplnKqsX1c%2FDKZDGNZM8VxR2mMk7XvZwfIQpvsBBolZKBlWjpW",
+      roomId: "7400",
+      url: "",
       src: $importImage("111902053", "jpg", "images/games"),
     },
     {
       value: 4,
       text: "V0035",
       title: "V0032",
+      roomId: "7900",
       url: "",
       src: $importImage("111902075", "jpg", "images/games"),
     },
@@ -193,6 +202,7 @@
       value: 5,
       text: "V0035",
       title: "V0032",
+      roomId: "10000",
       url: "",
       src: $importImage("111902076", "jpg", "images/games"),
     },
@@ -200,33 +210,38 @@
       value: 6,
       text: "V0035",
       title: "V0032",
+      roomId: "11000",
       src: $importImage("111902079", "jpg", "images/games"),
     },
     {
       value: 1,
       text: "V0033",
       title: "V0030",
-      url: "https://mobile.easygamehome.com/4900/?account_name=613382_101085247&account_id=101085247&platform_token=cJwcMLuWXHf4JzodzSGxSirvnH99sQrK&rate=1&roomID=4900&lang=BR&apimode=1",
+      roomId: "5900",
+      url: "",
       src: $importImage("111902008", "jpg", "images/games"),
     },
     {
       value: 2,
       text: "V0034",
       title: "V0031",
-      url: "https://mobile.easygamehome.com/27200/?account_name=613382_101085247&account_id=101085247&platform_token=VSUfauRHtTaihbuzVyR5dF8yuttgMHsR&rate=1&roomID=27200&lang=BR&apimode=1",
+      roomId: "6300",
+      url: "",
       src: $importImage("111902051", "jpg", "images/games"),
     },
     {
       value: 3,
       text: "V0035",
       title: "V0032",
-      url: "https://mobile.easygamehome.com/4300/?account_name=613382_101085247&account_id=101085247&platform_token=s1ucgorP40YwQBcF0CRt0pzncEu3sP84&rate=1&roomID=4300&lang=BR&apimode=1",
+      roomId: "6600",
+      url: "",
       src: $importImage("111902053", "jpg", "images/games"),
     },
     {
       value: 4,
       text: "V0035",
       title: "V0032",
+      roomId: "6900",
       url: "",
       src: $importImage("111902075", "jpg", "images/games"),
     },
@@ -234,39 +249,46 @@
       value: 5,
       text: "V0035",
       title: "V0032",
+      roomId: "7600",
+      url: "",
       src: $importImage("111902076", "jpg", "images/games"),
     },
     {
       value: 6,
       text: "V0035",
       title: "V0032",
+      roomId: "8800",
       src: $importImage("111902079", "jpg", "images/games"),
     },
     {
       value: 1,
       text: "V0033",
       title: "V0030",
-      url: "https://mobile.easygamehome.com/4900/?account_name=613382_101085247&account_id=101085247&platform_token=cJwcMLuWXHf4JzodzSGxSirvnH99sQrK&rate=1&roomID=4900&lang=BR&apimode=1",
+      roomId: "9400",
+      url: "",
       src: $importImage("111902008", "jpg", "images/games"),
     },
     {
       value: 2,
       text: "V0034",
       title: "V0031",
-      url: "https://mobile.easygamehome.com/27200/?account_name=613382_101085247&account_id=101085247&platform_token=VSUfauRHtTaihbuzVyR5dF8yuttgMHsR&rate=1&roomID=27200&lang=BR&apimode=1",
+      roomId: "12900",
+      url: "",
       src: $importImage("111902051", "jpg", "images/games"),
     },
     {
       value: 3,
       text: "V0035",
       title: "V0032",
-      url: "https://mobile.easygamehome.com/4300/?account_name=613382_101085247&account_id=101085247&platform_token=s1ucgorP40YwQBcF0CRt0pzncEu3sP84&rate=1&roomID=4300&lang=BR&apimode=1",
+      roomId: "27400",
+      url: "",
       src: $importImage("111902053", "jpg", "images/games"),
     },
     {
       value: 4,
       text: "V0035",
       title: "V0032",
+      roomId: "27700",
       url: "",
       src: $importImage("111902075", "jpg", "images/games"),
     },
@@ -274,12 +296,15 @@
       value: 5,
       text: "V0035",
       title: "V0032",
+      roomId: "28200",
+      url: "",
       src: $importImage("111902076", "jpg", "images/games"),
     },
     {
       value: 6,
       text: "V0035",
       title: "V0032",
+      roomId: "11000",
       src: $importImage("111902079", "jpg", "images/games"),
     },
   ];

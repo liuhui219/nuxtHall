@@ -25,24 +25,30 @@
   import {useFullscreen} from "@vueuse/core";
   const iframe = ref(null);
 
+  const route = useRoute();
   const {enter} = useFullscreen(iframe);
   const drawerGame = ref(false);
 
-  const route = useRoute();
-
-  const url = games.gameURL();
-  const httpLoading = useHttpLoading();
+  const url = ref("");
   const iFrameLoad = () => {
     if (url.value != "") {
-      httpLoading.value = false;
       enter();
-    } else {
-      setTimeout(() => {
-        navigateTo({path: "/"});
-        drawerGame.value = false;
-      }, 3000);
     }
   };
+  onMounted(() => {
+    let gameURL = games.init();
+    url.value = gameURL;
+  });
+
+  onActivated(() => {
+    let gameURL = games.init();
+    url.value = gameURL;
+  });
+
+  onUnmounted(() => {
+    games.leaveGame();
+  });
+
   watchEffect(() => {
     drawerGame.value = route.path === "/game";
   });

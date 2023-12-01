@@ -1,10 +1,11 @@
 <!-- @format -->
 
-<template>666</template>
+<template>暂无数据</template>
 
 <script setup>
   definePageMeta({
-    auth: true,
+    auth: false,
+    pageIndex: 2,
   });
 </script>
 

@@ -35,19 +35,24 @@
   import {useFullscreen} from "@vueuse/core";
   const iframe = ref(null);
 
+  const route = useRoute();
   const {toggle} = useFullscreen(iframe);
 
-  const url = games.gameURL();
-  const httpLoading = useHttpLoading();
-  const iFrameLoad = () => {
-    if (url.value != "") {
-      httpLoading.value = false;
-    } else {
-      setTimeout(() => {
-        httpLoading.value = false;
-      }, 3000);
-    }
-  };
+  const url = ref("");
+  const iFrameLoad = () => {};
+  onMounted(() => {
+    let gameURL = games.init();
+    url.value = gameURL;
+  });
+
+  onActivated(() => {
+    let gameURL = games.init();
+    url.value = gameURL;
+  });
+
+  onUnmounted(() => {
+    games.leaveGame();
+  });
 </script>
 
 <style lang="scss" scoped>

@@ -30,11 +30,11 @@
               <base-img class="w-full banner-image" :name="item.img" type="jpg" path="images/home" />
             </div>
           </swiper-slide>
-          <div class="mobile-home-sign absolute">
+          <!-- <div class="mobile-home-sign absolute">
             <el-button @click="openPopupFn" class="mobile-home-sign-btn w-[267px]"
               ><span class="font-black">SIGN UP</span></el-button
             >
-          </div>
+          </div> -->
         </swiper>
 
         <div v-if="list.length > 1" class="home-nl-p">
@@ -82,7 +82,7 @@
           </div>
           <template v-if="item.children">
             <div class="w-full game-classification-wrap">
-              <div v-for="(child, i) in item.children" :key="i" class="games-item">
+              <div v-for="(child, i) in item.children" :key="i" class="games-item" @click="openGame(child)">
                 <base-game-component :game="child"></base-game-component>
               </div>
             </div>
@@ -146,12 +146,19 @@
       img: "phb11-6",
     },
   ];
+  const gamereload = gameReload();
   const httpLoading = useHttpLoading();
-  const openGame = (item) => {
-    url.value = item.url;
+  const openGame = (item: {roomId: string}) => {
+    // url.value = item.url;
     httpLoading.value = true;
     //openPopup("game-drawer");
-    navigateTo({path: "/game"});
+    navigateTo({
+      path: "/game",
+      query: {
+        roomId: item.roomId,
+      },
+    });
+    gamereload.value++;
   };
 
   const hotGamesList = [
@@ -159,27 +166,31 @@
       value: 1,
       text: "V0033",
       title: "V0030",
-      url: "https://mobile.easygamehome.com/12500/?account_name=613382_101085247&account_id=101085247&platform_token=ApoHn8Lnfopdmn6bzG8Av9yq19jow7RQ&rate=1&roomID=12500&lang=BR&apimode=1",
+      roomId: "5200",
+      url: "",
       src: $importImage("111902008", "jpg", "images/games"),
     },
     {
       value: 2,
       text: "V0034",
       title: "V0031",
-      url: "https://mobile.easygamehome.com/27200/?account_name=613382_101085247&account_id=101085247&platform_token=VSUfauRHtTaihbuzVyR5dF8yuttgMHsR&rate=1&roomID=27200&lang=BR&apimode=1",
+      roomId: "12000",
+      url: "",
       src: $importImage("111902051", "jpg", "images/games"),
     },
     {
       value: 3,
       text: "V0035",
       title: "V0032",
-      url: "https://mobile.easygamehome.com/4300/?account_name=613382_101085247&account_id=101085247&platform_token=s1ucgorP40YwQBcF0CRt0pzncEu3sP84&rate=1&roomID=4300&lang=BR&apimode=1",
+      roomId: "7400",
+      url: "",
       src: $importImage("111902053", "jpg", "images/games"),
     },
     {
       value: 4,
       text: "V0035",
       title: "V0032",
+      roomId: "7900",
       url: "",
       src: $importImage("111902075", "jpg", "images/games"),
     },
@@ -187,12 +198,15 @@
       value: 5,
       text: "V0035",
       title: "V0032",
+      roomId: "10000",
+      url: "",
       src: $importImage("111902076", "jpg", "images/games"),
     },
     {
       value: 6,
       text: "V0035",
       title: "V0032",
+      roomId: "11000",
       src: $importImage("111902079", "jpg", "images/games"),
     },
   ];

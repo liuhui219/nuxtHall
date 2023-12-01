@@ -16,20 +16,25 @@
   <LazyMobileModelReset />
   <LazyMobileModelRegister />
 
-  <component v-for="(item, index) in components" :key="index" :is="item" />
+  <template v-for="(item, index) in components"
+    ><component :is="item.component" v-if="route.hash.includes(item.name)"
+  /></template>
   <baseLoading :http="true" v-if="httpLoading"></baseLoading>
 </template>
 
-<script setup lang="ts">
-  const components = shallowRef<any>([]);
+<script setup>
+  const components = shallowRef([]);
   const httpLoading = useHttpLoading();
+  const route = useRoute();
   onMounted(() => {
     const modulesFiles = import.meta.glob("~/components/mobile/drawer/*.vue");
 
-    const modules: Array<any> = [];
+    const modules = [];
     Object.keys(modulesFiles).forEach((modulePath) => {
-      const value: any = modulesFiles[modulePath];
-      modules.push(defineAsyncComponent(value));
+      const result = modulePath.match(/.*\/(.+).vue$/);
+
+      const value = modulesFiles[modulePath];
+      modules.push({component: defineAsyncComponent(value), name: result[1]});
     });
 
     components.value = [...modules];

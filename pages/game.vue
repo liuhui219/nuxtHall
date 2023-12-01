@@ -7,11 +7,15 @@
 
 <script setup>
   definePageMeta({
+    name: "游戏",
     auth: false,
+    pageIndex: 1,
+    scrollToTop: true,
+    pageIndex: 10,
   });
+
   const show = ref(true);
   const gamereload = gameReload();
-
   const gameReloadSave = ref(gamereload.value);
   watchEffect(() => {
     if (gameReloadSave.value != gamereload.value) {

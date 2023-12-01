@@ -27,13 +27,29 @@ export default defineNuxtRouteMiddleware((to, from) => {
   if (!to.name) {
     return navigateTo("/");
   }
-
+  const pageToIndex = to.meta.pageIndex;
+  const pageFromIndex = from.meta.pageIndex;
   if (!useNuxtApp().$device.isDesktop) {
-    if (to.path != from.path) {
-      to.meta.pageTransition = from.meta.pageTransition = {
-        name: "page",
-        mode: "in-out",
-      };
+    if (to.path !== from.path) {
+      if (pageToIndex === pageFromIndex) {
+        to.meta.pageTransition = from.meta.pageTransition = {
+          name: "page",
+          mode: "in-out",
+        };
+      }
+      if (pageToIndex > pageFromIndex) {
+        to.meta.pageTransition = from.meta.pageTransition = {
+          name: "app-slide-left",
+          mode: "in-out",
+        };
+      }
+
+      if (pageToIndex < pageFromIndex) {
+        to.meta.pageTransition = from.meta.pageTransition = {
+          name: "app-slide-right",
+          mode: "in-out",
+        };
+      }
     } else {
       to.meta.pageTransition = from.meta.pageTransition = {};
     }

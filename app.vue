@@ -13,20 +13,27 @@
 <script setup lang="ts">
   import * as ElementPlusIconsVue from "@element-plus/icons-vue";
   import {useOnline} from "@vueuse/core";
+  import store from "store";
   import {getAnalytics, logEvent} from "firebase/analytics";
   const {isMobile, isDesktop} = useDevice();
-  const {locale, messages, t} = useI18n();
+  const {locale, messages, t, setLocale} = useI18n();
   const nuxtApp = useNuxtApp();
   const httpLoading = useHttpLoading();
   const online = useOnline();
   const locales = ref();
+  const config = useRuntimeConfig();
   const pageLoading = usePageLoading();
-
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     nuxtApp.vueApp.component(key, component);
   }
 
   watchEffect(() => {
+    let lang = store.get("lang");
+    if (lang === "undefined") {
+      store.set("lang", config.public.locale);
+      lang = config.public.locale;
+    }
+    setLocale(lang);
     locales.value = messages["value"][locale.value];
     if (!online.value) {
       ElMessage({
@@ -38,7 +45,6 @@
     }
   });
 
-  // useStorage("LastUid", uuidv4());
   // Server & Client
   // 监听不到此函数，因为在setup里
   nuxtApp.hook("app:created", (vueApp) => {
@@ -67,16 +73,22 @@
     const initfirebase = initialize();
     getAnalytics(initfirebase.app);
     console.log("app:mounted");
-
+    if (isMobile) {
+      document.addEventListener("gesturestart", function (event) {
+        event.preventDefault();
+      });
+    }
     useHead({
       title: "afun Apostas Esportivas | Plataforma de Cassino online",
     });
   });
 
   onMounted(() => {
+    console.log("onMounted");
     pageLoading.value = false;
     setUid();
     setLoginStatus();
+
     window.addEventListener("message", games.handleIframeMsg);
     window.dataLayer = window.dataLayer || [];
     function gtag() {
@@ -88,12 +100,6 @@
   nuxtApp.hook("page:finish", (vueApp) => {
     console.log("page:finish");
     httpLoading.value = false;
-    if (isMobile) {
-      document.addEventListener("gesturestart", function (event) {
-        event.preventDefault();
-      });
-    }
-
     pageLoading.value = false;
   });
 </script>

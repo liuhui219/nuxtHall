@@ -9,7 +9,7 @@
         >
       </div>
       <div class="header-right flex items-center">
-        <el-button @click="GoogleSign" size="large">{{ $t("L1001") }}</el-button>
+        <el-button @click="openPopup('login')" size="large">{{ $t("L1001") }}</el-button>
         <el-button @click="openPopup('register')" class="el-button-sign-up" size="large">{{ $t("L1002") }}</el-button>
         <el-dropdown trigger="click" placement="bottom-end" popper-class="el-dropdown-popper">
           <span class="el-dropdown-link" aria-label="dropdown">
@@ -38,8 +38,8 @@
 <script setup lang="ts">
   import {Search, Plus, CirclePlusFilled, CirclePlus, Check, CircleCheck} from "@element-plus/icons-vue";
   import {useImage, useIntersectionObserver} from "@vueuse/core";
-
-  const {locale} = useI18n();
+  import store from "store";
+  const {locale, setLocale} = useI18n();
   const router = useRouter();
   const route = useRoute();
   const path = ref(route.path);
@@ -81,9 +81,11 @@
     return isLoading.value;
   };
 
-  const setLang = (item: {lang: boolean; code: string}) => {
+  const setLang = async (item: {lang: boolean; code: string}) => {
     if (item.lang) {
-      locale.value = item.code;
+      //locale.value = item.code;
+      store.set("lang", item.code);
+      setLocale(item.code);
     }
   };
 
