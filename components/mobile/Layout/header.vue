@@ -50,6 +50,10 @@
   };
 
   const isLogin = useLogin();
+  const finish = ref(false);
+  onMounted(() => {
+    finish.value = true;
+  });
 </script>
 
 <style lang="scss" scoped>

@@ -2,7 +2,7 @@
 
 <template>
   <client-only
-    ><el-drawer
+    ><Lazy-el-drawer
       v-model="menuDrawer"
       modal-class="mobile-el-overlay"
       direction="ltr"
@@ -40,7 +40,7 @@
             </template>
           </el-menu>
         </div>
-      </div> </el-drawer
+      </div> </Lazy-el-drawer
   ></client-only>
 </template>
 

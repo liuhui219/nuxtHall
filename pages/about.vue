@@ -1,6 +1,6 @@
 <!-- @format -->
 
-<template>暂无数据</template>
+<template><div>暂无数据</div></template>
 
 <script setup>
   definePageMeta({

@@ -71,7 +71,7 @@
 
       <div class="hot-games w-full">
         <div class="games-item" v-for="(item, index) in hotGamesList" :key="index" @click="openGame(item)">
-          <base-game-component :game="item"></base-game-component>
+          <Lazy-base-game-component :game="item"></Lazy-base-game-component>
         </div>
       </div>
       <!-- 游戏分类 -->
@@ -83,7 +83,7 @@
           <template v-if="item.children">
             <div class="w-full game-classification-wrap">
               <div v-for="(child, i) in item.children" :key="i" class="games-item" @click="openGame(child)">
-                <base-game-component :game="child"></base-game-component>
+                <Lazy-base-game-component :game="child"></Lazy-base-game-component>
               </div>
             </div>
             <el-button @click="moreFn" class="game-classification-btn w-full">View All {{ info }}</el-button>

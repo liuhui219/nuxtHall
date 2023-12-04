@@ -12,9 +12,6 @@
     <NuxtPage />
   </main>
   <LazyMobileLayoutFooter />
-  <LazyMobileModelLogin />
-  <LazyMobileModelReset />
-  <LazyMobileModelRegister />
 
   <template v-for="(item, index) in components"
     ><component :is="item.component" v-if="route.hash.includes(item.name)"

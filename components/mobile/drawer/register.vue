@@ -2,7 +2,7 @@
 
 <template>
   <client-only
-    ><el-dialog
+    ><Lazy-el-dialog
       v-model="registerDialog"
       modal-class="mobile-el-overlay-register-dialog"
       :show-close="false"
@@ -74,7 +74,7 @@
           </div>
         </div>
       </el-form>
-    </el-dialog></client-only
+    </Lazy-el-dialog></client-only
   >
 </template>
 

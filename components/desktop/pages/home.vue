@@ -28,21 +28,22 @@
         </swiper-slide>
       </swiper>
     </div>
-    <div class="home-tab w-full">
-      <swiper
-        :modules="[SwiperNavigation, SwiperPagination]"
-        :slides-per-view="7"
-        :space-between="24"
-        @slide-change="slideChange"
-      >
-        <swiper-slide v-for="(item, index) in tabList" :key="index" class="flex justify-center">
-          <div class="home-tab-btn" :class="{active: index === activeTabIndex}" :key="index" @click="tabClick(index)">
-            <i class="iconfont" :class="`icon-${item.icon}`"></i>
-            {{ item.text }}
+
+    <!-- 滚动播放站内通知 -->
+    <div class="home-container-header flex w-full overflow-y-hidden">
+      <BaseIcon name="notifications" />
+      <div class="home-container-news flex h-full">
+        <div class="home-container-news-main flex h-full">
+          <div ref="containerNews" class="home-container-news-box flex h-full">
+            <span v-for="(item, index) in newsList" :key="index">{{ item.text }}</span>
           </div>
-        </swiper-slide>
-      </swiper>
+          <div ref="containerNews" class="home-container-news-box flex h-full">
+            <span v-for="(item, index) in newsList" :key="index">{{ item.text }}</span>
+          </div>
+        </div>
+      </div>
     </div>
+
     <!-- hot -->
     <section class="hot-games w-full">
       <div class="section-title mb-[12px] p-[0!important] flex justify-between">
@@ -73,6 +74,23 @@
         </swiper>
       </div>
     </section>
+
+    <div class="home-tab w-full">
+      <swiper
+        :modules="[SwiperNavigation, SwiperPagination]"
+        :slides-per-view="7"
+        :space-between="24"
+        @slide-change="slideChange"
+      >
+        <swiper-slide v-for="(item, index) in tabList" :key="index" class="flex justify-center">
+          <div class="home-tab-btn" :class="{active: index === activeTabIndex}" :key="index" @click="tabClick(index)">
+            <i class="iconfont" :class="`icon-${item.icon}`"></i>
+            {{ item.text }}
+          </div>
+        </swiper-slide>
+      </swiper>
+    </div>
+
     <!-- 游戏分类 -->
     <section class="game-classification mb-[12px] w-full" v-for="(item, index) in tabList" :key="index">
       <div class="section-title p-[0!important] flex justify-between">
@@ -126,6 +144,8 @@
   };
   const url = games.gameURL();
   const gamereload = gameReload();
+  const containerNews = ref<any>(null);
+  const containerNewsWidth = ref<any>(null);
   const openGame = (item: {roomId: string}) => {
     // url.value = item.url;
 
@@ -141,6 +161,15 @@
 
     gamereload.value++;
   };
+  const newsList = [
+    {
+      text: "央行通知：目前巴西央行临时维护将影响部分希望提款的用户，对于出现的意外情况我们深表歉意，我们将尽快解决。",
+    },
+    {
+      text: "央行通知：目前巴西央行临时维护将影响部分希望提款的用户，对于出现的意外情况我们深表歉意，我们将尽快解决。",
+    },
+  ];
+  const duration = `${newsList.length * 10}s`;
   const list = [
     {
       value: 1,
@@ -397,6 +426,7 @@
   }, 50);
 
   onMounted(async () => {
+    containerNewsWidth.value = 0 - containerNews.value.offsetWidth + "px";
     activeTabIndex.value = 0;
     document.querySelectorAll(".page-container-main") &&
       document
@@ -407,6 +437,7 @@
 </script>
 
 <style lang="scss" scoped>
+  $end-position: v-bind(containerNewsWidth);
   .home-view-pc {
     position: relative;
     margin: 0 auto;
@@ -419,6 +450,60 @@
         padding-bottom: 29.1%;
         border-radius: var(--border-radius);
         overflow: hidden;
+      }
+    }
+
+    .home-container-header {
+      flex-direction: row;
+      align-items: center;
+      margin-top: 20px;
+      border: 0.5px solid var(--el-fill-color-light);
+      -moz-border-radius: 6px;
+      border-radius: 6px;
+      padding: 15px 20px;
+      i {
+        font-size: 20px;
+      }
+    }
+
+    .home-container-news {
+      flex: 1;
+      overflow-y: hidden;
+      margin-left: 6px;
+    }
+
+    .home-container-news-main {
+      white-space: nowrap;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 12px;
+      width: 100%;
+      animation-name: scroll-left;
+      animation-duration: v-bind(duration);
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+
+      .home-container-news-box {
+        white-space: nowrap;
+        display: flex;
+
+        flex-direction: row;
+        align-items: center;
+        & > span {
+          display: block;
+          padding: 0 20px;
+          min-width: 50%;
+        }
+      }
+    }
+
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(0px);
+      }
+      100% {
+        transform: translateX($end-position);
       }
     }
 

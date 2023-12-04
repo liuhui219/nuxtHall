@@ -2,7 +2,7 @@
 
 <template>
   <client-only
-    ><el-drawer
+    ><Lazy-el-drawer
       v-model="drawer"
       modal-class="mobile-drawer-el-overlay"
       title="I am the title"
@@ -24,7 +24,7 @@
         <main class="mobile-modal-content-main" :style="{height: !header ? '100%' : 'calc(100% - 60px)'}">
           <slot name="body"></slot>
         </main>
-      </div> </el-drawer
+      </div> </Lazy-el-drawer
   ></client-only>
 </template>
 
