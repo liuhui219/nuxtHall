@@ -18,11 +18,13 @@
   const {isMobile, isDesktop} = useDevice();
   const {locale, messages, t, setLocale} = useI18n();
   const nuxtApp = useNuxtApp();
+  const {$isMobile} = nuxtApp;
   const httpLoading = useHttpLoading();
   const online = useOnline();
   const locales = ref();
   const config = useRuntimeConfig();
   const pageLoading = usePageLoading();
+
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     nuxtApp.vueApp.component(key, component);
   }

@@ -8,9 +8,7 @@ export const useMenuDrawer = () => useState("menu-drawer", () => false);
 
 export const useLang = () => useState("lang", () => "en");
 
-export const useLoginDialog = () => useState("login-dialog", () => false);
-export const useResetDialog = () => useState("reset-dialog", () => false);
-export const useRegisterDialog = () => useState("register-dialog", () => false);
+export const useDialog = () => useState("dialog", () => false);
 
 export const gameReload = () => useState("game-reload", () => 0);
 

@@ -142,16 +142,12 @@
       nodes.push(el);
     }
   };
+
   const url = games.gameURL();
   const gamereload = gameReload();
   const containerNews = ref<any>(null);
   const containerNewsWidth = ref<any>(null);
   const openGame = (item: {roomId: string}) => {
-    // url.value = item.url;
-
-    //openPopup("game-drawer");
-
-    //navigateTo("/game");
     navigateTo({
       path: "/game",
       query: {

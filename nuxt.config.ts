@@ -8,8 +8,6 @@ const envScript = (process.env.npm_lifecycle_script as string).split(" ");
 const envName = envScript[envScript.length - 1]; // 通过启动命令区分环境
 const envData: any = loadEnv(envName, process.cwd());
 
-console.log(666, envName, envData);
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: {
@@ -19,6 +17,7 @@ export default defineNuxtConfig({
       enabled: false,
     },
   },
+  ssr: true,
   sourcemap: {
     server: false,
     client: true,
@@ -32,7 +31,7 @@ export default defineNuxtConfig({
     // 针对路径进行接口转发
     "/dev-api/**": {
       // https://cnodejs.org/api/v1 是个公共接口api前缀，将其替换为后端写好的接口调用地址就好
-      proxy: `https://api.nuxtjs.dev/**`,
+      proxy: `https://dummyjson.com/**`,
     },
   },
 
