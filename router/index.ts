@@ -21,8 +21,8 @@ let routes = [
   {
     itemGroup: [
       {
-        path: "/Mygame",
-        name: "Mygame",
+        path: "/about",
+        name: "about",
         meta: {title: "H0006", icon: "Mygame", auth: true},
         children: [],
       },

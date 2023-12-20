@@ -154,6 +154,11 @@
         roomId: item.roomId,
       },
     });
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "customEvent",
+      customValue: "123",
+    });
 
     gamereload.value++;
   };

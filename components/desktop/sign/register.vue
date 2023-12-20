@@ -26,7 +26,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" class="w-full h-[50px]" size="large">{{ t("L1002") }}</el-button>
+        <el-button v-btn type="primary" class="w-full h-[50px]" size="large">{{ t("L1002") }}</el-button>
       </el-form-item>
 
       <div class="quick-link quick-link-center w-full text-[12px] text-center">

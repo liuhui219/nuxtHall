@@ -20,7 +20,7 @@
       <el-form-item prop="password">
         <el-input size="large" clearable v-model="ruleForm.password" :placeholder="$t('L1010')"
           ><template #append>
-            <el-button class="min-w-[67px]" :disabled="countdown" @click="codeFn(formRef)"
+            <el-button v-btn class="min-w-[67px]" :disabled="countdown" @click="codeFn(formRef)"
               ><span v-if="!countdown">{{ $t("L1017") }}</span
               ><span v-else>{{ time }}S</span></el-button
             >

@@ -10,7 +10,7 @@
   </NuxtLayout>
 </template>
 
-<script setup lang="ts">
+<script setup>
   import * as ElementPlusIconsVue from "@element-plus/icons-vue";
   import {useOnline} from "@vueuse/core";
   import store from "store";
@@ -18,6 +18,7 @@
   const {isMobile, isDesktop} = useDevice();
   const {locale, messages, t, setLocale} = useI18n();
   const nuxtApp = useNuxtApp();
+  nuxtApp.globalName = "haha";
   const {$isMobile} = nuxtApp;
   const httpLoading = useHttpLoading();
   const online = useOnline();
@@ -89,13 +90,13 @@
     pageLoading.value = false;
     setUid();
     setLoginStatus();
-
-    window.addEventListener("message", games.handleIframeMsg);
     window.dataLayer = window.dataLayer || [];
     function gtag() {
-      window.dataLayer.push(arguments);
+      dataLayer.push(arguments);
     }
     gtag("js", new Date());
+    gtag("config", "G-CPF0DDW6YE");
+    window.addEventListener("message", games.handleIframeMsg);
   });
 
   nuxtApp.hook("page:finish", (vueApp) => {

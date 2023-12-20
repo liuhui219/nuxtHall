@@ -11,6 +11,9 @@
     "postinstall": "nuxt prepare",
     "start": "pm2 start ecosystem.config.cjs"
   },
+  "resolutions": {
+    "bin-wrapper": "npm:bin-wrapper-china"
+  },
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.6",
     "@nuxt/devtools": "latest",

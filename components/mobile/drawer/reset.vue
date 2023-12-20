@@ -44,7 +44,7 @@
           >
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm(formRef)" class="w-full h-[50px]" size="large">{{
+          <el-button v-btn type="primary" @click="submitForm(formRef)" class="w-full h-[50px]" size="large">{{
             t("L1011")
           }}</el-button>
         </el-form-item>

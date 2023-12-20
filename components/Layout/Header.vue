@@ -4,13 +4,15 @@
   <header class="navbar">
     <div class="navbar-wrapper">
       <div class="header-left">
-        <el-button size="large" @click="routerFn" text :bg="path === '/'"
+        <el-button size="large" @click="routerFn" v-btn text :bg="path === '/'"
           ><i class="iconfont" :class="`icon-Casino`"></i>{{ $t("H0002") }}</el-button
         >
       </div>
       <div class="header-right flex items-center">
-        <el-button @click="openPopup('login')" size="large">{{ $t("L1001") }}</el-button>
-        <el-button @click="openPopup('register')" class="el-button-sign-up" size="large">{{ $t("L1002") }}</el-button>
+        <el-button @click="openPopup('login')" v-btn size="large">{{ $t("L1001") }}</el-button>
+        <el-button @click="openPopup('register')" v-btn class="el-button-sign-up" size="large">{{
+          $t("L1002")
+        }}</el-button>
         <el-dropdown trigger="click" placement="bottom-end" popper-class="el-dropdown-popper">
           <span class="el-dropdown-link" aria-label="dropdown">
             <el-badge is-dot
@@ -45,7 +47,7 @@
   const path = ref(route.path);
   const avatar = ref("https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png");
   const {isLoading} = useImage({src: avatar.value});
-
+  const resetBtn = ref();
   const dropdownMenu = [
     {
       text: "C1001",

@@ -18,16 +18,19 @@ export default defineNuxtConfig({
     },
   },
   ssr: true,
+
   sourcemap: {
     server: false,
     client: true,
   },
+
   devServer: {
     port: 6789,
     host: "0.0.0.0",
   },
 
   routeRules: {
+    // "/about": {prerender: true},
     // 针对路径进行接口转发
     "/dev-api/**": {
       // https://cnodejs.org/api/v1 是个公共接口api前缀，将其替换为后端写好的接口调用地址就好

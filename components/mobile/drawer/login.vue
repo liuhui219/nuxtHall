@@ -48,7 +48,7 @@
           <el-checkbox v-model="ruleForm.rememberCheck">{{ $t("L1003") }}</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button @click="submitForm(formRef)" type="primary" class="w-full h-[50px]" size="large">{{
+          <el-button v-btn @click="submitForm(formRef)" type="primary" class="w-full h-[50px]" size="large">{{
             t("L1001")
           }}</el-button>
         </el-form-item>

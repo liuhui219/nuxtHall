@@ -38,8 +38,9 @@ const request = async (url, method, body, query, headers, options) => {
     method,
     query,
     headers,
-    // lazy: true,
+    lazy: true,
     credentials: "include",
+    server: true,
     body,
 
     onRequest({request, options}) {},
