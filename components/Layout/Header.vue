@@ -9,11 +9,14 @@
         >
       </div>
       <div class="header-right flex items-center">
-        <el-button @click="openPopup('login')" v-btn size="large">{{ $t("L1001") }}</el-button>
-        <el-button @click="openPopup('register')" v-btn class="el-button-sign-up" size="large">{{
-          $t("L1002")
-        }}</el-button>
-        <el-dropdown trigger="click" placement="bottom-end" popper-class="el-dropdown-popper">
+        <template v-if="!isLogin">
+          <el-button @click="openPopup('login')" v-btn size="large">{{ $t("L1001") }}</el-button>
+          <el-button @click="openPopup('register')" v-btn class="el-button-sign-up" size="large">{{
+            $t("L1002")
+          }}</el-button>
+        </template>
+
+        <el-dropdown v-else trigger="click" placement="bottom-end" popper-class="el-dropdown-popper">
           <span class="el-dropdown-link" aria-label="dropdown">
             <el-badge is-dot
               ><el-avatar fit="fit" :size="35" alt="" :src="avatar" @error="errorHandler">
@@ -41,9 +44,11 @@
   import {Search, Plus, CirclePlusFilled, CirclePlus, Check, CircleCheck} from "@element-plus/icons-vue";
   import {useImage, useIntersectionObserver} from "@vueuse/core";
   import store from "store";
+  import {useStorage} from "@vueuse/core";
   const {locale, setLocale} = useI18n();
   const router = useRouter();
   const route = useRoute();
+  const isLogin = useIsLogin();
   const path = ref(route.path);
   const avatar = ref("https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png");
   const {isLoading} = useImage({src: avatar.value});
@@ -88,6 +93,10 @@
       //locale.value = item.code;
       store.set("lang", item.code);
       setLocale(item.code);
+    } else {
+      store.remove("w_l_s_a");
+      isLogin.value = false;
+      router.push({path: "/"});
     }
   };
 
@@ -121,13 +130,14 @@
 
   .navbar-wrapper {
     position: relative;
-    width: var(--container-width);
+    max-width: var(--container-width);
+    width: 100%;
     height: var(--header-height);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
+    padding: 0 20px;
     box-sizing: border-box;
     position: relative;
     .el-button > span {

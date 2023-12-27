@@ -7,14 +7,13 @@
         <base-img class="h-[40px] w-[104px] logo" name="logo-h" type="png" path="images/logo" />
       </div>
       <div class="right tools-login">
-        <template v-if="isLogin"
+        <template v-if="!isLogin"
           ><el-button @click="openPopup('login')" size="large" type="primary" text>{{ $t("L1001") }}</el-button>
           <el-button @click="openPopup('register')" class="el-button-sign-up" size="large" type="primary">{{
             $t("L1002")
           }}</el-button></template
         >
         <template v-else>
-          <el-button @click="openPopup('login')" size="large" type="primary" text>{{ $t("L1001") }}</el-button>
           <el-dropdown trigger="click" placement="bottom-end" popper-class="el-mobile-dropdown-popper">
             <span class="el-dropdown-link">
               <el-badge is-dot
@@ -33,7 +32,7 @@
                 <el-dropdown-item :icon="CirclePlusFilled"> Action 2 </el-dropdown-item>
                 <el-dropdown-item :icon="CirclePlus">Action 3</el-dropdown-item>
                 <el-dropdown-item :icon="Check">Action 4</el-dropdown-item>
-                <el-dropdown-item divided :icon="CircleCheck">{{ $t("L1018") }}</el-dropdown-item>
+                <el-dropdown-item @click="signOut" divided :icon="CircleCheck">{{ $t("L1018") }}</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -44,16 +43,22 @@
 </template>
 
 <script setup lang="ts">
+  import store from "store";
   import {Search, Plus, CirclePlusFilled, CirclePlus, Check, CircleCheck} from "@element-plus/icons-vue";
   const goHome = () => {
     navigateTo("/");
   };
-
-  const isLogin = useLogin();
+  const router = useRouter();
+  const isLogin = useIsLogin();
   const finish = ref(false);
   onMounted(() => {
     finish.value = true;
   });
+  const signOut = () => {
+    store.remove("w_l_s_a");
+    isLogin.value = false;
+    router.push({path: "/"});
+  };
 </script>
 
 <style lang="scss" scoped>

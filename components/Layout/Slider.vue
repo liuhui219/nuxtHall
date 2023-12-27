@@ -71,6 +71,7 @@
     await nextTick();
 
     document.documentElement.style.setProperty("--main-width", width);
+    document.querySelector(".page-container-right").style.width = `calc(100% - ${width})`;
   };
 </script>
 

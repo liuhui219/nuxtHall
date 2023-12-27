@@ -1,5 +1,5 @@
 /** @format */
-
+import store from "store";
 export const games = {
   gameURL: () => useState("game-URL", () => ""),
   gameUID: () => useState("game-UID", () => 1522367),
@@ -28,11 +28,19 @@ export const games = {
   },
 
   init: () => {
+    const gameURL = useRuntimeConfig().public.gameURL;
+    const isLogin = useIsLogin();
     const route = useRoute();
     const {query} = route;
     let roomId = query.roomId;
     let sid = games.setSid(Number(roomId));
-    const url = `http://h5game.vmhost238.com/${roomId}/?account_name=TK86115039&platform_token=BCBCA94FFD2948FE828805FD4412EB28&rate=1&roomID=${roomId}&lang=en&sortID=1&operator_id=663357&type=2&sid=${sid}&mac=KKsowmsjfado&isdbg=hxdebug&apimode=1`;
+    let status = store.get("w_l_s_a");
+    let loginInfo = isLogin.value ? JSON.parse(atob(status)) : {};
+
+    const url = `${gameURL}/${roomId}/index.html?oid=${loginInfo?.oid}&oa=${loginInfo?.account}&op=${
+      loginInfo?.password
+    }&hv=8283EAA9F1EBAF5D5CA773D30F5A02EF&ip=192.17.18.23&b=true&sid=${sid}&l=en&g=${roomId}&e=lua://Close.api.command&t=${new Date().getTime()}&s=1&u=wss://game2.wu6jv3.com/games/${roomId}`;
+
     return url;
   },
 

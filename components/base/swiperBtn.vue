@@ -16,8 +16,8 @@
     aria-label="Next"
     @click="slideNext"
     :icon="ArrowRight"
-    :class="{'swiper-button-disabled': disabled && activeIndex === swiperLength}"
-    :disabled="disabled && activeIndex === swiperLength"
+    :class="{'swiper-button-disabled': disabled && (activeIndex === swiperLength || swiperLength <= 0)}"
+    :disabled="disabled && (activeIndex === swiperLength || swiperLength <= 0)"
   />
 </template>
 

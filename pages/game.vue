@@ -8,7 +8,7 @@
 <script setup>
   definePageMeta({
     name: "游戏",
-    auth: false,
+    auth: true,
     pageIndex: 1,
     scrollToTop: true,
     pageIndex: 10,

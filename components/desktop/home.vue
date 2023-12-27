@@ -44,23 +44,24 @@
     flex-direction: row;
   }
   .page-container-right {
-    // width: calc(100% - var(--main-width));
+    width: calc(100% - 320px);
     display: flex;
-    flex: 1;
+
     flex-direction: column;
     height: 100%;
     position: relative;
 
     .page-container-main {
       width: 100%;
+      max-width: var(--container-width);
       height: calc(100% - var(--nav-height));
-      display: flex;
-      justify-content: center;
-      overflow-x: hidden;
+      margin: 0 auto;
+      overflow: auto;
+      display: block;
+      padding: 0 20px;
 
       .page-container-main-wrap {
-        max-width: var(--container-width);
-        width: 100%;
+        width: 1240px;
         height: 100%;
       }
     }

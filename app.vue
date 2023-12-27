@@ -18,7 +18,7 @@
   const {isMobile, isDesktop} = useDevice();
   const {locale, messages, t, setLocale} = useI18n();
   const nuxtApp = useNuxtApp();
-  nuxtApp.globalName = "haha";
+  nuxtApp.globalName = "hall";
   const {$isMobile} = nuxtApp;
   const httpLoading = useHttpLoading();
   const online = useOnline();
@@ -32,10 +32,12 @@
 
   watchEffect(() => {
     let lang = store.get("lang");
+    let loginStatus = store.get("w_l_s_a");
     if (lang === "undefined") {
       store.set("lang", config.public.locale);
       lang = config.public.locale;
     }
+
     setLocale(lang);
     locales.value = messages["value"][locale.value];
     if (!online.value) {
@@ -89,7 +91,7 @@
     console.log("onMounted");
     pageLoading.value = false;
     setUid();
-    setLoginStatus();
+
     window.dataLayer = window.dataLayer || [];
     function gtag() {
       dataLayer.push(arguments);
@@ -98,7 +100,6 @@
     gtag("config", "G-CPF0DDW6YE");
     window.addEventListener("message", games.handleIframeMsg);
   });
-
   nuxtApp.hook("page:finish", (vueApp) => {
     console.log("page:finish");
     httpLoading.value = false;

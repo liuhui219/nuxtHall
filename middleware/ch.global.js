@@ -1,19 +1,25 @@
 /** @format */
-
+import store from "store";
 export default defineNuxtRouteMiddleware((to, from) => {
-  const islogin = useLogin();
+  if (process.server) return;
+  const isLogin = useIsLogin();
+  let status = store.get("w_l_s_a");
 
-  if (to.meta.auth && !~~islogin.value) {
+  if (status === "undefined" || status === undefined) {
+    isLogin.value = false;
+  } else {
+    isLogin.value = true;
+  }
+
+  if (to.meta.auth && !isLogin.value) {
     return navigateTo({
-      path: from.path,
-      query: from.query,
-      params: from.params,
+      path: "/",
       hash: "#/login",
     });
   }
 
   if (to.hash.includes("/login") || to.hash.includes("/register")) {
-    if (~~islogin.value) {
+    if (isLogin.value) {
       let hash = to.hash.replace("/login", "").replace("/register", "");
       return navigateTo({path: to.path, query: to.query, params: to.params, hash: hash});
     }

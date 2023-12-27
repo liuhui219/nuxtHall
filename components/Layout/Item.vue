@@ -35,7 +35,6 @@
 
 <script setup>
   const {t} = useI18n();
-  const islogin = useLogin();
   const is_collapse = useIsCollapse();
   const props = defineProps({
     item: {

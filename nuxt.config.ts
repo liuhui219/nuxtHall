@@ -2,7 +2,6 @@
 import {loadEnv} from "vite";
 import {compression} from "vite-plugin-compression2";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
-import {ViteImageOptimizer} from "vite-plugin-image-optimizer";
 import viteImagemin from "vite-plugin-imagemin";
 const envScript = (process.env.npm_lifecycle_script as string).split(" ");
 const envName = envScript[envScript.length - 1]; // 通过启动命令区分环境
@@ -51,6 +50,7 @@ export default defineNuxtConfig({
     public: {
       apiBase: envData?.VITE_PUBLIC_API_BASE,
       locale: envData?.VITE_PUBLIC_LANG || "en",
+      gameURL: envData?.VITE_PUBLIC_GAME_URL,
     },
   },
 
@@ -66,7 +66,7 @@ export default defineNuxtConfig({
       meta: [
         {
           name: "viewport",
-          content: "width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=5.0",
+          content: "width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no",
         },
         {
           charset: "utf-8",

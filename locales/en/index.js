@@ -20,6 +20,8 @@ export default {
   L1017: "Code",
   L1018: "Sign Out",
   L1019: "Back Home",
+  L1020: "Enter UserName",
+  L1021: "Enter OID",
 
   C1001: "Chinese",
   C1002: "English",
