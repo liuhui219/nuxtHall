@@ -39,6 +39,8 @@ export default {
   H0010: "Incorrect mobile number",
   H0011: `{min} to {max} characters long,number or letter\r\nLetters are case sensitive`,
   H0012: "The network has been disconnected, please check",
+  H0013: "Promotion",
+  H0014: "Charge",
 
   E0001: "Can't find this page",
 

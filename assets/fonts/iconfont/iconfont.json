@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "929946",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e882",
+      "unicode_decimal": 59522
+    },
+    {
+      "icon_id": "2372742",
+      "name": "推广",
+      "font_class": "tuiguang",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "3356304",
+      "name": "md_btn_money go",
+      "font_class": "moneygo",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
       "icon_id": "12336012",
       "name": "足球",
       "font_class": "baseball",

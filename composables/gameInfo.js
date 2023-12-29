@@ -39,7 +39,7 @@ export const games = {
 
     const url = `${gameURL}/${roomId}/index.html?oid=${loginInfo?.oid}&oa=${loginInfo?.account}&op=${
       loginInfo?.password
-    }&hv=8283EAA9F1EBAF5D5CA773D30F5A02EF&ip=192.17.18.23&b=true&sid=${sid}&l=en&g=${roomId}&e=lua://Close.api.command&t=${new Date().getTime()}&s=1&u=wss://game2.wu6jv3.com/games/${roomId}`;
+    }&hv=8283EAA9F1EBAF5D5CA773D30F5A02EF&ip=192.17.18.23&b=1&sid=${sid}&l=en&g=${roomId}&t=${new Date().getTime()}&s=1&isdbg=hxdebug&e=ToCloseWebView`;
 
     return url;
   },

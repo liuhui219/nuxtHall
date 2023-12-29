@@ -1,9 +1,5 @@
 <!-- @format -->
 
-/* * @Author: liuhui * @Date: 2023-11-02 11:23:54 * @Last Modified by: liuhui * @Last Modified time: 2023-11-02 11:23:54
-*/
-<!-- @format -->
-
 <template>
   <LazyMobileModelDrawer :title="'detail'" :drawer="drawerDetail" :hash="'detail-drawer'">
     <template #header>

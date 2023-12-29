@@ -8,7 +8,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
     target.blur();
   };
-  nuxtApp.vueApp.directive("btn", {
+  let btn = nuxtApp.vueApp.directive("btn", {
     mounted(el) {
       el.addEventListener("focus", fun);
     },

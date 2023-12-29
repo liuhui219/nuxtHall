@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4296752 */
-  src: url('iconfont.woff2?t=1700297082856') format('woff2'),
-       url('iconfont.woff?t=1700297082856') format('woff'),
-       url('iconfont.ttf?t=1700297082856') format('truetype');
+  src: url('iconfont.woff2?t=1703658316432') format('woff2'),
+       url('iconfont.woff?t=1703658316432') format('woff'),
+       url('iconfont.ttf?t=1703658316432') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,18 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-user:before {
+  content: "\e882";
+}
+
+.icon-tuiguang:before {
+  content: "\e603";
+}
+
+.icon-moneygo:before {
+  content: "\e65d";
 }
 
 .icon-baseball:before {
