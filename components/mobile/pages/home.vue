@@ -161,7 +161,7 @@
     gamereload.value++;
   };
 
-  let List = gameList.getData($importImage);
+  let List = gameList.getData();
 
   const hotGamesList = List.slice(0, 6);
 
