@@ -43,6 +43,7 @@ export default {
   H0014: "Charge",
 
   E0001: "Can't find this page",
+  E0002: "Maintenance is in progress.",
 
   ...en,
 };

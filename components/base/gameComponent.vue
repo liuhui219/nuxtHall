@@ -7,6 +7,10 @@
           <div class="game-play pointer">
             <i class="iconfont icon-play2"></i>
           </div>
+          <div class="game-info">
+            <span>{{ game.text }}</span>
+            <span>{{ game.en }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -121,6 +125,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
+          }
+
+          .game-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            margin-top: 10px;
+            span {
+              padding-top: 2px;
+              color: rgb(151, 168, 199);
+              font-weight: bold;
+            }
           }
         }
       }

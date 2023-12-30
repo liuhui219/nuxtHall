@@ -21,6 +21,9 @@
         style="color-scheme: light"
         @load="iFrameLoad"
       />
+      <div class="w-full h-full absolute top-0 left-0 flex items-center justify-center" v-if="!url">
+        <div>{{ $t("E0002") }}</div>
+      </div>
     </div>
     <div class="flex justify-between items-center px-6 py-4">
       <div class="screen">
