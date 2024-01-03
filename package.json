@@ -7,7 +7,7 @@
     "build": "nuxt build --analyze --dotenv env/.env.production",
     "test": "nuxt build --analyze --dotenv env/.env.test",
     "dev": "nuxt dev --dotenv env/.env.development",
-    "generate": "nuxt generate",
+    "generate": "nuxt generate --analyze --dotenv env/.env.production",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "start": "pm2 start ecosystem.config.cjs"

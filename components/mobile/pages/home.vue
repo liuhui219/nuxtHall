@@ -55,6 +55,33 @@
           </div>
         </div>
       </div>
+
+      <section class="mobile-hot-games w-full">
+        <div class="section-title mb-[12px] p-[0!important] flex justify-between">
+          <div data-v-5af0f1b2="" class="flex items-center justify-start">Grandes Vitórias Recentes</div>
+        </div>
+        <div>
+          <swiper
+            ref="rewardRef"
+            :modules="[SwiperAutoplay, SwiperNavigation, SwiperEffectCoverflow, SwiperPagination, SwiperEffectCreative]"
+            :slides-per-view="4"
+            :space-between="10"
+            :slides-per-group="1"
+            :loop="true"
+            :autoplay="{
+              delay: 5000,
+              disableOnInteraction: false,
+            }"
+          >
+            <swiper-slide v-for="(item, index) in hotGamesList" :key="index" class="flex justify-center">
+              <div class="mobile-hot-games-box w-full">
+                <base-game-component :game="item" textInfo showGameName></base-game-component>
+              </div>
+            </swiper-slide>
+          </swiper>
+        </div>
+      </section>
+
       <!-- 游戏分类导航栏 -->
       <div class="home-tab" ref="homeTab">
         <div
@@ -69,24 +96,24 @@
         </div>
       </div>
 
-      <div class="hot-games w-full">
-        <div class="games-item" v-for="(item, index) in hotGamesList" :key="index" @click="openGame(item)">
-          <Lazy-base-game-component :game="item"></Lazy-base-game-component>
-        </div>
-      </div>
       <!-- 游戏分类 -->
       <div class="game-classification w-full">
-        <div v-for="(item, index) in tabList" :key="index" class="game-classification-box w-full">
-          <div class="game-classification-title" :id="item.text">
+        <div
+          v-for="(item, index) in tabList"
+          :key="index"
+          class="game-classification-box w-full"
+          :class="{boxActive: index === activeTabIndex}"
+        >
+          <!-- <div class="game-classification-title" :id="item.text">
             <span>{{ item.text }}</span>
-          </div>
+          </div> -->
           <template v-if="item.children">
             <div class="w-full game-classification-wrap">
               <div v-for="(child, i) in item.children" :key="i" class="games-item" @click="openGame(child)">
-                <Lazy-base-game-component :game="child"></Lazy-base-game-component>
+                <Lazy-base-game-component :game="child" textInfo provider></Lazy-base-game-component>
               </div>
             </div>
-            <el-button @click="moreFn" class="game-classification-btn w-full">View All {{ info }}</el-button>
+            <!-- <el-button @click="moreFn" class="game-classification-btn w-full">View All {{ info }}</el-button> -->
           </template>
         </div>
       </div>
@@ -163,57 +190,29 @@
 
   let List = gameList.getData();
 
-  const hotGamesList = List.slice(0, 6);
+  const hotGamesList = List.slice(0, 10);
 
   const tabList = [
     {
       value: 1,
-      text: "All Games",
+      text: "火热推荐",
       length: 6,
       icon: "lobby",
-      children: List.slice(6, 12),
+      children: List.slice(0, 30),
     },
     {
       value: 2,
-      text: "Originais",
+      text: "老虎机",
       length: 6,
       icon: "fire",
-      children: List.slice(12, 18),
+      children: List.slice(30, 60),
     },
     {
       value: 3,
-      text: "Slots",
+      text: "休闲游戏",
       length: 6,
       icon: "cherry1",
-      children: List.slice(18, 24),
-    },
-    {
-      value: 4,
-      text: "Ao vivo",
-      length: 6,
-      icon: "play1",
-      children: List.slice(24, 30),
-    },
-    {
-      value: 5,
-      text: "Lazer",
-      length: 6,
-      icon: "badge1",
-      children: List.slice(30, 36),
-    },
-    {
-      value: 6,
-      text: "Shows",
-      length: 6,
-      icon: "tv-one",
-      children: List.slice(36, 42),
-    },
-    {
-      value: 7,
-      text: "Esportes",
-      length: 6,
-      icon: "baseball",
-      children: List.slice(42, 51),
+      children: List.slice(60, 82),
     },
   ];
 
@@ -224,13 +223,19 @@
   };
 
   const tabClick = (index: number) => {
-    const element = document.querySelectorAll(".game-classification-box")[index] as HTMLDivElement;
-    const targetPosition = element.offsetTop - 120;
+    activeTabIndex.value = index;
+    const listItems = document.querySelectorAll(".game-classification-box");
+    for (const listItem of listItems) {
+      listItem.style.display = "none";
+    }
+    listItems[index].style.display = "block";
+    // const element = document.querySelectorAll(".game-classification-box")[index] as HTMLDivElement;
+    // const targetPosition = element.offsetTop - 120;
 
-    document.querySelectorAll(".mobile-container-main")[0].scrollTo({
-      top: targetPosition,
-      behavior: "smooth",
-    });
+    // document.querySelectorAll(".mobile-container-main")[0].scrollTo({
+    //   top: targetPosition,
+    //   behavior: "smooth",
+    // });
 
     // document.querySelectorAll(".game-classification-box")[index].scrollIntoView({
     //   behavior: "smooth", // 平滑过渡
@@ -289,9 +294,9 @@
   //moreFns();
 
   onMounted(async () => {
-    document
-      .querySelectorAll(".mobile-container-main")[0]
-      .addEventListener("scroll", scrollFn as unknown as EventListener);
+    // document
+    //   .querySelectorAll(".mobile-container-main")[0]
+    //   .addEventListener("scroll", scrollFn as unknown as EventListener);
   });
 </script>
 <style lang="scss" scoped>
@@ -362,6 +367,19 @@
         }
       }
 
+      .mobile-hot-games {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        margin-top: 16px;
+        .mobile-hot-games-box {
+          position: relative;
+          background: var(--el-fill-color-light);
+          border-radius: var(--border-radius);
+          overflow: hidden;
+        }
+      }
+
       .mobile-home-container-header {
         flex-direction: row;
         align-items: center;
@@ -416,7 +434,7 @@
         height: 60px;
         //border: 1px solid var(--el-text-color-disabled);
         //border-radius: var(--border-radius);
-        margin-top: 24px;
+
         overflow-x: auto;
         overflow-y: hidden;
         display: flex;
@@ -427,6 +445,7 @@
         top: 0px;
         background: var(--el-bg-color);
         z-index: 100;
+        gap: 10px;
 
         .home-tab-btn {
           height: 100%;
@@ -436,8 +455,11 @@
           padding: 0 16px;
           font-size: 12px;
           flex-shrink: 0;
+          flex: 1;
           font-weight: 700;
           color: var(--el-text-color-placeholder);
+          border-radius: var(--border-radius);
+          background-color: var(--el-border-color-extra-light);
         }
         .active {
           background: var(--el-color-primary);
@@ -463,12 +485,14 @@
 
     .game-classification {
       .game-classification-box {
-        margin-top: 20px;
+        display: none;
       }
-      margin-top: 20px;
+      .boxActive {
+        display: block;
+      }
+
       .game-classification-wrap {
         display: grid;
-        margin-top: 16px;
         box-sizing: content-box;
         grid-template-rows: 1fr 1fr;
         grid-template-columns: 1fr 1fr 1fr;

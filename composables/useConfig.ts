@@ -11,6 +11,7 @@ export const useLang = () => useState("lang", () => "en");
 export const useDialog = () => useState("dialog", () => false);
 
 export const gameReload = () => useState("game-reload", () => 0);
+export const gameURL = () => useState("game-URL", () => "");
 
 export const useLoginDialog = () => useState("login-dialog", () => false);
 export const useResetDialog = () => useState("reset-dialog", () => false);

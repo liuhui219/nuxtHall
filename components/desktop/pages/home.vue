@@ -240,14 +240,14 @@
       text: "Shows",
       length: 6,
       icon: "tv-one",
-      children: List.slice(66, 80),
+      children: List.slice(66, 78),
     },
     {
       value: 7,
       text: "Esportes",
       length: 6,
       icon: "baseball",
-      children: hotGamesList,
+      children: List.slice(78, 82),
     },
   ];
 

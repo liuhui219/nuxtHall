@@ -50,7 +50,7 @@ export default defineNuxtConfig({
     public: {
       apiBase: envData?.VITE_PUBLIC_API_BASE,
       locale: envData?.VITE_PUBLIC_LANG || "en",
-      gameURL: envData?.VITE_PUBLIC_GAME_URL,
+      // gameURL: envData?.VITE_PUBLIC_GAME_URL,
     },
   },
 
@@ -79,7 +79,7 @@ export default defineNuxtConfig({
         class: "dark",
         lang: envData?.VITE_PUBLIC_LANG || "en",
       },
-      script: [{src: "https://www.googletagmanager.com/gtag/js?id=G-CPF0DDW6YE", defer: true}],
+      script: [{src: "https://www.googletagmanager.com/gtag/js?id=G-CPF0DDW6YE", defer: true}, {src: "config.js"}],
     },
   },
 

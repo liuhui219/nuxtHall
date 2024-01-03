@@ -14,6 +14,16 @@
         </div>
       </div>
     </div>
+    <div class="game-text-info text-left" v-if="textInfo">
+      <div class="game-provider" v-if="provider">Original</div>
+      <h4 v-if="showGameName" class="game-name !text-[20px] scale-50 text-left">67****6</h4>
+      <div
+        v-if="showGameName"
+        class="recent-point !text-[18px] scale-50 -mt-[12px] text-left !w-[200%] -translate-x-[1px]"
+      >
+        <span class="text-home-second mr-[4px]">R$</span><em class="text-number not-italic">56.390,00</em>
+      </div>
+    </div>
     <div v-if="isLoading || !loaded" class="game-cover game-cover-copy" />
   </div>
 </template>
@@ -31,11 +41,11 @@
     },
     provider: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     showDetail: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     showMask: {
       type: Boolean,
@@ -46,6 +56,10 @@
       default: false,
     },
     mask: {
+      type: Boolean,
+      default: false,
+    },
+    textInfo: {
       type: Boolean,
       default: false,
     },
@@ -78,6 +92,7 @@
 <style lang="scss" scoped>
   .game-component {
     cursor: pointer;
+    box-sizing: border-box;
     .game-cover {
       background-repeat: no-repeat;
       background-size: cover;
@@ -196,6 +211,47 @@
       background-repeat: no-repeat;
       background-color: transparent;
       position: relative;
+    }
+
+    .game-text-info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      box-sizing: border-box;
+      .game-provider {
+        color: "#97a8c7";
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        text-overflow: "ellipsis";
+        width: 100%;
+        overflow: hidden;
+        padding: 9px 8px;
+      }
+      .game-name {
+        color: #97a8c7;
+        padding-left: 8px;
+        font-weight: 400;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 200%;
+      }
+      .recent-point {
+        padding-left: 8px;
+        border-radius: 2px;
+        color: #1bb83d;
+        flex: 0;
+        flex-grow: 0;
+        flex-shrink: 0;
+        font-size: 12px;
+        overflow: hidden;
+        width: auto;
+      }
+    }
+    .not-italic {
+      font-style: normal;
     }
   }
 

@@ -32,12 +32,10 @@
 
   watchEffect(() => {
     let lang = store.get("lang");
-    let loginStatus = store.get("w_l_s_a");
     if (lang === "undefined") {
       store.set("lang", config.public.locale);
       lang = config.public.locale;
     }
-
     setLocale(lang);
     locales.value = messages["value"][locale.value];
     if (!online.value) {
@@ -77,6 +75,8 @@
     const initfirebase = initialize();
     getAnalytics(initfirebase.app);
     console.log("app:mounted");
+    const gameurl = gameURL();
+    gameurl.value = window.BASE_CONFIG.GAME_URL;
     if (isMobile) {
       document.addEventListener("gesturestart", function (event) {
         event.preventDefault();
