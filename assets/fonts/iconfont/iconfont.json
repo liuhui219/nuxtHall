@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "27374447",
+      "name": "分享",
+      "font_class": "fenxiang",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
       "icon_id": "929946",
       "name": "user",
       "font_class": "user",

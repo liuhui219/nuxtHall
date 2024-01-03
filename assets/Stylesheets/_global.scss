@@ -25,36 +25,6 @@ html,
   background-color: var(--el-bg-color);
   text-rendering: optimizeLegibility;
 }
-.sys-btn.btn-home-next {
-  align-items: center;
-  background: var(--el-border-color-lighter);
-  border: none;
-  border-radius: 3px;
-  color: var(--el-text-color-regular);
-  display: flex;
-  font-size: 14.4px;
-  height: 36px;
-  justify-content: center;
-  min-width: unset;
-  padding: 0;
-  width: 36px;
-  &:active {
-    scale: 0.7;
-    opacity: 0.6;
-  }
-  &:focus {
-    color: var(--el-text-color-regular);
-    background: var(--el-border-color-lighter);
-  }
-  &:hover {
-    opacity: 0.6;
-  }
-}
-.sys-btn.btn-home-next.swiper-button-disabled {
-  background: var(--el-border-color-lighter);
-  color: var(--el-text-color-disabled);
-  pointer-events: none;
-}
 
 .mobile-el-overlay {
   height: calc(100% - 65px) !important;

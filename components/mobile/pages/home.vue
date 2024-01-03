@@ -82,41 +82,50 @@
         </div>
       </section>
 
-      <!-- 游戏分类导航栏 -->
-      <div class="home-tab" ref="homeTab">
-        <div
-          class="home-tab-btn"
-          :class="{active: index === activeTabIndex}"
-          v-for="(item, index) in tabList"
-          :key="index"
-          @click="tabClick(index)"
-        >
-          <i class="iconfont" :class="`icon-${item.icon}`"></i>
-          {{ item.text }}
+      <section class="game-classification mt-[20px] w-full" v-for="(item, index) in tabList" :key="index">
+        <div class="section-title p-[0!important] flex justify-between">
+          <div data-v-5af0f1b2="" class="flex items-center justify-start">
+            {{ item.text }}
+          </div>
+          <div class="shrink-0 flex items-center">
+            <BaseSwiperBtn :swiper="nodes[index]" :disabled="true"></BaseSwiperBtn>
+          </div>
         </div>
-      </div>
-
-      <!-- 游戏分类 -->
-      <div class="game-classification w-full">
-        <div
-          v-for="(item, index) in tabList"
-          :key="index"
-          class="game-classification-box w-full"
-          :class="{boxActive: index === activeTabIndex}"
-        >
-          <!-- <div class="game-classification-title" :id="item.text">
-            <span>{{ item.text }}</span>
-          </div> -->
-          <template v-if="item.children">
-            <div class="w-full game-classification-wrap">
-              <div v-for="(child, i) in item.children" :key="i" class="games-item" @click="openGame(child)">
-                <Lazy-base-game-component :game="child" textInfo provider></Lazy-base-game-component>
+        <div>
+          <swiper
+            :ref="setRef"
+            :modules="[SwiperAutoplay, SwiperNavigation, SwiperEffectCoverflow]"
+            :slides-per-view="3"
+            :space-between="10"
+            :slides-per-group="1"
+          >
+            <swiper-slide v-for="count in Math.ceil(item.children.length / 2)" :key="count" class="flex justify-center">
+              <div class="game-classification-component w-full flex flex-col gap-y-[24px]">
+                <base-game-component
+                  key="(count - 1) * 2"
+                  @click="openGame(item.children[(count - 1) * 2])"
+                  textInfo
+                  provider
+                  :game="item.children[(count - 1) * 2]"
+                ></base-game-component>
+                <base-game-component
+                  key="(count - 1) * 2 + 1"
+                  v-if="
+                    !(
+                      count === Math.ceil(item.children.length / 2) &&
+                      item.children.length / 2 < Math.ceil(item.children.length / 2)
+                    )
+                  "
+                  @click="openGame(item.children[(count - 1) * 2 + 1])"
+                  textInfo
+                  provider
+                  :game="item.children[(count - 1) * 2 + 1]"
+                ></base-game-component>
               </div>
-            </div>
-            <!-- <el-button @click="moreFn" class="game-classification-btn w-full">View All {{ info }}</el-button> -->
-          </template>
+            </swiper-slide>
+          </swiper>
         </div>
-      </div>
+      </section>
     </div>
     <LazyMobilePagesFooter />
   </div>
@@ -136,14 +145,19 @@
   });
   const url = games.gameURL();
   const openPopupFn = () => {};
-
+  const nodes = reactive<any>([]);
+  const setRef = (el: any) => {
+    if (el) {
+      nodes.push(el);
+    }
+  };
   // message_notifications
   const newsList = [
     {
-      text: "1现成梵蒂冈电饭锅发的尴尬代发给代发更大更代发给代发",
+      text: "央行通知：目前巴西央行临时维护将影响部分希望提款的用户，对于出现的意外情况我们深表歉意，我们将尽快解决。",
     },
     {
-      text: "2现成梵蒂冈电饭锅发的尴尬代发给代发更大更代发给代发",
+      text: "央行通知：目前巴西央行临时维护将影响部分希望提款的用户，对于出现的意外情况我们深表歉意，我们将尽快解决。",
     },
   ];
   const duration = `${newsList.length * 10}s`;
@@ -212,92 +226,16 @@
       text: "休闲游戏",
       length: 6,
       icon: "cherry1",
-      children: List.slice(60, 82),
+      children: List.slice(60, 81),
     },
   ];
 
   const activeIndex = ref(0);
-  const activeTabIndex = ref(0);
   const slideChange = (event: {realIndex: number}) => {
     activeIndex.value = event.realIndex;
   };
 
-  const tabClick = (index: number) => {
-    activeTabIndex.value = index;
-    const listItems = document.querySelectorAll(".game-classification-box");
-    for (const listItem of listItems) {
-      listItem.style.display = "none";
-    }
-    listItems[index].style.display = "block";
-    // const element = document.querySelectorAll(".game-classification-box")[index] as HTMLDivElement;
-    // const targetPosition = element.offsetTop - 120;
-
-    // document.querySelectorAll(".mobile-container-main")[0].scrollTo({
-    //   top: targetPosition,
-    //   behavior: "smooth",
-    // });
-
-    // document.querySelectorAll(".game-classification-box")[index].scrollIntoView({
-    //   behavior: "smooth", // 平滑过渡
-    //   block: "center", // 上边框与视窗顶部平齐。默认值
-    // });
-  };
-
-  const scrollFn = useThrottleFn((event: {target: {scrollTop: number}}) => {
-    const scrollItems = document.querySelectorAll(".game-classification-box");
-    let index = activeTabIndex.value;
-    for (let i = scrollItems.length - 1; i >= 0; i--) {
-      // 判断滚动条滚动距离是否大于当前滚动项可滚动距离
-      let judge = event.target.scrollTop > (scrollItems[i] as HTMLDivElement).offsetTop;
-      if (judge) {
-        index = i + 1;
-        if (index > scrollItems.length - 1) {
-          index = scrollItems.length - 1;
-        }
-        break;
-      } else {
-        index = 0;
-      }
-    }
-    activeTabIndex.value = index;
-  }, 100);
-
-  watch(
-    () => activeTabIndex.value,
-    (newValue) => {
-      let tabElement = document.querySelectorAll(".home-tab-btn")[newValue] as HTMLDivElement;
-
-      let left = tabElement && tabElement.offsetLeft - homeTab.value.offsetWidth / 2;
-      let scrollLeft = 0;
-      if (left > 0) {
-        scrollLeft = left + tabElement.offsetWidth / 2;
-      }
-      homeTab.value.scrollTo({
-        left: scrollLeft,
-        behavior: "smooth",
-      });
-    }
-  );
-
-  const id = ref(1);
-
-  const moreFn = () => {
-    id.value++;
-  };
-
-  const moreFns = async () => {
-    //
-    const {data, pending, error, refresh} = await useDefaultRequest.get("/mountains", null, {param1: id});
-    info.value = data.value[0]?.title;
-  };
-
-  //moreFns();
-
-  onMounted(async () => {
-    // document
-    //   .querySelectorAll(".mobile-container-main")[0]
-    //   .addEventListener("scroll", scrollFn as unknown as EventListener);
-  });
+  onMounted(() => {});
 </script>
 <style lang="scss" scoped>
   $end-position: v-bind(containerNewsWidth);
@@ -484,26 +422,18 @@
     }
 
     .game-classification {
-      .game-classification-box {
-        display: none;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      .game-classification-component .game-component {
+        background: var(--el-fill-color-light);
+        border-radius: 4px;
       }
-      .boxActive {
-        display: block;
-      }
-
-      .game-classification-wrap {
-        display: grid;
-        box-sizing: content-box;
-        grid-template-rows: 1fr 1fr;
-        grid-template-columns: 1fr 1fr 1fr;
-        column-gap: 10px;
-        gap: 10px;
-      }
-      .game-classification-btn {
-        margin-top: 10px;
-        height: 40px;
+      .section-title {
         color: var(--el-text-color-primary);
-        background: linear-gradient(to right, #80d693, #34aa4e);
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 12px;
       }
     }
   }

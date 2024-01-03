@@ -22,8 +22,9 @@
 <script setup lang="ts">
   const list = ref([
     {name: "menu", text: "Menu", hash: "menu", title: "H0001"},
-    {name: "Rewards", text: "About", path: "about", title: "H0004"},
+    // {name: "Rewards", text: "About", path: "about", title: "H0004"},
     {name: "moneygo", text: "Moneygo", path: "#/charge", title: "H0014"},
+    {name: "fenxiang", text: "Fenxiang", path: "#/share", title: "H0015"},
     // {name: "Mygame", text: "Vip", path: "vip", title: "TR0001"},
     {name: "home", text: "Home", path: "", title: "H0003"},
     {name: "tuiguang", text: "Promotion", path: "promotion", title: "H0013"},

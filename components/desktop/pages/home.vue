@@ -116,6 +116,12 @@
                 :game="item.children[(count - 1) * 2]"
               ></base-game-component>
               <base-game-component
+                v-if="
+                  !(
+                    count === Math.ceil(item.children.length / 2) &&
+                    item.children.length / 2 < Math.ceil(item.children.length / 2)
+                  )
+                "
                 key="(count - 1) * 2 + 1"
                 @click="openGame(item.children[(count - 1) * 2 + 1])"
                 mask

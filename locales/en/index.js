@@ -41,6 +41,7 @@ export default {
   H0012: "The network has been disconnected, please check",
   H0013: "Promotion",
   H0014: "Charge",
+  H0015: "Share",
 
   E0001: "Can't find this page",
   E0002: "Maintenance is in progress.",
