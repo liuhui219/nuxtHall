@@ -9,6 +9,16 @@
   }
 }
 
+@keyframes home-progress {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
 .page-enter-active,
 .page-leave-active {
   transition: all 0.4s;

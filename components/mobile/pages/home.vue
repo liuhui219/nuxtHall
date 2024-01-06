@@ -25,7 +25,9 @@
         </swiper>
 
         <div v-if="list.length > 1" class="home-nl-p">
-          <div v-for="(item, index) in list.length" :key="item" :class="{'home-nl-p-a': index == activeIndex}" />
+          <div v-for="(item, index) in list.length" :key="item" :class="{'home-nl-p-a': index === activeIndex}">
+            <div class="progress"></div>
+          </div>
         </div>
       </div>
       <!-- 滚动播放站内通知 -->
@@ -321,8 +323,23 @@
           }
 
           .home-nl-p-a {
-            background: var(--el-color-primary);
+            // background: var(--el-color-primary);
+            border-radius: 10px;
             border: 1px solid var(--el-text-color-primary);
+            width: 30px;
+            position: relative;
+            .progress {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 0%;
+              height: 100%;
+              background-color: var(--el-color-primary);
+              border-radius: 10px;
+              white-space: nowrap;
+              animation: home-progress 4s;
+              animation-fill-mode: forwards;
+            }
           }
         }
       }
