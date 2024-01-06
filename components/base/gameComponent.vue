@@ -1,7 +1,7 @@
 <!-- @format -->
 <template>
   <div ref="target" class="game-component w-full relative">
-    <div class="game-cover relative z-[1]" :style="{backgroundImage: !isLoading && loaded ? `url(${game.src})` : ''}">
+    <div class="game-cover relative z-[1]" :style="{backgroundImage: loaded ? `url(${game.src})` : ''}">
       <div v-if="mask && show" class="game-mask">
         <div class="game-mask-content">
           <div class="game-play pointer">
@@ -16,15 +16,15 @@
     </div>
     <div class="game-text-info text-left" v-if="textInfo">
       <div class="game-provider" v-if="provider">Original</div>
-      <h4 v-if="showGameName" class="game-name !text-[20px] scale-50 text-left">67****6</h4>
+      <h4 v-if="showGameName" class="game-name !text-[24px] scale-50 text-left">67****6</h4>
       <div
         v-if="showGameName"
-        class="recent-point !text-[18px] scale-50 -mt-[12px] text-left !w-[200%] -translate-x-[1px]"
+        class="recent-point !text-[20px] scale-50 -mt-[12px] text-left !w-[200%] -translate-x-[1px]"
       >
         <span class="text-home-second mr-[4px]">R$</span><em class="text-number not-italic">56.390,00</em>
       </div>
     </div>
-    <div v-if="isLoading || !loaded" class="game-cover game-cover-copy" />
+    <div v-if="!loaded" class="game-cover game-cover-copy" />
   </div>
 </template>
 
@@ -68,14 +68,14 @@
   const loaded = ref(false);
   const show = ref(false);
   const target = ref(null);
-  const {isLoading} = useImage({src: propsConf.game.src});
+  // const {isLoading,} = useImage({src: propsConf.game.src});
 
   const {stop} = useIntersectionObserver(target, ([{isIntersecting}], observerElement) => {
     if (isIntersecting) {
       show.value = isIntersecting;
       setTimeout(() => {
         loaded.value = isIntersecting;
-      }, 100);
+      }, 500);
     }
   });
   // onMounted(() => {

@@ -25,6 +25,7 @@
   left: 0%;
   width: 100vw;
   height: 100%;
+  max-width: var(--maxWidth);
   padding-top: 60px;
   transition: transform 0.4s;
 }
@@ -43,6 +44,7 @@
   padding-top: 60px;
   width: 100vw;
   height: 100%;
+  max-width: var(--maxWidth);
   transition: transform 0.4s;
 }
 .app-slide-left-leave-from {
@@ -58,6 +60,7 @@
   left: 0%;
   width: 100vw;
   height: 100%;
+  max-width: var(--maxWidth);
   padding-top: 60px;
   transition: transform 0.4s;
 }
@@ -73,6 +76,7 @@
   top: 0;
   left: 0%;
   width: 100vw;
+  max-width: var(--maxWidth);
   height: 100%;
   padding-top: 60px;
   transition: transform 0.4s;

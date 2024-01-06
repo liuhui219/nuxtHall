@@ -59,7 +59,7 @@
   const loaded = ref(false);
   const image = ref(propsConf.src ? propsConf.src : $importImage(propsConf.name, propsConf.type, propsConf.path));
 
-  const {isLoading} = useImage({src: image.value});
+  // const {isLoading} = useImage({src: image.value});
   const {stop} = useIntersectionObserver(img, ([{isIntersecting}], observerElement) => {
     if (isIntersecting) {
       loaded.value = isIntersecting;

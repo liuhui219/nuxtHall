@@ -37,7 +37,6 @@
         <el-form-item prop="account">
           <el-input
             size="large"
-            type="tel"
             autoComplete="off"
             clearable
             v-model="ruleForm.account"
@@ -163,7 +162,7 @@
   }, 1000);
 
   watchEffect(() => {
-    loginDialog.value = route.hash.includes("login");
+    loginDialog.value = getHashValue(route.hash) === "login";
   });
 </script>
 
@@ -172,6 +171,7 @@
     backdrop-filter: blur(12px);
     .el-dialog {
       width: calc(100% - 40px);
+      max-width: calc(var(--maxWidth) - 40px);
       border-radius: 10px;
       .login-close .el-icon {
         font-size: 18px;

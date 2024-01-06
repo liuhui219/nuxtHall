@@ -8,7 +8,11 @@ export default defineNuxtPlugin((nuxtApp) => {
           eager: true,
         });
 
-        return glob[`/assets/${folder}/${name}.${type}`]["default"];
+        let path = glob[`/assets/${folder}/${name}.${type}`]
+          ? glob[`/assets/${folder}/${name}.${type}`]["default"]
+          : "";
+
+        return path;
       },
     },
   };

@@ -18,23 +18,10 @@
           @slide-change="slideChange"
         >
           <swiper-slide v-for="(item, index) in list" :key="index" class="flex justify-center">
-            <!-- <div class="carousel-nl-container w-full flex flex-col items-center absolute top-[36px] px-[20px]">
-              <div class="flex flex-col items-center justify-center w-[267px]">
-                <div class="font-black text-[24px]">Best Crypto Casino</div>
-                <p class="text-center text-[12px] mt-[10px]">
-                  With our subscription, you’ll get much more bonuses and extra rewards.
-                </p>
-              </div>
-            </div> -->
             <div class="container-banner-box w-full">
               <LazyBaseImg class="w-full banner-image" :name="item.img" type="jpg" path="images/home" />
             </div>
           </swiper-slide>
-          <!-- <div class="mobile-home-sign absolute">
-            <el-button @click="openPopupFn" class="mobile-home-sign-btn w-[267px]"
-              ><span class="font-black">SIGN UP</span></el-button
-            >
-          </div> -->
         </swiper>
 
         <div v-if="list.length > 1" class="home-nl-p">
@@ -56,26 +43,32 @@
         </div>
       </div>
 
+      <div class="headMenu w-full">
+        <swiper :modules="[SwiperNavigation, SwiperPagination]" :slides-per-view="5" :space-between="6">
+          <swiper-slide v-for="(item, index) in headMenu" :key="index" class="flex justify-center">
+            <div class="home-tab-btn" :key="index">
+              <i class="iconfont" :class="`icon-${item.icon}`"></i>
+              {{ item.text }}
+            </div>
+          </swiper-slide>
+        </swiper>
+      </div>
+
       <section class="mobile-hot-games w-full">
         <div class="section-title mb-[12px] p-[0!important] flex justify-between">
-          <div data-v-5af0f1b2="" class="flex items-center justify-start">Grandes Vitórias Recentes</div>
+          <div data-v-5af0f1b2="" class="game_title flex items-center justify-start">Grandes Vitórias Recentes</div>
         </div>
         <div>
           <swiper
             ref="rewardRef"
             :modules="[SwiperAutoplay, SwiperNavigation, SwiperEffectCoverflow, SwiperPagination, SwiperEffectCreative]"
             :slides-per-view="4"
-            :space-between="10"
+            :space-between="8"
             :slides-per-group="1"
-            :loop="true"
-            :autoplay="{
-              delay: 5000,
-              disableOnInteraction: false,
-            }"
           >
             <swiper-slide v-for="(item, index) in hotGamesList" :key="index" class="flex justify-center">
               <div class="mobile-hot-games-box w-full">
-                <base-game-component :game="item" textInfo showGameName></base-game-component>
+                <base-game-component :game="item" textInfo showGameName @click="openGame(item)"></base-game-component>
               </div>
             </swiper-slide>
           </swiper>
@@ -84,7 +77,7 @@
 
       <section class="game-classification mt-[20px] w-full" v-for="(item, index) in tabList" :key="index">
         <div class="section-title p-[0!important] flex justify-between">
-          <div data-v-5af0f1b2="" class="flex items-center justify-start">
+          <div data-v-5af0f1b2="" class="game_title flex items-center justify-start">
             {{ item.text }}
           </div>
           <div class="shrink-0 flex items-center">
@@ -96,11 +89,11 @@
             :ref="setRef"
             :modules="[SwiperAutoplay, SwiperNavigation, SwiperEffectCoverflow]"
             :slides-per-view="3"
-            :space-between="10"
+            :space-between="8"
             :slides-per-group="1"
           >
             <swiper-slide v-for="count in Math.ceil(item.children.length / 2)" :key="count" class="flex justify-center">
-              <div class="game-classification-component w-full flex flex-col gap-y-[24px]">
+              <div class="game-classification-component w-full flex flex-col gap-y-[10px]">
                 <base-game-component
                   key="(count - 1) * 2"
                   @click="openGame(item.children[(count - 1) * 2])"
@@ -135,6 +128,7 @@
   import {useThrottleFn} from "@vueuse/core";
   const {$importImage} = useNuxtApp();
   const nuxtApp = useNuxtApp();
+  const {locale, t} = useI18n();
   const homeContainer = ref(null);
   const homeTab = ref<any>(null);
   const info = ref();
@@ -204,26 +198,49 @@
 
   let List = gameList.getData();
 
+  const headMenu = [
+    {
+      text: t("H0017"),
+      icon: "qiandao",
+    },
+    {
+      text: t("H0018"),
+      icon: "choujiangzhuanpan",
+    },
+    {
+      text: t("H0019"),
+      icon: "Rewards",
+    },
+    {
+      text: t("H0020"),
+      icon: "vip1",
+    },
+    {
+      text: t("H0021"),
+      icon: "huodong",
+    },
+  ];
+
   const hotGamesList = List.slice(0, 10);
 
   const tabList = [
     {
       value: 1,
-      text: "火热推荐",
+      text: t("L1023"),
       length: 6,
       icon: "lobby",
       children: List.slice(0, 30),
     },
     {
       value: 2,
-      text: "老虎机",
+      text: t("L1024"),
       length: 6,
       icon: "fire",
       children: List.slice(30, 60),
     },
     {
       value: 3,
-      text: "休闲游戏",
+      text: t("L1024"),
       length: 6,
       icon: "cherry1",
       children: List.slice(60, 81),
@@ -245,9 +262,11 @@
     .mobile-home-container-main {
       height: 100%;
       box-sizing: border-box;
+      position: relative;
       .container-banner,
       .swiper {
         border-radius: var(--border-radius);
+        position: relative;
         .container-banner-box {
           position: relative;
           height: 0;
@@ -286,6 +305,9 @@
           justify-content: center;
           align-items: center;
           gap: 6px;
+          position: absolute;
+          bottom: 8px;
+          z-index: 10;
 
           display: flex;
           & > div {
@@ -293,15 +315,76 @@
             height: 8px;
             border-radius: 50%;
             transition: all 0.3s;
-            background: var(--el-bg-color);
+            // background: var(--el-bg-color);
             cursor: pointer;
-            border: 1px solid var(--el-text-color-disabled);
+            border: 1px solid var(--el-text-color-primary);
           }
 
           .home-nl-p-a {
             background: var(--el-color-primary);
             border: 1px solid var(--el-text-color-primary);
           }
+        }
+      }
+
+      .headMenu {
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 15px 0px;
+
+        // background-image: radial-gradient(transparent 1px, var(--el-fill-color) 1px);
+        z-index: 100;
+
+        .swiper {
+          width: 100%;
+          height: 100%;
+        }
+
+        .home-tab-btn {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 10px 0;
+          gap: 8px;
+          font-size: 12px;
+          flex-shrink: 0;
+          cursor: pointer;
+          color: var(--el-color-primary);
+          background: rgb(255 255 255 / 8%);
+          // background-color: var(--el-bg-color-overlay);
+          border-radius: var(--border-radius);
+          border: 2px solid rgb(141 144 149 / 10%);
+          &:hover {
+            color: var(--el-text-color-primary);
+          }
+        }
+        .active {
+          background: var(--el-color-primary);
+          border-radius: var(--border-radius);
+          color: var(--el-text-color-primary);
+        }
+
+        .iconfont {
+          font-size: 24px;
+          font-weight: initial;
+        }
+
+        &::before {
+          content: "";
+          background-color: var(--el-color-primary);
+          position: absolute;
+          left: -28%;
+          top: 15%;
+          width: 65%;
+          height: 15%;
+          border-radius: 50%;
+          opacity: 0.4;
+          filter: blur(100px);
         }
       }
 
@@ -312,9 +395,11 @@
         margin-top: 16px;
         .mobile-hot-games-box {
           position: relative;
-          background: var(--el-fill-color-light);
+          background: rgb(255 255 255 / 8%);
           border-radius: var(--border-radius);
           overflow: hidden;
+          padding: 2px;
+          border: 2px solid rgb(141 144 149 / 10%);
         }
       }
 
@@ -434,6 +519,46 @@
         font-size: 14px;
         font-weight: 700;
         margin-bottom: 12px;
+      }
+      // &:nth-child(2n-1)::after {
+      //   content: "";
+      //   background-color: var(--el-color-primary);
+      //   position: absolute;
+      //   right: -35%;
+      //   top: -5%;
+      //   width: 65%;
+      //   height: 36%;
+      //   border-radius: 50%;
+      //   opacity: 0.7;
+      //   filter: blur(100px);
+      // }
+      // &:nth-child(2n)::before {
+      //   content: "";
+      //   background-color: var(--el-color-primary);
+      //   position: absolute;
+      //   left: -28%;
+      //   top: -5%;
+      //   width: 65%;
+      //   height: 36%;
+      //   border-radius: 50%;
+      //   opacity: 0.7;
+      //   filter: blur(100px);
+      // }
+    }
+    .game_title {
+      position: relative;
+      padding-left: 16px;
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: var(--el-color-primary);
+        border: 1px solid var(--el-text-color-primary);
       }
     }
   }

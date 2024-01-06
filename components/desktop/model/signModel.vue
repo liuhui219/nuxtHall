@@ -53,7 +53,7 @@
   const openDialog = () => {};
 
   watchEffect(() => {
-    dialog.value = route.hash.includes("login") || route.hash.includes("register") || route.hash.includes("reset");
+    dialog.value = ["login", "register", "reset"].includes(getHashValue(route.hash));
   });
 
   onMounted(() => {

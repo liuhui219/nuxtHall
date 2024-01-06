@@ -2,7 +2,7 @@
 
 <template>
   <div class="mobile-footer gap-y-[24px] px-[10px]">
-    <Lazy-base-img class="h-[40px] w-[104px] logo" name="logo-h" type="png" path="images/logo" />
+    <Lazy-base-img class="h-[40px] w-[150px] logo" name="logo" type="png" path="images/logo" />
     <div class="company-introduction">
       O site AFUN.com é operado pela Brilliant Star Services B.V. (registro nº 159982), com endereço em Julianaplein 36
       Curaçao. Este site é operado sob <strong id="apg-text">número de licença: 8048/JAZ</strong> Emitido pelo Provedor

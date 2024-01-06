@@ -4,9 +4,10 @@
   <transition name="el-fade-in-linear"><baseLoading v-if="pageLoading"></baseLoading></transition>
 
   <NuxtLayout
-    ><el-config-provider :locale="locales" size="default"
-      ><desktopHome v-if="isDesktop" /><mobileHome v-if="isMobile"
-    /></el-config-provider>
+    ><el-config-provider :locale="locales" size="default">
+      <!-- <desktopHome v-if="isDesktop" /> -->
+      <mobileHome />
+    </el-config-provider>
   </NuxtLayout>
 </template>
 

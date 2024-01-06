@@ -12,7 +12,7 @@
   const drawerDetail = ref(false);
   const route = useRoute();
   watchEffect(() => {
-    drawerDetail.value = route.hash.includes("detail-drawer");
+    drawerDetail.value = getHashValue(route.hash) === "detail-drawer";
   });
 </script>
 

@@ -7,7 +7,7 @@
         <el-icon><component :is="is_collapse ? 'Expand' : 'Fold'"></component></el-icon>
       </div>
       <div class="title" v-if="!is_collapse">
-        <base-img class="h-[50px] w-[130px]" name="logo-h" type="png" path="images/logo" />
+        <base-img class="h-[50px] w-[185px]" name="logo" type="png" path="images/logo" />
       </div>
     </div>
     <div class="menu">

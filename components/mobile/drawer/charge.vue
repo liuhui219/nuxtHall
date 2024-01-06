@@ -22,7 +22,7 @@
     closePopup("charge");
   };
   watchEffect(() => {
-    drawerDetail.value = route.hash.includes("charge");
+    drawerDetail.value = getHashValue(route.hash) === "charge";
   });
 </script>
 

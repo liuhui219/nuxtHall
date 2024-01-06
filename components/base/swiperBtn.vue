@@ -77,7 +77,7 @@
     background: var(--el-border-color-lighter);
     border: none;
     border-radius: 3px;
-    color: var(--el-text-color-regular);
+    color: var(--el-color-primary);
     display: flex;
     font-size: 14.4px;
     height: $w_H;
@@ -90,7 +90,7 @@
       opacity: 0.6;
     }
     &:focus {
-      color: var(--el-text-color-regular);
+      color: var(--el-color-primary);
       background: var(--el-border-color-lighter);
     }
     &:hover {

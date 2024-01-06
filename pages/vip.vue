@@ -45,13 +45,11 @@
     <div class="vip-nl-reward-item-container">
       <h3 class="flex justify-between items-center vip-nl-title">
         <span>{{ $t("V0036") }}</span>
-        <div class="flex items-center ml-[6px]">
-          <BaseSwiperBtn :swiper="rewardRef" :disabled="true" :type="other" />
-        </div>
+        <div class="flex items-center ml-[6px]"></div>
       </h3>
       <swiper
         ref="rewardRef"
-        :modules="[SwiperAutoplay, SwiperNavigation, SwiperEffectCoverflow, SwiperPagination, SwiperEffectCreative]"
+        :modules="[SwiperAutoplay, SwiperNavigation]"
         :slides-per-view="4"
         :space-between="16"
         :slides-per-group="1"

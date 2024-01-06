@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "13769353",
+      "name": "列表页-VIP角标",
+      "font_class": "vip1",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "10907110",
+      "name": "活动",
+      "font_class": "huodong",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "1000816",
+      "name": "share",
+      "font_class": "share",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "11349168",
+      "name": "share-f",
+      "font_class": "share-f",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "730867",
+      "name": "签到",
+      "font_class": "qiandao",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "11337537",
+      "name": "抽奖转盘",
+      "font_class": "choujiangzhuanpan",
+      "unicode": "e6a7",
+      "unicode_decimal": 59047
+    },
+    {
       "icon_id": "27374447",
       "name": "分享",
       "font_class": "fenxiang",

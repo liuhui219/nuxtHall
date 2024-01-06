@@ -4,7 +4,7 @@
   <footer class="home-footer-pc wrap gap-y-[36px]">
     <div class="flex w-full justify-between">
       <div class="logo">
-        <base-img class="h-[50px] w-[130px]" name="logo-h" type="png" path="images/logo" />
+        <base-img class="h-[50px] w-[185px]" name="logo" type="png" path="images/logo" />
         <div class="share flex w-full gap-[20px] mt-[16px] justify-center">
           <div class="share-icon w-[40px] h-[40px]" v-for="(item, index) in shareList" :key="index">
             <LazyBaseIcon :name="item.icon" />

@@ -36,6 +36,17 @@ export function isPageInSome(current: string, path = "") {
   return path.toString().includes(current);
 }
 
+export const getHashValue = (url: string) => {
+  var regex = /#\/([^?]+)/;
+
+  // 使用正则表达式进行匹配
+  let match = url.match(regex);
+
+  // 获取匹配到的hash值
+  let hashValue = match ? match[1] : null;
+  return hashValue;
+};
+
 export const closePopup = (name?: string | undefined) => {
   const route = useRoute();
   let {params, query, path, hash} = route;
@@ -47,7 +58,7 @@ export const closePopup = (name?: string | undefined) => {
 export const openPopup = (name?: string | undefined) => {
   const route = useRoute();
   let {params, query, path, hash} = route;
-  if (!useNuxtApp().$device.isDesktop && name != "menu") {
+  if (name != "menu") {
     hash = hash.replace("/menu", "");
   }
   let nextHash = "";

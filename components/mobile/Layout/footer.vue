@@ -11,10 +11,11 @@
     >
       <BaseIcon
         :name="item.name"
-        class="animate__animated text-[18px]"
+        class="animate__animated text-[22px]"
         :class="{animate__jello: activeName === item.text && isChanged}"
       />
-      <div>{{ $t(item.title) }}</div>
+      <div class="text-[12px]">{{ $t(item.title) }}</div>
+      <div v-if="item.bg" class="mobile_bg"></div>
     </button>
   </div>
 </template>
@@ -24,11 +25,12 @@
     {name: "menu", text: "Menu", hash: "menu", title: "H0001"},
     // {name: "Rewards", text: "About", path: "about", title: "H0004"},
     {name: "moneygo", text: "Moneygo", path: "#/charge", title: "H0014"},
-    {name: "fenxiang", text: "Fenxiang", path: "#/share", title: "H0015"},
+    {name: "share", text: "Share", path: "#/share", title: "H0015", bg: true},
     // {name: "Mygame", text: "Vip", path: "vip", title: "TR0001"},
-    {name: "home", text: "Home", path: "", title: "H0003"},
-    {name: "tuiguang", text: "Promotion", path: "promotion", title: "H0013"},
 
+    {name: "tuiguang", text: "Promotion", path: "promotion", title: "H0013"},
+    {name: "user", text: "User", path: "user", title: "H0016"},
+    // {name: "home", text: "Home", path: "", title: "H0003"},
     // { name: 'member', text: 'userInfo', hash: 'userInfo', title: 'H0048' },
     // {name: "chatb", text: "Chat", hash: "chat", title: "Chat", isTranslation: true},
   ]);
@@ -78,18 +80,20 @@
 <style lang="scss" scoped>
   .mobileNavbar {
     display: flex;
-    background: var(--el-border-color-extra-light);
+    background: var(--foot-bg);
     bottom: 0;
     box-shadow: 0 -12px 24px var(--el-bg-color-page);
     height: 65px;
     height: calc(65px + env(safe-area-inset-bottom));
-    left: 0;
+    left: 50%;
     padding-bottom: env(safe-area-inset-bottom);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     width: 100%;
+    max-width: var(--maxWidth);
+    transform: translateX(-50%);
     z-index: 350;
 
     & > button {
@@ -105,12 +109,44 @@
       cursor: pointer;
       & > .icon {
         margin-bottom: 4px;
-        font-size: 18px;
+        font-size: 22px;
       }
       &.current {
         color: var(--el-color-primary);
       }
     }
+
+    .mobile_bg {
+      width: 56px;
+      height: 56px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -12px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 50%;
+      z-index: -1;
+      background: var(--foot-bg);
+    }
+  }
+
+  .icon-moneygo {
+    font-size: 24px !important;
+    margin-top: -4px;
+  }
+
+  .icon-share {
+    margin-top: -18px;
+    border: 1px solid var(--el-color-primary);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: var(--el-color-primary);
+    background: linear-gradient(180deg, rgba(31, 223, 117, 0.1), rgba(23, 212, 55, 0.4) 93.23%, rgba(6, 155, 68, 0.4));
   }
 
   .animate__animated {

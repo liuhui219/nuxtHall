@@ -147,7 +147,7 @@
   };
 
   watchEffect(() => {
-    resetDialog.value = route.hash.includes("reset");
+    resetDialog.value = getHashValue(route.hash) === "reset";
   });
 </script>
 
@@ -156,6 +156,7 @@
     backdrop-filter: blur(12px);
     .el-dialog {
       width: calc(100% - 40px);
+      max-width: calc(var(--maxWidth) - 40px);
       border-radius: 10px;
       .login-close .el-icon {
         font-size: 18px;

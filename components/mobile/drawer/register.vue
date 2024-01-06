@@ -22,8 +22,8 @@
       <el-form ref="formRef" :model="ruleForm" :rules="rules" status-icon inline-message key="formRef">
         <el-tabs v-model="activeName" class="demo-tabs">
           <el-tab-pane :label="$t('L1012')" name="first"
-            ><el-form-item prop="account">
-              <el-input size="large" clearable v-model="ruleForm.account" :placeholder="$t('L1014')"></el-input>
+            ><el-form-item prop="emil">
+              <el-input size="large" clearable v-model="ruleForm.emil" :placeholder="$t('L1014')"></el-input>
             </el-form-item>
             <el-form-item prop="password">
               <el-input
@@ -87,20 +87,34 @@
   const formRef = ref<FormInstance>();
   const route = useRoute();
   const ruleForm = reactive({
-    account: "",
+    emil: "",
     password: "",
     phoneNumber: "",
     rememberCheck: false,
   });
+  const validateEmil = (rule: any, value: any, callback: any) => {
+    const emailRegex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    if (value === "") {
+      callback(new Error(t("L1014")));
+    } else {
+      if (!emailRegex.test(value)) {
+        callback(new Error(t("L1022")));
+      } else {
+        callback();
+      }
+    }
+  };
   const rules = computed(() => {
     const rule = {
-      account: [
+      emil: [
+        {validator: validateEmil, trigger: ["blur", "change"]},
         {
           required: true,
           message: t("L1014"),
           trigger: ["blur", "change"],
         },
       ],
+
       phoneNumber: [
         {
           required: true,
@@ -130,7 +144,7 @@
   };
 
   watchEffect(() => {
-    registerDialog.value = route.hash.includes("register");
+    registerDialog.value = getHashValue(route.hash) === "register";
   });
 </script>
 
@@ -139,6 +153,7 @@
     backdrop-filter: blur(12px);
     .el-dialog {
       width: calc(100% - 40px);
+      max-width: calc(var(--maxWidth) - 40px);
       border-radius: 10px;
       .login-close .el-icon {
         font-size: 18px;

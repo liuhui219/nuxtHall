@@ -1,15 +1,14 @@
 <!-- @format -->
 
 <template>
-  <LazyDesktopPagesGame v-if="$device.isDesktop && show" />
-  <LazyMobilePagesGame v-else-if="show" />
+  <!-- <LazyDesktopPagesGame v-if="$device.isDesktop && show" /> -->
+  <div><LazyMobilePagesGame v-if="show" /></div>
 </template>
 
 <script setup>
   definePageMeta({
     name: "游戏",
     auth: true,
-    pageIndex: 1,
     scrollToTop: true,
     pageIndex: 10,
   });

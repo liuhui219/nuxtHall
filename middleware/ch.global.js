@@ -2,6 +2,11 @@
 import store from "store";
 export default defineNuxtRouteMiddleware((to, from) => {
   if (process.server) return;
+
+  //dialog弹框做登录权限判断
+
+  let authList = ["charge"];
+
   const isLogin = useIsLogin();
   let status = store.get("w_l_s_a");
 
@@ -11,7 +16,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     isLogin.value = true;
   }
 
-  if (to.meta.auth && !isLogin.value) {
+  if ((to.meta.auth || authList.includes(getHashValue(to.hash))) && !isLogin.value) {
     return navigateTo({
       path: "/",
       hash: "#/login",
@@ -35,30 +40,29 @@ export default defineNuxtRouteMiddleware((to, from) => {
   }
   const pageToIndex = to.meta.pageIndex;
   const pageFromIndex = from.meta.pageIndex;
-  if (!useNuxtApp().$device.isDesktop) {
-    if (to.path !== from.path) {
-      if (pageToIndex === pageFromIndex) {
-        to.meta.pageTransition = from.meta.pageTransition = {
-          name: "page",
-          mode: "in-out",
-        };
-      }
-      if (pageToIndex > pageFromIndex) {
-        to.meta.pageTransition = from.meta.pageTransition = {
-          name: "app-slide-left",
-          mode: "in-out",
-        };
-      }
 
-      if (pageToIndex < pageFromIndex) {
-        to.meta.pageTransition = from.meta.pageTransition = {
-          name: "app-slide-right",
-          mode: "in-out",
-        };
-      }
-    } else {
-      to.meta.pageTransition = from.meta.pageTransition = {};
+  if (to.path !== from.path) {
+    if (pageToIndex === pageFromIndex) {
+      to.meta.pageTransition = from.meta.pageTransition = {
+        name: "page",
+        mode: "in-out",
+      };
     }
+    if (pageToIndex > pageFromIndex) {
+      to.meta.pageTransition = from.meta.pageTransition = {
+        name: "app-slide-left",
+        mode: "in-out",
+      };
+    }
+
+    if (pageToIndex < pageFromIndex) {
+      to.meta.pageTransition = from.meta.pageTransition = {
+        name: "app-slide-right",
+        mode: "in-out",
+      };
+    }
+  } else {
+    to.meta.pageTransition = from.meta.pageTransition = {};
   }
 
   if (from.path != to.path) {

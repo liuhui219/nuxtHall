@@ -22,6 +22,10 @@ export default {
   L1019: "Back Home",
   L1020: "Enter UserName",
   L1021: "Enter OID",
+  L1022: "Please enter a valid email address",
+  L1023: "Hot recommendations",
+  L1024: "Slots",
+  L1025: "Casual game",
 
   C1001: "Chinese",
   C1002: "English",
@@ -42,6 +46,12 @@ export default {
   H0013: "Promotion",
   H0014: "Charge",
   H0015: "Share",
+  H0016: "My",
+  H0017: "Report",
+  H0018: "Lottery",
+  H0019: "Bonus",
+  H0020: "VIP",
+  H0021: "Activity",
 
   E0001: "Can't find this page",
   E0002: "Maintenance is in progress.",

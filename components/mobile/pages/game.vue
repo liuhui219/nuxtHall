@@ -21,7 +21,7 @@
   </LazyMobileModelDrawer>
 </template>
 
-<script setup lang="ts">
+<script setup>
   import {useFullscreen} from "@vueuse/core";
   const iframe = ref(null);
 
@@ -31,8 +31,9 @@
 
   const url = ref("");
   const iFrameLoad = () => {
+    iframe.value.contentWindow.focus();
     if (url.value != "") {
-      enter();
+      //enter();
     }
   };
   onMounted(() => {

@@ -4,7 +4,7 @@
   <header class="mobile-header fixed">
     <section class="flex justify-between w-full px-[15px] h-full">
       <div class="left flex justify-center items-center" @click="goHome">
-        <base-img class="h-[40px] w-[104px] logo" name="logo-h" type="png" path="images/logo" />
+        <base-img class="h-[36px] w-[133px] logo" name="logo" type="png" path="images/logo" />
       </div>
       <div class="right tools-login">
         <template v-if="!isLogin"
@@ -64,12 +64,14 @@
 <style lang="scss" scoped>
   .mobile-header {
     top: 0;
-    left: 0;
+    left: 50%;
     z-index: 300;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    max-width: var(--maxWidth);
+    transform: translateX(-50%);
     height: var(--mobile-header-height);
     background-color: var(--el-bg-color);
     .logo {

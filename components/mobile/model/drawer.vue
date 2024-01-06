@@ -62,6 +62,10 @@
 
 <style lang="scss">
   .mobile-drawer-el-overlay {
+    width: 100%;
+    max-width: var(--maxWidth);
+    left: 50% !important;
+    transform: translateX(-50%);
     .el-drawer__body {
       padding: 0;
       background-color: var(--el-bg-color);

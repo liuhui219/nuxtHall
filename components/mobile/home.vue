@@ -5,18 +5,20 @@
 <!-- @format -->
 
 <template>
-  <LazyMobileLayoutHeader />
+  <div class="mobile-root">
+    <LazyMobileLayoutHeader />
 
-  <LazyMobileLayoutMenu />
-  <main class="mobile-container-main">
-    <NuxtPage />
-  </main>
-  <LazyMobileLayoutFooter />
+    <LazyMobileLayoutMenu />
+    <main class="mobile-container-main">
+      <NuxtPage />
+    </main>
+    <LazyMobileLayoutFooter />
 
-  <template v-for="(item, index) in components"
-    ><component :is="item.component" v-if="route.hash.includes(item.name)"
-  /></template>
-  <baseLoading :http="true" v-if="httpLoading"></baseLoading>
+    <template v-for="(item, index) in components"
+      ><component :is="item.component" v-if="route.hash.includes(item.name)"
+    /></template>
+    <baseLoading :http="true" v-if="httpLoading"></baseLoading>
+  </div>
 </template>
 
 <script setup>
@@ -39,6 +41,14 @@
 </script>
 
 <style lang="scss" scoped>
+  .mobile-root {
+    width: 100%;
+    height: 100%;
+    max-width: var(--maxWidth);
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+  }
   .mobile-container-main {
     width: 100%;
     padding-bottom: 65px;
