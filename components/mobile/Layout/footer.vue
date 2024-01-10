@@ -28,7 +28,7 @@
     {name: "share", text: "Share", path: "#/share", title: "H0015", bg: true},
     // {name: "Mygame", text: "Vip", path: "vip", title: "TR0001"},
 
-    {name: "tuiguang", text: "Promotion", path: "promotion", title: "H0013"},
+    {name: "tuiguang", text: "Promotion", path: "#/moneyRain", title: "H0013"},
     {name: "user", text: "User", path: "user", title: "H0016"},
     // {name: "home", text: "Home", path: "", title: "H0003"},
     // { name: 'member', text: 'userInfo', hash: 'userInfo', title: 'H0048' },

@@ -12,7 +12,7 @@
           :slides-per-group="1"
           :loop="true"
           :autoplay="{
-            delay: 5000,
+            delay: animationtime * 1000,
             disableOnInteraction: false,
           }"
           @slide-change="slideChange"
@@ -67,6 +67,11 @@
             :slides-per-view="4"
             :space-between="8"
             :slides-per-group="1"
+            :loop="true"
+            :autoplay="{
+              delay: 5000,
+              disableOnInteraction: false,
+            }"
           >
             <swiper-slide v-for="(item, index) in hotGamesList" :key="index" class="flex justify-center">
               <div class="mobile-hot-games-box w-full">
@@ -100,7 +105,6 @@
                   key="(count - 1) * 2"
                   @click="openGame(item.children[(count - 1) * 2])"
                   textInfo
-                  provider
                   :game="item.children[(count - 1) * 2]"
                 ></base-game-component>
                 <base-game-component
@@ -113,7 +117,6 @@
                   "
                   @click="openGame(item.children[(count - 1) * 2 + 1])"
                   textInfo
-                  provider
                   :game="item.children[(count - 1) * 2 + 1]"
                 ></base-game-component>
               </div>
@@ -136,6 +139,7 @@
   const info = ref();
   const containerNews = ref<any>(null);
   const containerNewsWidth = ref<any>(0);
+  const animationtime = ref(5);
   onMounted(() => {
     containerNewsWidth.value = 0 - containerNews.value.offsetWidth + "px";
   });
@@ -313,10 +317,10 @@
 
           display: flex;
           & > div {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
-            transition: all 0.3s;
+            transition: all 0.6s;
             // background: var(--el-bg-color);
             cursor: pointer;
             border: 1px solid var(--el-text-color-primary);
@@ -337,8 +341,7 @@
               background-color: var(--el-color-primary);
               border-radius: 10px;
               white-space: nowrap;
-              animation: home-progress 4s;
-              animation-fill-mode: forwards;
+              animation: home-progress 5s forwards;
             }
           }
         }

@@ -1,7 +1,7 @@
 <!-- @format -->
 <template>
   <div ref="target" class="game-component w-full relative">
-    <div class="game-cover relative z-[1]" :style="{backgroundImage: loaded ? `url(${game.src})` : ''}">
+    <div class="game-cover relative z-[1]" :style="{backgroundImage: !isLoading && loaded ? `url(${imgURL})` : ''}">
       <div v-if="mask && show" class="game-mask">
         <div class="game-mask-content">
           <div class="game-play pointer">
@@ -12,6 +12,9 @@
             <span>{{ game.en }}</span>
           </div>
         </div>
+      </div>
+      <div class="img-error" v-if="error">
+        <base-img class="w-full h-full" name="img_fial" type="png" path="images/load" />
       </div>
     </div>
     <div class="game-text-info text-left" v-if="textInfo">
@@ -24,12 +27,13 @@
         <span class="text-home-second mr-[4px]">R$</span><em class="text-number not-italic">56.390,00</em>
       </div>
     </div>
-    <div v-if="!loaded" class="game-cover game-cover-copy" />
+    <div v-if="isLoading || !loaded" class="game-cover game-cover-copy" />
   </div>
 </template>
 
 <script setup lang="ts">
   import {useImage, useIntersectionObserver} from "@vueuse/core";
+  const {$importImage} = useNuxtApp();
   const propsConf = defineProps({
     game: {
       type: Object,
@@ -65,13 +69,42 @@
     },
   });
 
+  const error = ref(false);
+
   const loaded = ref(false);
   const show = ref(false);
   const target = ref(null);
+  const imgURL = ref("");
+  const first = ref(false);
+  const isLoading = ref(true);
   // const {isLoading,} = useImage({src: propsConf.game.src});
+  const getImg = (src: string) => {
+    let xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      if (xhr.status === 200 && src) {
+        let url = URL.createObjectURL(xhr.response);
+        imgURL.value = url;
+        isLoading.value = false;
+      } else {
+        isLoading.value = false;
+        error.value = true;
+      }
+    };
+    xhr.onerror = function () {
+      isLoading.value = false;
+      error.value = true;
+    };
+    xhr.open("GET", src, true);
+    xhr.responseType = "blob";
+    xhr.send();
+  };
 
   const {stop} = useIntersectionObserver(target, ([{isIntersecting}], observerElement) => {
     if (isIntersecting) {
+      if (!first.value) {
+        getImg(propsConf.game.src);
+      }
+      first.value = isIntersecting;
       show.value = isIntersecting;
       setTimeout(() => {
         loaded.value = isIntersecting;
@@ -162,6 +195,15 @@
       &:hover .game-mask {
         display: flex;
       }
+    }
+
+    .img-error {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 15%;
     }
 
     .game-cover.game-cover-copy {

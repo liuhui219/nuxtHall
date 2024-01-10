@@ -13,7 +13,7 @@ export const games = {
       if (data == "ToCloseWebView") {
         //EASYGAME
         // closePopup("game-drawer");
-        navigateTo({path: "/"});
+        navigateTo("/");
       }
     }
   },

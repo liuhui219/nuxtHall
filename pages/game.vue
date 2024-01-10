@@ -1,32 +1,22 @@
 <!-- @format -->
 
 <template>
-  <!-- <LazyDesktopPagesGame v-if="$device.isDesktop && show" /> -->
-  <div><LazyMobilePagesGame v-if="show" /></div>
+  <div class="mobile-game w-full h-full"><LazyMobilePagesGame /></div>
 </template>
 
 <script setup>
   definePageMeta({
     name: "游戏",
     auth: true,
-    scrollToTop: true,
     pageIndex: 10,
-  });
-
-  const show = ref(true);
-  const gamereload = gameReload();
-  const gameReloadSave = ref(gamereload.value);
-  watchEffect(() => {
-    if (gameReloadSave.value != gamereload.value) {
-      gameReloadSave.value = gamereload.value;
-      // reloadNuxtApp({path: "/game"});
-      show.value = false;
-
-      nextTick(() => {
-        show.value = true;
-      });
-    }
   });
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+  .mobile-game {
+    background-color: var(--el-bg-color);
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+  }
+</style>

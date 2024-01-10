@@ -1,7 +1,7 @@
 <!-- @format -->
 
 <template>
-  <div><LazyMobilePagesHome /></div>
+  <div class="w-full h-full"><LazyMobilePagesHome /></div>
 </template>
 
 <script setup>

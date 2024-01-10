@@ -1,24 +1,20 @@
 <!-- @format -->
 
 <template>
-  <LazyMobileModelDrawer :title="'game'" :drawer="drawerGame" :header="false" :hash="''">
-    <template #body>
-      <div class="game-iframe">
-        <div class="iframe-box">
-          <iframe
-            ref="iframe"
-            :src="url"
-            frameborder="0"
-            allowtransparency="true"
-            allow="autoplay"
-            auto=" "
-            allowfullscreen
-            @load="iFrameLoad"
-          />
-        </div>
-      </div>
-    </template>
-  </LazyMobileModelDrawer>
+  <div class="game-iframe">
+    <div class="iframe-box">
+      <iframe
+        ref="iframe"
+        :src="url"
+        frameborder="0"
+        allowtransparency="true"
+        allow="autoplay"
+        auto=" "
+        allowfullscreen="true"
+        @load="iFrameLoad"
+      />
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -31,7 +27,6 @@
 
   const url = ref("");
   const iFrameLoad = () => {
-    iframe.value.contentWindow.focus();
     if (url.value != "") {
       //enter();
     }
@@ -50,10 +45,6 @@
   onDeactivated(() => {
     games.leaveGame();
   });
-
-  watchEffect(() => {
-    drawerGame.value = route.path === "/game";
-  });
 </script>
 
 <style lang="scss" scoped>
@@ -62,7 +53,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    position: relative;
+
     .iframe-box {
       width: 100%;
       display: flex;
