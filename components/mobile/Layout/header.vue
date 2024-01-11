@@ -57,7 +57,7 @@
   const signOut = () => {
     store.remove("w_l_s_a");
     isLogin.value = false;
-    router.push({path: "/"});
+    navigateTo("/");
   };
 </script>
 

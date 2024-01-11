@@ -207,3 +207,13 @@
     transform: translateY(1296px) rotate(1turn) translateX(0);
   }
 }
+
+@keyframes bottom-animation {
+  0% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

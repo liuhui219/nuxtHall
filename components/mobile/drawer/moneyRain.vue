@@ -13,7 +13,16 @@
         <div @click="closeFn" class="close p-[15px] absolute right-0 top-0 z-[1] text-[14px]">
           <el-icon><component is="CloseBold"></component></el-icon>
         </div>
-        <div class="moneyRain w-full h-full"></div>
+
+        <div class="moneyRain w-full h-full">
+          <base-img
+            style="position: absolute"
+            class="w-full bottom-[0] opacity-0 z-[1] bottom-animation"
+            name="redpacket_bottom"
+            type="png"
+            path="images/home"
+          />
+        </div>
       </div>
     </template>
   </LazyMobileModelDrawer>
@@ -59,9 +68,9 @@
     var a = Math.ceil(4 * Math.random());
     let money = document.createElement("div");
     money.classList.add("money" + a);
-    var i = arr[a - 1],
-      left = Math.random() * window.innerWidth,
-      top = 30 * getRandom(0.7, 1) - 100;
+    let i = arr[a - 1];
+    let left = getRandom(0, window.innerWidth - i.width / 2);
+    let top = 30 * getRandom(0.7, 1) - 100;
 
     money.style.left = "".concat(left, "px");
     money.style.top = "".concat(top, "px");
@@ -130,6 +139,9 @@
         position: absolute;
         animation-timing-function: linear;
         transform-style: preserve-3d;
+      }
+      .bottom-animation {
+        animation: bottom-animation 8s forwards;
       }
     }
   }
