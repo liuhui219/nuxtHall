@@ -6,6 +6,55 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1424268",
+      "name": "叉叉",
+      "font_class": "no",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "6204084",
+      "name": "对勾",
+      "font_class": "yes",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "998863",
+      "name": "提现",
+      "font_class": "tixian",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "38297640",
+      "name": "fill-new-office-doc-tickets",
+      "font_class": "jilu",
+      "unicode": "e70d",
+      "unicode_decimal": 59149
+    },
+    {
+      "icon_id": "11686796",
+      "name": "info",
+      "font_class": "info",
+      "unicode": "e675",
+      "unicode_decimal": 58997
+    },
+    {
+      "icon_id": "13519423",
+      "name": "info",
+      "font_class": "info1",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "27930099",
+      "name": "特权",
+      "font_class": "tequan",
+      "unicode": "e7ff",
+      "unicode_decimal": 59391
+    },
+    {
       "icon_id": "13769353",
       "name": "列表页-VIP角标",
       "font_class": "vip1",

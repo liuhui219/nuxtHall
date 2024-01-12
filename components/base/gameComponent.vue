@@ -111,16 +111,6 @@
       }, 500);
     }
   });
-  // onMounted(() => {
-  //   var img = document.createElement("img");
-  //   img.src = propsConf.game.src;
-  //   img.onload = function () {
-  //     loaded.value = true;
-  //     setTimeout(() => {
-  //       isRemove.value = true;
-  //     }, 2000);
-  //   };
-  // });
 </script>
 
 <style lang="scss" scoped>

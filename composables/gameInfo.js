@@ -8,12 +8,13 @@ export const games = {
     console.log("====================================");
     console.log(data);
     console.log("====================================");
-
+    const router = useRouter();
     if (typeof data == "string") {
       if (data == "ToCloseWebView") {
         //EASYGAME
         // closePopup("game-drawer");
-        navigateTo("/");
+        //navigateTo("/");
+        router.back();
       }
     }
   },

@@ -8,6 +8,7 @@
   definePageMeta({
     name: "游戏",
     auth: true,
+    scrollToTop: true,
     pageIndex: 10,
   });
 </script>

@@ -52,6 +52,10 @@ export default {
   H0019: "Bonus",
   H0020: "VIP",
   H0021: "Activity",
+  H0022: "Withdraw",
+  H0023: "Privilege",
+  H0024: "Records",
+  H0025: "Rules",
 
   E0001: "Can't find this page",
   E0002: "Maintenance is in progress.",

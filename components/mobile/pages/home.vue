@@ -374,7 +374,7 @@
           font-size: 12px;
           flex-shrink: 0;
           cursor: pointer;
-          color: var(--el-color-primary);
+          //color: var(--el-color-primary);
           background: rgb(255 255 255 / 8%);
           // background-color: var(--el-bg-color-overlay);
           border-radius: var(--border-radius);
@@ -394,18 +394,18 @@
           font-weight: initial;
         }
 
-        &::before {
-          content: "";
-          background-color: var(--el-color-primary);
-          position: absolute;
-          left: -28%;
-          top: 15%;
-          width: 65%;
-          height: 15%;
-          border-radius: 50%;
-          opacity: 0.4;
-          filter: blur(100px);
-        }
+        // &::before {
+        //   content: "";
+        //   background-color: var(--el-color-primary);
+        //   position: absolute;
+        //   left: -28%;
+        //   top: 15%;
+        //   width: 65%;
+        //   height: 15%;
+        //   border-radius: 50%;
+        //   opacity: 0.4;
+        //   filter: blur(100px);
+        // }
       }
 
       .mobile-hot-games {

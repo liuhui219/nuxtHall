@@ -107,8 +107,8 @@
     width: 100%;
     height: 100%;
     .close .el-icon {
-      font-size: 18px;
-      color: var(--el-border-color-darker);
+      font-size: 22px;
+      color: var(--el-color-primary);
     }
 
     .moneyRain {
