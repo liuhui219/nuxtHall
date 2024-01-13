@@ -1,224 +1,135 @@
 <!-- @format -->
 
 <template>
-  <client-only
-    ><Lazy-el-dialog
-      v-model="registerDialog"
-      modal-class="mobile-el-overlay-register-dialog"
-      :show-close="false"
-      title=""
-      width="100%"
-      destroy-on-close
-      center
-      align-center
-      @close="closeDialog"
-    >
-      <template #header>
-        <div @click="closeLogin" class="login-close p-[15px] absolute right-0 top-0 z-[1] text-[14px]">
-          <el-icon><component is="CloseBold"></component></el-icon>
-        </div>
-      </template>
-
-      <el-form ref="formRef" :model="ruleForm" :rules="rules" status-icon inline-message key="formRef">
-        <el-tabs v-model="activeName" class="demo-tabs">
-          <el-tab-pane :label="$t('L1012')" name="first"
-            ><el-form-item prop="emil">
-              <el-input size="large" clearable v-model="ruleForm.emil" :placeholder="$t('L1014')"></el-input>
-            </el-form-item>
-            <el-form-item prop="password">
-              <el-input
-                size="large"
-                type="password"
-                show-password
-                clearable
-                v-model="ruleForm.password"
-                :placeholder="$t('L1006')"
-              ></el-input>
-            </el-form-item>
-            <el-form-item prop="rememberCheck">
-              <el-checkbox v-model="ruleForm.rememberCheck">{{ $t("L1003") }}</el-checkbox>
-            </el-form-item></el-tab-pane
-          >
-          <el-tab-pane :label="$t('L1013')" name="second"
-            ><el-form-item prop="phoneNumber">
-              <el-input size="large" type="tel" clearable v-model="ruleForm.phoneNumber" :placeholder="$t('L1015')">
-                <template #prefix>
-                  <span>+55</span>
-                </template>
-              </el-input>
-            </el-form-item>
-            <el-form-item prop="password">
-              <el-input
-                size="large"
-                type="password"
-                show-password
-                clearable
-                v-model="ruleForm.password"
-                :placeholder="$t('L1006')"
-              ></el-input>
-            </el-form-item>
-            <el-form-item prop="rememberCheck">
-              <el-checkbox v-model="ruleForm.rememberCheck">{{ $t("L1003") }}</el-checkbox>
-            </el-form-item></el-tab-pane
-          >
-        </el-tabs>
-
-        <el-form-item>
-          <el-button v-btn type="primary" class="w-full h-[50px]" size="large">{{ t("L1002") }}</el-button>
-        </el-form-item>
-
-        <div class="quick-link quick-link-center w-full">
-          <div>
-            {{ $t("L1016") }}
-            <span class="login-main pointer" @click="openPopup('login')">{{ $t("L1001") }}</span>
+  <LazyMobileModelDrawer
+    :title="'register'"
+    :direction="'btt'"
+    :drawer="drawerDetail"
+    :header="false"
+    :hash="'register'"
+  >
+    <template #body>
+      <div class="mobile-register">
+        <div class="mobile-register-header">
+          <div class="flex justify-start items-center">
+            <base-img class="h-[36px] w-[133px] logo" name="logo" type="png" path="images/logo" />
+          </div>
+          <div @click="closeFn" class="register-close text-[14px]">
+            <el-icon><component is="CloseBold"></component></el-icon>
           </div>
         </div>
-      </el-form>
-    </Lazy-el-dialog></client-only
-  >
+        <div class="mobile-register-content">
+          <template v-for="(item, index) in components">
+            <Suspense v-if="activeName === item.name">
+              <component :is="item.component" />
+              <template #fallback>
+                <baseLoading :http="true"></baseLoading>
+              </template>
+            </Suspense>
+          </template>
+        </div>
+        <div class="mobile-register-foot">
+          <button
+            v-for="item in list"
+            :key="`navbar-${item.value}`"
+            class="no-hover"
+            :class="{current: activeName == item.code}"
+            @click="changeActive(item)"
+          >
+            <BaseIcon :name="item.icon" class="animate__animated text-[22px]" />
+            <div class="text-[12px]">{{ $t(item.title) }}</div>
+          </button>
+        </div>
+      </div>
+    </template>
+  </LazyMobileModelDrawer>
 </template>
 
-<script setup lang="ts">
-  import {onMounted, onUnmounted} from "vue";
-  import {FormInstance} from "element-plus";
-  const {locale, t} = useI18n();
-  const registerDialog = useRegisterDialog();
-  const activeName = ref("first");
-  const formRef = ref<FormInstance>();
+<script setup>
+  const drawerDetail = ref(false);
   const route = useRoute();
-  const ruleForm = reactive({
-    emil: "",
-    password: "",
-    phoneNumber: "",
-    rememberCheck: false,
+  const list = ref([
+    {icon: "mobile", title: "H0022", value: 1, code: "emil"},
+    {icon: "users", title: "H0023", value: 2, code: "mobile"},
+  ]);
+  const activeName = ref("emil");
+  const components = shallowRef([]);
+  const component = ref();
+  onMounted(() => {
+    const modulesFiles = import.meta.glob("~/components/mobile/register/*.vue");
+
+    const modules = [];
+    Object.keys(modulesFiles).forEach((modulePath) => {
+      const result = modulePath.match(/.*\/(.+).vue$/);
+
+      const value = modulesFiles[modulePath];
+      modules.push({component: defineAsyncComponent(value), name: result[1]});
+    });
+
+    components.value = [...modules];
   });
-  const validateEmil = (rule: any, value: any, callback: any) => {
-    const emailRegex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-    if (value === "") {
-      callback(new Error(t("L1014")));
-    } else {
-      if (!emailRegex.test(value)) {
-        callback(new Error(t("L1022")));
-      } else {
-        callback();
-      }
-    }
-  };
-  const rules = computed(() => {
-    const rule = {
-      emil: [
-        {validator: validateEmil, trigger: ["blur", "change"]},
-        {
-          required: true,
-          message: t("L1014"),
-          trigger: ["blur", "change"],
-        },
-      ],
-
-      phoneNumber: [
-        {
-          required: true,
-          message: t("H0010"),
-          trigger: ["blur", "change"],
-        },
-      ],
-      password: [
-        {
-          required: true,
-          message: t("H0011", {min: "6", max: "30"}),
-          trigger: ["blur", "change"],
-        },
-      ],
-    };
-
-    return rule;
-  });
-
-  const closeDialog = () => {
+  const closeFn = () => {
     closePopup("register");
   };
-
-  const closeLogin = () => {
-    closePopup("register");
-    formRef.value?.resetFields();
+  const changeActive = (item) => {
+    activeName.value = item.code;
   };
-
   watchEffect(() => {
-    registerDialog.value = getHashValue(route.hash) === "register";
+    drawerDetail.value = getHashValue(route.hash) === "register";
   });
 </script>
 
-<style lang="scss">
-  .mobile-el-overlay-register-dialog {
-    backdrop-filter: blur(12px);
-    .el-dialog {
-      width: calc(100% - 40px);
-      max-width: calc(var(--maxWidth) - 40px);
-      border-radius: 10px;
-      .login-close .el-icon {
-        font-size: 18px;
-        color: var(--el-border-color-darker);
-      }
-    }
-    .el-form .el-form-item__content {
-      .el-input {
-        --el-input-height: 50px;
-        .el-input__wrapper {
-          border-radius: 8px;
-          font-weight: bold;
-        }
-        .el-input__prefix {
-          color: var(--el-text-color-primary);
-          font-weight: 500;
-        }
-      }
-      .el-form-item__error {
-        margin-left: 0;
-        margin-top: 6px;
-      }
-      .el-button {
-        border-radius: 8px;
-        --el-button-size: 50px;
-      }
-    }
-
-    .el-dialog__body,
-    .el-form,
-    .el-tabs,
-    .el-tabs__header,
-    .el-tabs__nav-wrap,
-    .el-tabs__nav-scroll,
-    .el-tabs__nav {
+<style lang="scss" scoped>
+  .mobile-register {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .mobile-register-header {
       width: 100%;
-    }
-
-    .el-tabs__header {
-      margin-bottom: 30px;
-    }
-
-    .el-tabs__nav-scroll {
-      width: 100%;
-      .el-tabs__nav {
-        padding-bottom: 20px;
-      }
-      .el-tabs__active-bar {
-        width: 50% !important;
-      }
-      .el-tabs__item {
-        flex: 1;
-        font-size: 16px;
-        font-weight: 700;
-      }
-    }
-
-    .quick-link {
-      width: 100%;
+      height: 60px;
+      padding: 0 15px;
       display: flex;
-      justify-content: center;
-      font-size: 12px;
-      color: var(--el-text-color-regular);
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #25262b;
+      box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.5);
+      position: relative;
     }
-    .login-main {
+    .mobile-register-foot {
+      width: 100%;
+      height: 60px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      button {
+        position: relative;
+        flex: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        color: #e2e8e3;
+        cursor: pointer;
+        &.current {
+          color: var(--el-color-primary);
+        }
+      }
+      .icon {
+        margin-bottom: 4px;
+        font-size: 22px;
+      }
+    }
+    .mobile-register-content {
+      width: 100%;
+      height: calc(100% - 120px);
+      overflow-x: hidden;
+    }
+    .register-close .el-icon {
+      font-size: 22px;
       color: var(--el-color-primary);
     }
   }

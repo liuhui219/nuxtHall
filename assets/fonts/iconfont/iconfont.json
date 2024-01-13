@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "315959",
+      "name": "user",
+      "font_class": "users",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "474968",
+      "name": "mobile",
+      "font_class": "mobile",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
       "icon_id": "1424268",
       "name": "叉叉",
       "font_class": "no",
