@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   //dialog弹框做登录权限判断
 
-  let authList = ["charge"];
+  let authList = ["charge", "withdrawal", "share"];
 
   const isLogin = useIsLogin();
   let status = store.get("w_l_s_a");

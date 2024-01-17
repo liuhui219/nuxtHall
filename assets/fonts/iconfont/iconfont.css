@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4296752 */
-  src: url('iconfont.woff2?t=1705134010194') format('woff2'),
-       url('iconfont.woff?t=1705134010194') format('woff'),
-       url('iconfont.ttf?t=1705134010194') format('truetype');
+  src: url('iconfont.woff2?t=1705372692666') format('woff2'),
+       url('iconfont.woff?t=1705372692666') format('woff'),
+       url('iconfont.ttf?t=1705372692666') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,42 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-left:before {
+  content: "\e606";
+}
+
+.icon-right:before {
+  content: "\e60a";
+}
+
+.icon-tupian:before {
+  content: "\e691";
+}
+
+.icon-huixingzhen:before {
+  content: "\e60c";
+}
+
+.icon-whatsapp:before {
+  content: "\ea07";
+}
+
+.icon-messenger:before {
+  content: "\ea0f";
+}
+
+.icon-telegram1:before {
+  content: "\e60d";
+}
+
+.icon-laidianxianshi:before {
+  content: "\e64c";
+}
+
+.icon-share1:before {
+  content: "\e7b0";
 }
 
 .icon-users:before {

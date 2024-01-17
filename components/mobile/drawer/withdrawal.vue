@@ -2,23 +2,23 @@
 
 <template>
   <LazyMobileModelDrawer
-    :title="'register'"
+    :title="'Withdrawal'"
     :direction="'btt'"
     :drawer="drawerDetail"
     :header="false"
-    :hash="'register'"
+    :hash="'withdrawal'"
   >
     <template #body>
-      <div class="mobile-register">
-        <div class="mobile-register-header">
+      <div class="mobile-withdrawal">
+        <div class="mobile-withdrawal-header">
           <div class="flex justify-start items-center">
             <base-img class="h-[36px] w-[133px] logo" name="logo" type="png" path="images/logo" />
           </div>
-          <div @click="closeFn" class="register-close text-[14px]">
+          <div @click="closeFn" class="withdrawal-close text-[14px]">
             <el-icon><component is="CloseBold"></component></el-icon>
           </div>
         </div>
-        <div class="mobile-register-content">
+        <div class="mobile-withdrawal-content">
           <template v-for="(item, index) in components">
             <Suspense v-if="activeName === item.name">
               <component :is="item.component" />
@@ -28,7 +28,7 @@
             </Suspense>
           </template>
         </div>
-        <div class="mobile-register-foot">
+        <div class="mobile-withdrawal-foot">
           <button
             v-for="item in list"
             :key="`navbar-${item.value}`"
@@ -49,14 +49,16 @@
   const drawerDetail = ref(false);
   const route = useRoute();
   const list = ref([
-    {icon: "mobile", title: "L1012", value: 1, code: "email"},
-    {icon: "users", title: "L1031", value: 2, code: "mobile"},
+    {icon: "tixian", title: "H0022", value: 1, code: "withdraw"},
+    {icon: "tequan", title: "H0023", value: 2, code: "privilege"},
+    {icon: "jilu", title: "H0024", value: 3, code: "records"},
+    {icon: "info1", title: "H0025", value: 4, code: "rules"},
   ]);
-  const activeName = ref("email");
+  const activeName = ref("withdraw");
   const components = shallowRef([]);
   const component = ref();
   onMounted(() => {
-    const modulesFiles = import.meta.glob("~/components/mobile/register/*.vue");
+    const modulesFiles = import.meta.glob("~/components/mobile/withdrawal/*.vue");
 
     const modules = [];
     Object.keys(modulesFiles).forEach((modulePath) => {
@@ -69,23 +71,23 @@
     components.value = [...modules];
   });
   const closeFn = () => {
-    closePopup("register");
+    closePopup("withdrawal");
   };
   const changeActive = (item) => {
     activeName.value = item.code;
   };
   watchEffect(() => {
-    drawerDetail.value = getHashValue(route.hash) === "register";
+    drawerDetail.value = getHashValue(route.hash) === "withdrawal";
   });
 </script>
 
 <style lang="scss" scoped>
-  .mobile-register {
+  .mobile-withdrawal {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    .mobile-register-header {
+    .mobile-withdrawal-header {
       width: 100%;
       height: 60px;
       padding: 0 15px;
@@ -94,11 +96,11 @@
       justify-content: space-between;
       align-items: center;
       background-color: #25262b;
-      box-shadow: 0px 2px 16px 5px rgb(0 0 0 / 50%);
+      box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.5);
       position: relative;
       z-index: 1;
     }
-    .mobile-register-foot {
+    .mobile-withdrawal-foot {
       width: 100%;
       height: calc(65px + env(safe-area-inset-bottom));
       padding-bottom: env(safe-area-inset-bottom);
@@ -125,13 +127,13 @@
         font-size: 28px;
       }
     }
-    .mobile-register-content {
+    .mobile-withdrawal-content {
       width: 100%;
       height: calc(100% - 125px);
       overflow-x: hidden;
       position: relative;
     }
-    .register-close .el-icon {
+    .withdrawal-close .el-icon {
       font-size: 22px;
       color: var(--el-color-primary);
     }

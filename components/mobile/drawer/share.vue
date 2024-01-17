@@ -1,24 +1,18 @@
 <!-- @format -->
 
 <template>
-  <LazyMobileModelDrawer
-    :title="'register'"
-    :direction="'btt'"
-    :drawer="drawerDetail"
-    :header="false"
-    :hash="'register'"
-  >
+  <LazyMobileModelDrawer :title="'Share'" :direction="'btt'" :drawer="drawerDetail" :header="false" :hash="'share'">
     <template #body>
-      <div class="mobile-register">
-        <div class="mobile-register-header">
+      <div class="mobile-share">
+        <div class="mobile-share-header">
           <div class="flex justify-start items-center">
             <base-img class="h-[36px] w-[133px] logo" name="logo" type="png" path="images/logo" />
           </div>
-          <div @click="closeFn" class="register-close text-[14px]">
+          <div @click="closeFn" class="share-close text-[14px]">
             <el-icon><component is="CloseBold"></component></el-icon>
           </div>
         </div>
-        <div class="mobile-register-content">
+        <div class="mobile-share-content">
           <template v-for="(item, index) in components">
             <Suspense v-if="activeName === item.name">
               <component :is="item.component" />
@@ -28,7 +22,7 @@
             </Suspense>
           </template>
         </div>
-        <div class="mobile-register-foot">
+        <div class="mobile-share-foot">
           <button
             v-for="item in list"
             :key="`navbar-${item.value}`"
@@ -49,14 +43,14 @@
   const drawerDetail = ref(false);
   const route = useRoute();
   const list = ref([
-    {icon: "mobile", title: "L1012", value: 1, code: "email"},
-    {icon: "users", title: "L1031", value: 2, code: "mobile"},
+    {icon: "share1", title: "H0015", value: 1, code: "social"},
+    {icon: "laidianxianshi", title: "H0026", value: 2, code: "mobile"},
   ]);
-  const activeName = ref("email");
+  const activeName = ref("social");
   const components = shallowRef([]);
   const component = ref();
   onMounted(() => {
-    const modulesFiles = import.meta.glob("~/components/mobile/register/*.vue");
+    const modulesFiles = import.meta.glob("~/components/mobile/share/*.vue");
 
     const modules = [];
     Object.keys(modulesFiles).forEach((modulePath) => {
@@ -69,23 +63,23 @@
     components.value = [...modules];
   });
   const closeFn = () => {
-    closePopup("register");
+    closePopup("share");
   };
   const changeActive = (item) => {
     activeName.value = item.code;
   };
   watchEffect(() => {
-    drawerDetail.value = getHashValue(route.hash) === "register";
+    drawerDetail.value = getHashValue(route.hash) === "share";
   });
 </script>
 
 <style lang="scss" scoped>
-  .mobile-register {
+  .mobile-share {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    .mobile-register-header {
+    .mobile-share-header {
       width: 100%;
       height: 60px;
       padding: 0 15px;
@@ -98,7 +92,7 @@
       position: relative;
       z-index: 1;
     }
-    .mobile-register-foot {
+    .mobile-share-foot {
       width: 100%;
       height: calc(65px + env(safe-area-inset-bottom));
       padding-bottom: env(safe-area-inset-bottom);
@@ -125,13 +119,13 @@
         font-size: 28px;
       }
     }
-    .mobile-register-content {
+    .mobile-share-content {
       width: 100%;
       height: calc(100% - 125px);
       overflow-x: hidden;
       position: relative;
     }
-    .register-close .el-icon {
+    .share-close .el-icon {
       font-size: 22px;
       color: var(--el-color-primary);
     }

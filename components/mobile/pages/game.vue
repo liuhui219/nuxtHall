@@ -1,7 +1,7 @@
 <!-- @format -->
 
 <template>
-  <div class="game-iframe">
+  <div class="game-iframe" ref="gameIframe">
     <div class="iframe-box">
       <iframe
         ref="iframe"
@@ -20,15 +20,15 @@
 <script setup>
   import {useFullscreen} from "@vueuse/core";
   const iframe = ref(null);
-
+  const gameIframe = ref(null);
   const route = useRoute();
-  const {enter} = useFullscreen(iframe);
+  const {enter} = useFullscreen(gameIframe);
   const drawerGame = ref(false);
 
   const url = ref("");
   const iFrameLoad = () => {
     if (url.value != "") {
-      //enter();
+      // enter();
     }
   };
   onMounted(() => {

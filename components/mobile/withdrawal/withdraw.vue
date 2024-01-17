@@ -107,8 +107,17 @@
   const money = ref(1515160);
 
   const inputFn = (val) => {
-    ruleForm.amount = val;
-    activeIndex.value = String(val);
+    let regNumber = /^([0])(\d)+$/;
+    let reg = /[^0-9]/g;
+    let value = val;
+
+    value = value.replace(reg, "");
+
+    if (regNumber.test(value)) {
+      value = value.replace(regNumber, "$2");
+    }
+    ruleForm.amount = value;
+    activeIndex.value = String(value);
   };
 
   const checkFn = (parmas) => {
@@ -128,6 +137,7 @@
   .withdraw {
     width: 100%;
     height: 100%;
+    background-color: #25262b;
     .withdraw-title {
       width: 100%;
       height: 36px;

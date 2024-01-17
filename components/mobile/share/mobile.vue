@@ -1,6 +1,6 @@
 <!-- @format -->
 
-<template>4</template>
+<template></template>
 
 <script setup lang="ts"></script>
 

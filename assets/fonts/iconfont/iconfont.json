@@ -6,6 +6,69 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "35698780",
+      "name": "left左",
+      "font_class": "left",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "35698795",
+      "name": "Right右",
+      "font_class": "right",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "1008575",
+      "name": "图片",
+      "font_class": "tupian",
+      "unicode": "e691",
+      "unicode_decimal": 59025
+    },
+    {
+      "icon_id": "3262689",
+      "name": "回形针",
+      "font_class": "huixingzhen",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "11983524",
+      "name": "whatsapp",
+      "font_class": "whatsapp",
+      "unicode": "ea07",
+      "unicode_decimal": 59911
+    },
+    {
+      "icon_id": "11983556",
+      "name": "messenger",
+      "font_class": "messenger",
+      "unicode": "ea0f",
+      "unicode_decimal": 59919
+    },
+    {
+      "icon_id": "26267569",
+      "name": "telegram",
+      "font_class": "telegram1",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "279850",
+      "name": "来电显示",
+      "font_class": "laidianxianshi",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "2517444",
+      "name": "share",
+      "font_class": "share1",
+      "unicode": "e7b0",
+      "unicode_decimal": 59312
+    },
+    {
       "icon_id": "315959",
       "name": "user",
       "font_class": "users",

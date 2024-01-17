@@ -4,28 +4,9 @@
   <div class="mobile-register">
     <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="0" class="demo-ruleForm">
       <div class="mobile-register-cont">
-        <div class="mobile-register-label">{{ $t("L1031") }}</div>
-        <el-form-item label="" prop="phoneNumber">
-          <el-input size="large" @input="inputFn" v-model="ruleForm.phoneNumber" :placeholder="$t('L1009')">
-            <template #prepend>+55</template>
-          </el-input>
-        </el-form-item>
-      </div>
-
-      <div class="mobile-register-cont">
-        <div class="mobile-register-label">{{ $t("L1032") }}</div>
-        <el-form-item label="" prop="captcha">
-          <el-row :gutter="6" class="w-full">
-            <el-col :span="18">
-              <el-input size="large" v-model="ruleForm.captcha" clearable :placeholder="$t('L1033')" />
-            </el-col>
-            <el-col :span="6">
-              <el-button v-btn class="w-full CaptchaBtn" size="large" :disabled="countdown" @click="codeFn(ruleFormRef)"
-                ><span v-if="!countdown">{{ $t("L1017") }}</span
-                ><span v-else>{{ time }}S</span></el-button
-              >
-            </el-col>
-          </el-row>
+        <div class="mobile-register-label">{{ $t("L1012") }}</div>
+        <el-form-item label="" prop="email">
+          <el-input size="large" v-model="ruleForm.email" clearable :placeholder="$t('L1014')" />
         </el-form-item>
       </div>
 
@@ -66,19 +47,27 @@
 <script setup>
   import {useDebounceFn} from "@vueuse/core";
   import {cloneDeep} from "lodash";
-  import store from "store";
   const {locale, t} = useI18n();
   const loding = ref(false);
-  const countdown = ref(false);
-  const conut = 60;
-  const time = ref(conut);
   const ruleFormRef = ref();
   const ruleForm = reactive({
-    phoneNumber: "",
-    captcha: "",
+    email: "",
     password: "",
     confirm: "",
   });
+
+  const validateEmil = (rule, value, callback) => {
+    const emailRegex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    if (value === "") {
+      callback(new Error(t("L1014")));
+    } else {
+      if (!emailRegex.test(value)) {
+        callback(new Error(t("L1022")));
+      } else {
+        callback();
+      }
+    }
+  };
 
   const validatePassword = (rule, value, callback) => {
     let reg = /^[0-9a-zA-Z]{6,8}$/;
@@ -108,17 +97,11 @@
 
   const rules = computed(() => {
     const rule = {
-      phoneNumber: [
+      email: [
+        {validator: validateEmil, trigger: ["blur", "change"]},
         {
           required: true,
-          message: t("L1009"),
-          trigger: ["blur", "change"],
-        },
-      ],
-      captcha: [
-        {
-          required: true,
-          message: t("L1033"),
+          message: t("L1014"),
           trigger: ["blur", "change"],
         },
       ],
@@ -134,54 +117,6 @@
     };
 
     return rule;
-  });
-
-  const inputFn = (val) => {
-    let reg = /[^0-9]/g;
-    let value = val;
-
-    value = value.replace(reg, "");
-
-    ruleForm.phoneNumber = value;
-  };
-
-  const intervalFn = (s) => {
-    let timer = null;
-    timer = setInterval(() => {
-      if (s === 0) {
-        time.value = conut;
-        clearInterval(timer);
-        countdown.value = false;
-        timer = null;
-        return;
-      }
-      s--;
-      time.value = s;
-    }, 1000);
-  };
-
-  const codeFn = (formEl) => {
-    if (!formEl) return;
-    formEl.validateField("phoneNumber", (valid) => {
-      if (valid) {
-        let nowTime = new Date().getTime();
-        let Countdown = Number(nowTime) + time.value * 1000;
-        store.set("w_l_s_cd", Countdown);
-        countdown.value = true;
-        intervalFn(time.value);
-      }
-    });
-  };
-
-  onMounted(() => {
-    let Countdown = store.get("w_l_s_cd");
-    let nowTime = new Date().getTime();
-    if (Countdown && nowTime < Countdown) {
-      countdown.value = true;
-      let times = Math.ceil((Countdown - nowTime) / 1000);
-      time.value = times;
-      intervalFn(times);
-    }
   });
 
   const submitForm = async (formEl) => {
@@ -209,14 +144,13 @@
     height: 100%;
     background: #25262b;
     padding: 20px 8px;
-    overflow-x: hidden;
 
     ::v-deep(.el-form) {
       width: 100%;
-      padding-bottom: 50px;
       gap: 10px;
       display: flex;
       flex-direction: column;
+      padding-bottom: 50px;
     }
     .mobile-register-cont {
       background: #45464a;
@@ -249,14 +183,6 @@
       ::v-deep(.el-input__wrapper) {
         background-color: #2b2f35;
       }
-
-      ::v-deep(.el-input-group__prepend) {
-        background-color: #3b3f44;
-        font-weight: bold;
-      }
-    }
-    ::v-deep(.CaptchaBtn) {
-      background: var(--background);
     }
     ::v-deep(.submit) {
       width: 100%;

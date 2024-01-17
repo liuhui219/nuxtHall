@@ -66,10 +66,37 @@ export default defineNuxtConfig({
       meta: [
         {
           name: "viewport",
-          content: "width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no",
+          content:
+            "width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no,initial-scale=1.0,viewport-fit=cover",
         },
+        {name: "render", content: "webkit"},
+        {name: "force-rendering", content: "webkit"},
         {
           charset: "utf-8",
+        },
+        {
+          name: "apple-mobile-web-app-status-bar-style",
+          content: "#141414",
+        },
+        {
+          name: "apple-touch-fullscreen",
+          content: "yes",
+        },
+        {
+          name: "full-screen",
+          content: "yes",
+        },
+        {
+          name: "appname",
+          content: "game",
+        },
+        {
+          name: "apple-mobile-web-app-capable",
+          content: "yes",
+        },
+        {
+          name: "mobile-web-app-capable",
+          content: "yes",
         },
         {name: "description", content: "描述"},
         {name: "keywords", content: "关键词"},
@@ -79,6 +106,7 @@ export default defineNuxtConfig({
         class: "dark",
         lang: envData?.VITE_PUBLIC_LANG || "en",
       },
+      link: [{rel: "manifest", href: "/manifest.webmanifest"}],
       script: [{src: "https://www.googletagmanager.com/gtag/js?id=G-CPF0DDW6YE", defer: true}, {src: "config.js"}],
     },
   },
@@ -94,7 +122,53 @@ export default defineNuxtConfig({
     "nuxt-delay-hydration",
     "@zadigetvoltaire/nuxt-gtm",
     "@nuxtjs/robots",
+    "@vite-pwa/nuxt",
   ],
+
+  pwa: {
+    registerType: "autoUpdate",
+    manifest: {
+      name: "EasyGame",
+      short_name: "EasyGame",
+      theme_color: "#141414",
+      display: "standalone",
+      scope: "/",
+      start_url: "/",
+      icons: [
+        {
+          src: "pwa-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "pwa-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+        {
+          src: "pwa-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "any maskable",
+        },
+      ],
+    },
+    workbox: {
+      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
+    },
+    client: {
+      installPrompt: true,
+      // you don't need to include this: only for testing purposes
+      // if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
+      periodicSyncForUpdates: 20,
+    },
+    devOptions: {
+      enabled: true,
+      suppressWarnings: true,
+      navigateFallbackAllowlist: [/^\/$/],
+      type: "module",
+    },
+  },
 
   gtm: {
     id: "GTM-PG9LNMLJ",
