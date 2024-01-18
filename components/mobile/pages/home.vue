@@ -34,11 +34,11 @@
       <div class="mobile-home-container-header flex w-full h-[30px] overflow-y-hidden">
         <BaseIcon name="notifications" />
         <div class="mobile-home-container-news flex h-full">
-          <div class="mobile-home-container-news-main flex h-full">
+          <div class="mobile-home-container-news-main flex h-full" ref="newsContainer">
             <div ref="containerNews" class="mobile-home-container-news-box flex h-full">
               <span v-for="(item, index) in newsList" :key="index">{{ item.text }}</span>
             </div>
-            <div ref="containerNews" class="mobile-home-container-news-box flex h-full">
+            <div class="mobile-home-container-news-box flex h-full">
               <span v-for="(item, index) in newsList" :key="index">{{ item.text }}</span>
             </div>
           </div>
@@ -133,15 +133,31 @@
   import {useThrottleFn} from "@vueuse/core";
   const {$importImage} = useNuxtApp();
   const nuxtApp = useNuxtApp();
+
   const {locale, t} = useI18n();
   const homeContainer = ref(null);
   const homeTab = ref<any>(null);
   const info = ref();
   const containerNews = ref<any>(null);
-  const containerNewsWidth = ref<any>(0);
+
   const animationtime = ref(5);
+  const durations = `${animationtime.value}s`;
+  const newsContainer = ref<any>(null);
   onMounted(() => {
-    containerNewsWidth.value = 0 - containerNews.value.offsetWidth + "px";
+    let containerNewsWidth = 0 - containerNews.value.offsetWidth + "px";
+
+    const dymanicStyle = `@keyframes scroll-left {
+      0% {
+        transform: translateX(0px);
+      }
+      100% {
+        transform: translateX(${containerNewsWidth});
+      }
+    }`;
+    const style = document.createElement("style");
+    style.innerHTML = dymanicStyle;
+
+    document.body.appendChild(style);
   });
   const url = games.gameURL();
   const openPopupFn = () => {};
@@ -257,11 +273,8 @@
   const slideChange = (event: {realIndex: number}) => {
     activeIndex.value = event.realIndex;
   };
-
-  onMounted(() => {});
 </script>
 <style lang="scss" scoped>
-  $end-position: v-bind(containerNewsWidth);
   .mobile-home-container {
     background-color: var(--el-bg-color);
     box-sizing: border-box;
@@ -341,7 +354,11 @@
               background-color: var(--el-color-primary);
               border-radius: 10px;
               white-space: nowrap;
-              animation: home-progress 5s forwards;
+
+              animation-name: home-progress;
+              animation-duration: v-bind(durations);
+              animation-timing-function: linear;
+              animation-fill-mode: forwards;
             }
           }
         }
@@ -450,7 +467,6 @@
         animation-duration: v-bind(duration);
         animation-timing-function: linear;
         animation-iteration-count: infinite;
-
         .mobile-home-container-news-box {
           white-space: nowrap;
           display: flex;
@@ -460,15 +476,6 @@
             display: block;
             padding: 0 20px;
           }
-        }
-      }
-
-      @keyframes scroll-left {
-        0% {
-          transform: translateX(0px);
-        }
-        100% {
-          transform: translateX($end-position);
         }
       }
 

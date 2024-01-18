@@ -58,6 +58,7 @@ export const closePopup = (name?: string | undefined) => {
 export const openPopup = (name?: string | undefined) => {
   const route = useRoute();
   let {params, query, path, hash} = route;
+
   if (name != "menu") {
     hash = hash.replace("/menu", "");
   }

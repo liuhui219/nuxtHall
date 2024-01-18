@@ -11,7 +11,7 @@
     <LazyMobileLayoutMenu />
     <main class="mobile-container-main">
       <NuxtPage />
-      <VitePwaManifest />
+      <NuxtPwaManifest />
     </main>
     <LazyMobileLayoutFooter />
 

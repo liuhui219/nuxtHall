@@ -70,6 +70,7 @@ export default {
   H0029: "Share on social media",
   H0030: "Save the image",
   H0031: "Copy link",
+  H0032: "Install",
 
   E0001: "Can't find this page",
   E0002: "Maintenance is in progress.",

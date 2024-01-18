@@ -69,26 +69,13 @@ export default defineNuxtConfig({
           content:
             "width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no,initial-scale=1.0,viewport-fit=cover",
         },
-        {name: "render", content: "webkit"},
-        {name: "force-rendering", content: "webkit"},
+
         {
           charset: "utf-8",
         },
         {
           name: "apple-mobile-web-app-status-bar-style",
-          content: "#141414",
-        },
-        {
-          name: "apple-touch-fullscreen",
-          content: "yes",
-        },
-        {
-          name: "full-screen",
-          content: "yes",
-        },
-        {
-          name: "appname",
-          content: "game",
+          content: "black",
         },
         {
           name: "apple-mobile-web-app-capable",
@@ -127,13 +114,15 @@ export default defineNuxtConfig({
 
   pwa: {
     registerType: "autoUpdate",
+    injectRegister: "inline",
     manifest: {
       name: "EasyGame",
       short_name: "EasyGame",
       theme_color: "#141414",
       display: "standalone",
-      scope: "/",
+      background_color: "#141414",
       start_url: "/",
+      scope: "/",
       icons: [
         {
           src: "pwa-192x192.png",
@@ -145,17 +134,12 @@ export default defineNuxtConfig({
           sizes: "512x512",
           type: "image/png",
         },
-        {
-          src: "pwa-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-          purpose: "any maskable",
-        },
       ],
     },
     workbox: {
       globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
     },
+
     client: {
       installPrompt: true,
       // you don't need to include this: only for testing purposes

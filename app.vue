@@ -100,6 +100,17 @@
     gtag("js", new Date());
     gtag("config", "G-CPF0DDW6YE");
     window.addEventListener("message", games.handleIframeMsg);
+    window.addEventListener("beforeinstallprompt", (event) => {
+      console.log("====================================");
+      console.log(123);
+      console.log("====================================");
+      event.preventDefault();
+      window.deferredPrompt = event;
+    });
+
+    window.addEventListener("appinstalled", function (event) {
+      window.deferredPrompt = null;
+    });
   });
   nuxtApp.hook("page:finish", (vueApp) => {
     console.log("page:finish");

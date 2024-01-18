@@ -24,11 +24,11 @@
   const list = ref([
     {name: "menu", text: "Menu", hash: "menu", title: "H0001"},
     // {name: "Rewards", text: "About", path: "about", title: "H0004"},
-    {name: "moneygo", text: "Moneygo", path: "#/charge", title: "H0014"},
-    {name: "share", text: "Share", path: "#/share", title: "H0015", bg: true},
+    {name: "moneygo", text: "Moneygo", hash: "charge", title: "H0014"},
+    {name: "share", text: "Share", hash: "share", title: "H0015", bg: true},
     // {name: "Mygame", text: "Vip", path: "vip", title: "TR0001"},
 
-    {name: "tixian", text: "Withdrawal", path: "#/withdrawal", title: "H0022"},
+    {name: "tixian", text: "Withdrawal", hash: "withdrawal", title: "H0022"},
     {name: "user", text: "User", path: "user", title: "H0016"},
     // {name: "home", text: "Home", path: "", title: "H0003"},
     // { name: 'member', text: 'userInfo', hash: 'userInfo', title: 'H0048' },
