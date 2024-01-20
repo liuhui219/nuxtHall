@@ -423,6 +423,10 @@
         //   opacity: 0.4;
         //   filter: blur(100px);
         // }
+        .icon-choujiangzhuanpan {
+          animation: list-loading-spinner 5s linear infinite;
+          color: var(--el-color-primary);
+        }
       }
 
       .mobile-hot-games {

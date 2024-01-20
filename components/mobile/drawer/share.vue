@@ -30,7 +30,11 @@
             :class="{current: activeName == item.code}"
             @click="changeActive(item)"
           >
-            <BaseIcon :name="item.icon" class="animate__animated text-[22px]" />
+            <BaseIcon
+              :name="item.icon"
+              :class="{animate__jello: activeName == item.code}"
+              class="animate__animated text-[22px]"
+            />
             <div class="text-[12px]">{{ $t(item.title) }}</div>
           </button>
         </div>
@@ -116,7 +120,16 @@
       }
       .icon {
         margin-bottom: 4px;
-        font-size: 28px;
+        font-size: 24px;
+      }
+      .animate__animated {
+        animation-duration: 1s;
+        animation-duration: 1s;
+        animation-fill-mode: both;
+      }
+      .animate__jello {
+        animation-name: jello;
+        transform-origin: center;
       }
     }
     .mobile-share-content {

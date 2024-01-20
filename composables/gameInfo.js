@@ -14,7 +14,12 @@ export const games = {
         //EASYGAME
         // closePopup("game-drawer");
         //navigateTo("/");
-        router.back();
+
+        if (router?.options?.history?.state?.position > 1) {
+          router.back();
+        } else {
+          navigateTo("/");
+        }
       }
     }
   },

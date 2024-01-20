@@ -30,7 +30,7 @@ html,
 }
 
 .mobile-el-overlay {
-  //height: calc(100% - 65px) !important;
+  height: calc(100% - 65px) !important;
   z-index: 300 !important;
   max-width: var(--maxWidth);
   transform: translateX(-50%);

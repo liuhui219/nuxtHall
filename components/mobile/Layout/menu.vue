@@ -93,7 +93,7 @@
 
   .navigation-body {
     height: calc(100% - 72px);
-    overflow: hidden;
+    overflow-x: hidden;
     width: 100%;
     .navigation-group-wrap {
       display: flex;
@@ -101,7 +101,7 @@
       gap: 18px;
       width: 100%;
       padding: 0 12px;
-      height: 100%;
+      padding-bottom: 30px;
       overflow-x: hidden;
       overflow-y: auto;
 
