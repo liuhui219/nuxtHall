@@ -155,7 +155,7 @@
   const submitFn = useDebounceFn(() => {
     const ruleFormClone = cloneDeep(ruleForm);
     ruleFormClone.password = md5(ruleFormClone.password);
-    store.set("w_l_s_a", btoa(JSON.stringify(ruleFormClone)));
+    store.set("w_l_s_a", btoa(encodeURIComponent(JSON.stringify(ruleFormClone))));
     isLogin.value = true;
     closePopup("login");
     loding.value = false;

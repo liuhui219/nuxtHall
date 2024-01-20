@@ -45,7 +45,7 @@ export const games = {
     if (games.isPositiveInteger(roomId)) {
       let sid = games.setSid(Number(roomId));
       let status = store.get("w_l_s_a");
-      let loginInfo = isLogin.value ? JSON.parse(atob(status)) : {};
+      let loginInfo = isLogin.value ? JSON.parse(decodeURIComponent(atob(status))) : {};
 
       url = `${game_url}/${roomId}/index.html?oid=${loginInfo?.oid}&oa=${loginInfo?.account}&op=${
         loginInfo?.password
