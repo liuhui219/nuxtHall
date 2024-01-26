@@ -17,6 +17,8 @@ export const useLoginDialog = () => useState("login-dialog", () => false);
 export const useResetDialog = () => useState("reset-dialog", () => false);
 export const useRegisterDialog = () => useState("register-dialog", () => false);
 export const useIsLogin = () => useState("is-login", () => false);
+export const useDownloadDialog = () => useState("download-dialog", () => false);
+export const useTipShow = () => useState("tip-show", () => true);
 //判断当前是否在某个页面(current必须以【/】开头)或弹窗(不带【/】开头则是弹窗)
 export function isPageInSome(current: string, path = "") {
   if (!current) {

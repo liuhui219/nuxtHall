@@ -71,6 +71,8 @@ export default {
   H0030: "Save the image",
   H0031: "Copy link",
   H0032: "Install",
+  H0033: "Save to have fun, bet with ease!",
+  H0034: "Save",
 
   E0001: "Can't find this page",
   E0002: "Maintenance is in progress.",

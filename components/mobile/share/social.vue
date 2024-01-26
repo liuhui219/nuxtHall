@@ -3,12 +3,12 @@
 <template>
   <div class="social">
     <div class="social-cont" v-for="(item, index) in List" :key="index">
-      <div class="social-label">{{ item.title }}</div>
+      <div class="social-label">{{ $t(item.title) }}</div>
       <div class="social-main">
         <div class="social-box" v-for="(info, i) in item.children">
           <div class="social-box-info">
             <span><BaseIcon :name="info.icon" /></span>
-            <span>{{ info.text }}</span>
+            <span>{{ $t(info.text) }}</span>
           </div>
           <BaseIcon name="right" />
         </div>
@@ -20,10 +20,10 @@
 <script setup>
   const {locale, t} = useI18n();
   const List = ref([
-    {title: t("H0027"), children: [{icon: "tupian", text: t("H0030")}]},
-    {title: t("H0028"), children: [{icon: "huixingzhen", text: t("H0031")}]},
+    {title: "H0027", children: [{icon: "tupian", text: "H0030"}]},
+    {title: "H0028", children: [{icon: "huixingzhen", text: "H0031"}]},
     {
-      title: t("H0029"),
+      title: "H0029",
       children: [
         {icon: "whatsapp", text: "WhatsApp"},
         {icon: "telegram1", text: "Telegram"},

@@ -16,7 +16,7 @@
   import {useOnline} from "@vueuse/core";
   import store from "store";
   import {getAnalytics, logEvent} from "firebase/analytics";
-  const {isMobile, isDesktop} = useDevice();
+  const {isMobile, isDesktop, isApple} = useDevice();
   const {locale, messages, t, setLocale} = useI18n();
   const nuxtApp = useNuxtApp();
   nuxtApp.globalName = "hall";
@@ -89,6 +89,7 @@
   });
 
   onMounted(() => {
+    const tipShow = useTipShow();
     console.log("onMounted");
     pageLoading.value = false;
     setUid();
@@ -101,9 +102,6 @@
     gtag("config", "G-CPF0DDW6YE");
     window.addEventListener("message", games.handleIframeMsg);
     window.addEventListener("beforeinstallprompt", (event) => {
-      console.log("====================================");
-      console.log(123);
-      console.log("====================================");
       event.preventDefault();
       window.deferredPrompt = event;
     });
@@ -111,10 +109,18 @@
     window.addEventListener("appinstalled", function (event) {
       window.deferredPrompt = null;
     });
+    let tipShows = store.get("sk_d_t_k");
+    if (navigator.standalone || isDesktop || tipShows) {
+      tipShow.value = false;
+      document.documentElement.style.setProperty("--app-download-height", "0px");
+    }
   });
   nuxtApp.hook("page:finish", (vueApp) => {
     console.log("page:finish");
     httpLoading.value = false;
+    if (history.scrollRestoration) {
+      history.scrollRestoration = "manual";
+    }
   });
 </script>
 

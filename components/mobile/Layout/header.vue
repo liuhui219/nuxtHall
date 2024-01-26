@@ -2,7 +2,21 @@
 
 <template>
   <header class="mobile-header fixed">
-    <section class="flex justify-between w-full px-[15px] h-full">
+    <div
+      v-if="tipShow && !isDesktop"
+      class="down-tip flex items-center justify-between w-full text-[12px] whitespace-pre-wrap relative px-[15px]"
+    >
+      <span>{{ $t("H0033") }}</span>
+      <el-button @click="downLoadFn" size="small" icon="Cellphone" color="#ffffff">{{ $t("H0034") }}</el-button>
+      <button
+        @click="closeTip"
+        style="background: rgba(0, 0, 0, 0.3)"
+        class="text-color-alpha-white-05 bg-color-alpha-black-03 rounded-br-[10px] w-[22px] h-[20px] flex items-center justify-center absolute top-0 left-0"
+      >
+        <el-icon><Close /></el-icon>
+      </button>
+    </div>
+    <section class="mobile-header-main flex justify-between w-full px-[15px] h-full">
       <div class="left flex justify-center items-center" @click="goHome">
         <base-img class="h-[36px] w-[133px] logo" name="logo" type="png" path="images/logo" />
       </div>
@@ -13,51 +27,110 @@
             $t("L1002")
           }}</el-button></template
         >
-        <template v-else>
-          <el-dropdown trigger="click" placement="bottom-end" popper-class="el-mobile-dropdown-popper">
-            <span class="el-dropdown-link">
-              <el-badge is-dot
-                ><el-avatar
-                  fit="fit"
-                  :size="35"
-                  alt=""
-                  src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-                >
-                  <base-img class="h-[35px] w-[35px]" name="error" type="png" path="images/load" /></el-avatar
-              ></el-badge>
-            </span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item :icon="Plus">Action 1</el-dropdown-item>
-                <el-dropdown-item :icon="CirclePlusFilled"> Action 2 </el-dropdown-item>
-                <el-dropdown-item :icon="CirclePlus">Action 3</el-dropdown-item>
-                <el-dropdown-item :icon="Check">Action 4</el-dropdown-item>
-                <el-dropdown-item @click="signOut" divided :icon="CircleCheck">{{ $t("L1018") }}</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-        </template>
+        <el-dropdown v-else trigger="click" placement="bottom-end" popper-class="el-dropdown-popper">
+          <span class="el-dropdown-link" aria-label="dropdown">
+            <el-badge is-dot
+              ><el-avatar fit="fit" :size="35" alt="" :src="avatar" @error="errorHandler">
+                <base-img class="h-[35px] w-[35px]" name="error" type="png" path="images/load" /></el-avatar
+            ></el-badge>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item
+                v-for="(item, index) in dropdownMenu"
+                :divided="item.divided"
+                :key="index"
+                @click="setLang(item)"
+                >{{ $t(item.text) }}</el-dropdown-item
+              >
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </section>
   </header>
 </template>
 
 <script setup lang="ts">
+  import {useImage, useIntersectionObserver} from "@vueuse/core";
   import store from "store";
+  const {locale, setLocale} = useI18n();
+  const {isAndroid, isApple, isDesktop} = useDevice();
+  const avatar = ref("https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png");
+  const {isLoading} = useImage({src: avatar.value});
   import {Search, Plus, CirclePlusFilled, CirclePlus, Check, CircleCheck} from "@element-plus/icons-vue";
+  const dropdownMenu = [
+    {
+      text: "C1001",
+      icon: "",
+      code: "zh-cn",
+      divided: false,
+      lang: true,
+    },
+    {
+      text: "C1002",
+      icon: "",
+      code: "en",
+      divided: false,
+      lang: true,
+    },
+    {
+      text: "C1003",
+      icon: "",
+      code: "pt-br",
+      divided: false,
+      lang: true,
+    },
+    {
+      text: "L1018",
+      icon: "",
+      code: "out",
+      divided: true,
+      lang: false,
+    },
+  ];
   const goHome = () => {
     navigateTo("/");
   };
+  const errorHandler = () => {
+    nextTick();
+    return isLoading.value;
+  };
+  const tipShow = useTipShow();
   const router = useRouter();
   const isLogin = useIsLogin();
   const finish = ref(false);
   onMounted(() => {
     finish.value = true;
   });
-  const signOut = () => {
-    store.remove("w_l_s_a");
-    isLogin.value = false;
-    navigateTo("/");
+
+  const setLang = async (item: {lang: boolean; code: string}) => {
+    if (item.lang) {
+      //locale.value = item.code;
+      store.set("lang", item.code);
+      setLocale(item.code);
+    } else {
+      store.remove("w_l_s_a");
+      isLogin.value = false;
+      router.push({path: "/"});
+    }
+  };
+  const downLoadFn = () => {
+    if (isApple) {
+      openPopup("download");
+    }
+    if (isAndroid) {
+      navigateTo("https://zjdown.easygameapi.com/patch/PresenteSlots20320.apk", {
+        open: {
+          target: "_blank",
+        },
+      });
+    }
+  };
+  const closeTip = () => {
+    tipShow.value = false;
+    store.set("sk_d_t_k", 1);
+    document.documentElement.style.setProperty("--app-download-height", "0px");
   };
 </script>
 
@@ -66,14 +139,25 @@
     top: 0;
     left: 50%;
     z-index: 300;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     width: 100%;
     max-width: var(--maxWidth);
     transform: translateX(-50%);
-    height: var(--mobile-header-height);
     background-color: var(--el-bg-color);
+    .down-tip {
+      background: var(--background);
+      height: var(--app-download-height, 0);
+      .el-button {
+        color: var(--el-color-primary);
+      }
+    }
+
+    .mobile-header-main {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--mobile-header-height);
+    }
     .logo {
       cursor: pointer;
       flex-shrink: 0;

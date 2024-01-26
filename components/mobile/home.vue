@@ -1,9 +1,5 @@
 <!-- @format -->
 
-/* * @Author: liuhui * @Date: 2023-11-02 10:04:14 * @Last Modified by: liuhui * @Last Modified time: 2023-11-02 10:04:14
-*/
-<!-- @format -->
-
 <template>
   <div class="mobile-root">
     <LazyMobileLayoutHeader />
@@ -25,6 +21,7 @@
 <script setup>
   const components = shallowRef([]);
   const httpLoading = useHttpLoading();
+
   const route = useRoute();
   onMounted(() => {
     const modulesFiles = import.meta.glob("~/components/mobile/drawer/*.vue");
@@ -52,8 +49,9 @@
   }
   .mobile-container-main {
     width: 100%;
-    padding-bottom: 65px;
-    padding-top: 60px;
+
+    padding-bottom: calc(65px + env(safe-area-inset-bottom));
+    padding-top: calc(60px + var(--app-download-height, 0px));
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;

@@ -50,7 +50,7 @@
           <swiper-slide v-for="(item, index) in headMenu" :key="index" class="flex justify-center">
             <div class="home-tab-btn" :key="index">
               <i class="iconfont" :class="`icon-${item.icon}`"></i>
-              {{ item.text }}
+              {{ $t(item.text) }}
             </div>
           </swiper-slide>
         </swiper>
@@ -85,7 +85,7 @@
       <section class="game-classification mt-[20px] w-full" v-for="(item, index) in tabList" :key="index">
         <div class="section-title p-[0!important] flex justify-between">
           <div data-v-5af0f1b2="" class="game_title flex items-center justify-start">
-            {{ item.text }}
+            {{ $t(item.text) }}
           </div>
           <div class="shrink-0 flex items-center">
             <BaseSwiperBtn :swiper="nodes[index]" :disabled="true"></BaseSwiperBtn>
@@ -126,6 +126,7 @@
       </section>
     </div>
     <LazyMobilePagesFooter />
+    <LazyMobilePagesRedpacket />
   </div>
 </template>
 
@@ -222,23 +223,23 @@
 
   const headMenu = [
     {
-      text: t("H0017"),
+      text: "H0017",
       icon: "qiandao",
     },
     {
-      text: t("H0018"),
+      text: "H0018",
       icon: "choujiangzhuanpan",
     },
     {
-      text: t("H0019"),
+      text: "H0019",
       icon: "Rewards",
     },
     {
-      text: t("H0020"),
+      text: "H0020",
       icon: "vip1",
     },
     {
-      text: t("H0021"),
+      text: "H0021",
       icon: "huodong",
     },
   ];
@@ -248,21 +249,21 @@
   const tabList = [
     {
       value: 1,
-      text: t("L1023"),
+      text: "L1023",
       length: 6,
       icon: "lobby",
       children: List.slice(0, 30),
     },
     {
       value: 2,
-      text: t("L1024"),
+      text: "L1024",
       length: 6,
       icon: "fire",
       children: List.slice(30, 60),
     },
     {
       value: 3,
-      text: t("L1024"),
+      text: "L1024",
       length: 6,
       icon: "cherry1",
       children: List.slice(60, 81),
@@ -333,7 +334,7 @@
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            transition: all 0.6s;
+            transition: all 0.2s;
             // background: var(--el-bg-color);
             cursor: pointer;
             border: 1px solid var(--el-text-color-primary);

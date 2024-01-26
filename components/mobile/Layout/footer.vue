@@ -83,7 +83,7 @@
     background: var(--foot-bg);
     bottom: 0;
     box-shadow: 0 -12px 24px var(--el-bg-color-page);
-    height: 65px;
+
     height: calc(65px + env(safe-area-inset-bottom));
     left: 50%;
     padding-bottom: env(safe-area-inset-bottom);

@@ -36,7 +36,7 @@
   width: 100vw;
   height: 100%;
   max-width: var(--maxWidth);
-  padding-top: 60px;
+  padding-top: calc(var(--mobile-header-height) + var(--app-download-height, 0px));
   transition: transform 0.4s;
 }
 
@@ -51,7 +51,7 @@
   position: absolute;
   top: 0;
   left: 0%;
-  padding-top: 60px;
+  padding-top: calc(var(--mobile-header-height) + var(--app-download-height, 0px));
   width: 100vw;
   height: 100%;
   max-width: var(--maxWidth);
@@ -71,7 +71,7 @@
   width: 100vw;
   height: 100%;
   max-width: var(--maxWidth);
-  padding-top: 60px;
+  padding-top: calc(var(--mobile-header-height) + var(--app-download-height, 0px));
   transition: transform 0.4s;
 }
 
@@ -88,7 +88,7 @@
   width: 100vw;
   max-width: var(--maxWidth);
   height: 100%;
-  padding-top: 60px;
+  padding-top: calc(var(--mobile-header-height) + var(--app-download-height, 0px));
   transition: transform 0.4s;
 }
 .app-slide-right-leave-from {

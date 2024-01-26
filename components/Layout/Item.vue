@@ -58,18 +58,7 @@
     if (item.meta.route) {
       navigateTo({path: item.path});
     } else if (item.meta.type === "install") {
-      if (isDesktop && window.deferredPrompt) {
-        window.deferredPrompt.prompt();
-        // 在用户选择安装或取消后，处理相应的逻辑
-        window.deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === "accepted") {
-            console.log("用户已安装");
-          } else {
-            console.log("用户取消安装");
-          }
-          window.deferredPrompt = null;
-        });
-      }
+      download.callBack();
     }
   };
 

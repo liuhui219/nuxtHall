@@ -148,7 +148,7 @@
   const intervalFn = (s) => {
     let timer = null;
     timer = setInterval(() => {
-      if (s === 0) {
+      if (s === 1) {
         time.value = conut;
         clearInterval(timer);
         countdown.value = false;
@@ -156,7 +156,9 @@
         return;
       }
       s--;
-      time.value = s;
+      time.value = new Intl.NumberFormat(undefined, {
+        minimumIntegerDigits: 2,
+      }).format(s);
     }, 1000);
   };
 
