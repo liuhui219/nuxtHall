@@ -10,10 +10,20 @@
     "generate": "nuxt generate --analyze --dotenv env/.env.production",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "start": "pm2 start ecosystem.config.cjs"
+    "start": "pm2 start ecosystem.config.cjs",
+    "pkg": "pkg -t win ."
   },
   "resolutions": {
     "bin-wrapper": "npm:bin-wrapper-china"
+  },
+  "bin": "server.js",
+  "pkg": {
+    "assets": [
+      "dist/**/*"
+    ],
+    "targets": [
+      "node14-linux-arm64"
+    ]
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.6",
@@ -45,6 +55,10 @@
     "element-plus": "^2.4.0",
     "firebase": "^10.6.0",
     "js-md5": "^0.8.3",
+    "koa": "^2.15.0",
+    "koa-compress": "^5.1.1",
+    "koa-mount": "^4.0.0",
+    "koa-static": "^5.0.0",
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.7.6",
     "nuxt-precompress": "^0.5.9",

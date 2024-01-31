@@ -13,6 +13,10 @@
         allowfullscreen="true"
         @load="iFrameLoad"
       />
+      <div class="game-error w-full h-full absolute top-0 left-0 flex items-center justify-center" v-if="!url">
+        <div>{{ $t("E0002") }}</div>
+        <el-button @click="backFn()">{{ $t("L1034") }}</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -29,6 +33,14 @@
   const iFrameLoad = () => {
     if (url.value != "") {
       // enter();
+    }
+  };
+  const router = useRouter();
+  const backFn = () => {
+    if (router?.options?.history?.state?.position > 1) {
+      router.back();
+    } else {
+      navigateTo("/");
     }
   };
   onMounted(() => {
@@ -61,6 +73,11 @@
       iframe {
         width: 100%;
         flex: 1;
+      }
+      .game-error {
+        background-color: var(--el-bg-color);
+        flex-direction: column;
+        gap: 10px;
       }
     }
   }

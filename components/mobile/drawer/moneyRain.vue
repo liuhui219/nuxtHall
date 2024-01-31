@@ -116,6 +116,7 @@
       height: 100%;
       overflow: hidden;
       position: relative;
+      padding-bottom: env(safe-area-inset-bottom);
       ::v-deep(.money1) {
         background-image: url("~/assets/images/home/money1.png");
         position: absolute;

@@ -126,7 +126,6 @@
       </section>
     </div>
     <LazyMobilePagesFooter />
-    <LazyMobilePagesRedpacket />
   </div>
 </template>
 

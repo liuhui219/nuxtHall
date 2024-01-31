@@ -8,6 +8,7 @@
     <main class="mobile-container-main">
       <NuxtPage />
       <NuxtPwaManifest />
+      <LazyMobilePagesRedpacket />
     </main>
     <LazyMobileLayoutFooter />
 

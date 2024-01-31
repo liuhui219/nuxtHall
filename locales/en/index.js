@@ -34,6 +34,7 @@ export default {
   L1031: "Telephone",
   L1032: "Captcha",
   L1033: "Enter the verification code",
+  L1034: "Back",
 
   C1001: "Chinese",
   C1002: "English",
