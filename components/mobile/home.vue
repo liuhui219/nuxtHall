@@ -8,7 +8,8 @@
     <main class="mobile-container-main">
       <NuxtPage />
       <NuxtPwaManifest />
-      <LazyMobilePagesRedpacket />
+      <LazyMobilePagesDraggable :initialX="10" :initialY="180" img="qiandao" />
+      <LazyMobilePagesDraggable img="feiji" />
     </main>
     <LazyMobileLayoutFooter />
 
@@ -51,7 +52,7 @@
   .mobile-container-main {
     width: 100%;
 
-    padding-bottom: calc(65px + env(safe-area-inset-bottom));
+    padding-bottom: calc(60px + env(safe-area-inset-bottom));
     padding-top: calc(60px + var(--app-download-height, 0px));
     height: 100%;
     overflow-y: auto;

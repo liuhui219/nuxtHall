@@ -12,7 +12,7 @@
       <div class="mobile-register">
         <div class="mobile-register-header">
           <div class="flex justify-start items-center">
-            <base-img class="h-[36px] w-[133px] logo" name="logo" type="png" path="images/logo" />
+            <base-img class="h-[29px] w-[91px] logo" name="logo" type="png" path="images/logo" />
           </div>
           <div @click="closeFn" class="register-close text-[14px]">
             <el-icon><component is="CloseBold"></component></el-icon>
@@ -41,7 +41,7 @@
               :class="{animate__jello: activeName == item.code}"
               class="animate__animated text-[22px]"
             />
-            <div class="text-[12px]">{{ $t(item.title) }}</div>
+            <div class="text-[11px]">{{ $t(item.title) }}</div>
           </button>
         </div>
       </div>
@@ -104,7 +104,7 @@
     }
     .mobile-register-foot {
       width: 100%;
-      height: calc(65px + env(safe-area-inset-bottom));
+      height: calc(60px + env(safe-area-inset-bottom));
       padding-bottom: env(safe-area-inset-bottom);
       display: flex;
       flex-direction: row;
@@ -140,7 +140,7 @@
     }
     .mobile-register-content {
       width: 100%;
-      height: calc(100% - 125px);
+      height: calc(100% - 120px);
       overflow-x: hidden;
       position: relative;
     }

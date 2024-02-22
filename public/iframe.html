@@ -1,0 +1,21 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="handle">2142342</div>
+  </body>
+  <script>
+    const handle = document.querySelector(".handle");
+    handle.addEventListener("click", function () {
+      // let aa = window.parent.location;
+      // alert(aa);
+      window.top.location.href = "https://www.baidu.com/";
+    });
+  </script>
+</html>

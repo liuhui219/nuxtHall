@@ -54,7 +54,7 @@ export default {
   H0013: "Promoção",
   H0014: "Recarga",
   H0015: "Compartilhar",
-  H0016: "Meu",
+  H0016: "Profil",
   H0017: "Relatório",
   H0018: "Loteria",
   H0019: "Bônus",

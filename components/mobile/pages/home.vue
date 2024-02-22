@@ -45,7 +45,7 @@
         </div>
       </div>
 
-      <div class="headMenu w-full">
+      <!-- <div class="headMenu w-full">
         <swiper :modules="[SwiperNavigation, SwiperPagination]" :slides-per-view="5" :space-between="6">
           <swiper-slide v-for="(item, index) in headMenu" :key="index" class="flex justify-center">
             <div class="home-tab-btn" :key="index">
@@ -54,9 +54,9 @@
             </div>
           </swiper-slide>
         </swiper>
-      </div>
+      </div> -->
 
-      <section class="mobile-hot-games w-full">
+      <!-- <section class="mobile-hot-games w-full">
         <div class="section-title mb-[12px] p-[0!important] flex justify-between">
           <div data-v-5af0f1b2="" class="game_title flex items-center justify-start">Grandes Vitórias Recentes</div>
         </div>
@@ -80,11 +80,17 @@
             </swiper-slide>
           </swiper>
         </div>
-      </section>
+      </section> -->
+
+      <div class="mobile-home-card">
+        <div class="w-1/2"><base-img class="w-full h-full" name="cunkuan" type="png" path="images/home" /></div>
+        <div class="w-1/2"><base-img class="w-full h-full" name="jiangli" type="png" path="images/home" /></div>
+      </div>
 
       <section class="game-classification mt-[20px] w-full" v-for="(item, index) in tabList" :key="index">
         <div class="section-title p-[0!important] flex justify-between">
           <div data-v-5af0f1b2="" class="game_title flex items-center justify-start">
+            <base-img class="w-[20px] h-[20px]" :name="item.titleIcon" type="png" path="images/home" />
             {{ $t(item.text) }}
           </div>
           <div class="shrink-0 flex items-center">
@@ -215,6 +221,28 @@
         roomId: item.roomId,
       },
     });
+
+    gtag("event", "purchase", {
+      transaction_id: "T_12345_2",
+      value: 25.42,
+      tax: 4.9,
+      shipping: 5.99,
+      currency: "USD",
+      coupon: "SUMMER_SALE",
+      items: [
+        {
+          item_id: "SKU_12345",
+          item_name: "Stan and Friends Tee",
+          affiliation: "Google Merchandise Store",
+          coupon: "SUMMER_FUN",
+          discount: 2.22,
+          index: 0,
+          item_brand: "Google",
+          price: 9.99,
+          quantity: 1,
+        },
+      ],
+    });
     gamereload.value++;
   };
 
@@ -252,6 +280,7 @@
       length: 6,
       icon: "lobby",
       children: List.slice(0, 30),
+      titleIcon: "tuijian_icon",
     },
     {
       value: 2,
@@ -259,6 +288,7 @@
       length: 6,
       icon: "fire",
       children: List.slice(30, 60),
+      titleIcon: "spirit_icon",
     },
     {
       value: 3,
@@ -266,6 +296,7 @@
       length: 6,
       icon: "cherry1",
       children: List.slice(60, 81),
+      titleIcon: "tuijian_icon",
     },
   ];
 
@@ -483,6 +514,14 @@
         }
       }
 
+      .mobile-home-card {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+        margin-top: 10px;
+      }
+
       .home-tab {
         width: 100%;
         height: 60px;
@@ -578,19 +617,20 @@
     }
     .game_title {
       position: relative;
-      padding-left: 16px;
-      &::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background-color: var(--el-color-primary);
-        border: 1px solid var(--el-text-color-primary);
-      }
+
+      gap: 5px;
+      // &::before {
+      //   content: "";
+      //   position: absolute;
+      //   left: 0;
+      //   top: 50%;
+      //   transform: translateY(-50%);
+      //   width: 8px;
+      //   height: 8px;
+      //   border-radius: 50%;
+      //   background-color: var(--el-color-primary);
+      //   border: 1px solid var(--el-text-color-primary);
+      // }
     }
   }
 

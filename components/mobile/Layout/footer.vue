@@ -9,12 +9,20 @@
       :class="{current: activeName == item.text}"
       @click="changeActive(item)"
     >
-      <BaseIcon
-        :name="item.name"
-        class="animate__animated text-[22px]"
-        :class="{animate__jello: activeName === item.text && isChanged}"
-      />
-      <div class="text-[12px]">{{ $t(item.title) }}</div>
+      <div class="icon-box">
+        <div v-if="item.bg" class="img-box">
+          <base-img class="h-[42px] w-[38px] mt-[-8px] logo" name="fenxiang_btn" type="png" path="images/home" />
+        </div>
+
+        <BaseIcon
+          v-else
+          :name="item.name"
+          class="animate__animated text-[22px]"
+          :class="{animate__jello: activeName === item.text && isChanged}"
+        />
+      </div>
+
+      <div class="text-[11px]">{{ $t(item.title) }}</div>
       <div v-if="item.bg" class="mobile_bg"></div>
     </button>
   </div>
@@ -22,13 +30,13 @@
 
 <script setup lang="ts">
   const list = ref([
-    {name: "menu", text: "Menu", hash: "menu", title: "H0001"},
+    {name: "home2", text: "Home", path: "", title: "H0003"},
     // {name: "Rewards", text: "About", path: "about", title: "H0004"},
-    {name: "moneygo", text: "Moneygo", hash: "charge", title: "H0014"},
-    {name: "share", text: "Share", hash: "share", title: "H0015", bg: true},
+    {name: "meiyuan", text: "Charge", hash: "charge", title: "H0014"},
+    {name: "share", text: "Share", hash: "share", title: "H0008", bg: true},
     // {name: "Mygame", text: "Vip", path: "vip", title: "TR0001"},
 
-    {name: "tixian", text: "Withdrawal", hash: "withdrawal", title: "H0022"},
+    {name: "vip1", text: "Vip", hash: "Vip", title: "H0005"},
     {name: "user", text: "User", path: "user", title: "H0016"},
     // {name: "home", text: "Home", path: "", title: "H0003"},
     // { name: 'member', text: 'userInfo', hash: 'userInfo', title: 'H0048' },
@@ -36,7 +44,6 @@
   ]);
   const isChanged = ref(false);
 
-  const menuDrawer = useMenuDrawer();
   const changeActive = (from: any) => {
     isChanged.value = true;
     const hash: string = from.hash;
@@ -70,11 +77,6 @@
     }
     return "";
   });
-
-  watchEffect(() => {
-    const menuDrawer = useMenuDrawer();
-    menuDrawer.value = activeName.value == "Menu";
-  });
 </script>
 
 <style lang="scss" scoped>
@@ -84,7 +86,7 @@
     bottom: 0;
     box-shadow: 0 -12px 24px var(--el-bg-color-page);
 
-    height: calc(65px + env(safe-area-inset-bottom));
+    height: calc(60px + env(safe-area-inset-bottom));
     left: 50%;
     padding-bottom: env(safe-area-inset-bottom);
     -webkit-user-select: none;
@@ -107,10 +109,7 @@
       font-size: 14px;
       color: #e2e8e3;
       cursor: pointer;
-      & > .icon {
-        margin-bottom: 4px;
-        font-size: 22px;
-      }
+
       &.current {
         color: var(--el-color-primary);
       }
@@ -130,14 +129,36 @@
       background: var(--foot-bg);
     }
   }
+  .icon-box {
+    width: 100%;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .img-box {
+      position: absolute;
+      top: -8px;
+      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      display: flex;
+      justify-content: center;
 
-  .icon-moneygo {
-    font-size: 24px !important;
-    margin-top: -4px;
+      align-items: center;
+      background-color: #4a3d4dc9;
+    }
+    & > .icon {
+      font-size: 24px;
+    }
+  }
+
+  .icon-vip1 {
+    font-size: 22px !important;
   }
 
   .icon-share {
     margin-top: -18px;
+    margin-bottom: 6px !important;
     border: 1px solid var(--el-color-primary);
     width: 40px;
     height: 40px;

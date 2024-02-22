@@ -11,7 +11,7 @@
       :before-close="handleClose"
     >
       <div class="mobile-navigation-header relative">
-        <base-img class="h-[28px] w-[104px]" name="logo" type="png" path="images/logo" />
+        <base-img class="h-[29px] w-[91px]" name="logo" type="png" path="images/logo" />
 
         <div
           class="closeBtn absolute -right-[12px] top-[0] bottom-0 m-auto z-[1] pr-[16px] pl-[16px]"
@@ -66,6 +66,10 @@
   const handleClose = () => {
     closePopup("menu");
   };
+  watchEffect(() => {
+    const menuDrawer = useMenuDrawer();
+    menuDrawer.value = getHashValue(route.hash) === "menu";
+  });
 </script>
 
 <style lang="scss" scoped>

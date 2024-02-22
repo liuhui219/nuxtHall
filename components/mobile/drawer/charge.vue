@@ -6,7 +6,7 @@
       <div class="mobile-charge">
         <div class="mobile-charge-header">
           <div class="flex justify-start items-center">
-            <base-img class="h-[36px] w-[133px] logo" name="logo" type="png" path="images/logo" />
+            <base-img class="h-[29px] w-[91px] logo" name="logo" type="png" path="images/logo" />
           </div>
           <div @click="closeFn" class="charge-close text-[14px]">
             <el-icon><component is="CloseBold"></component></el-icon>

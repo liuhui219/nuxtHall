@@ -12,7 +12,7 @@
       <div class="mobile-withdrawal">
         <div class="mobile-withdrawal-header">
           <div class="flex justify-start items-center">
-            <base-img class="h-[36px] w-[133px] logo" name="logo" type="png" path="images/logo" />
+            <base-img class="h-[29px] w-[91px] logo" name="logo" type="png" path="images/logo" />
           </div>
           <div @click="closeFn" class="withdrawal-close text-[14px]">
             <el-icon><component is="CloseBold"></component></el-icon>
@@ -41,7 +41,7 @@
               :class="{animate__jello: activeName == item.code}"
               class="animate__animated text-[22px]"
             />
-            <div class="text-[12px]">{{ $t(item.title) }}</div>
+            <div class="text-[11px]">{{ $t(item.title) }}</div>
           </button>
         </div>
       </div>
@@ -99,14 +99,14 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      background-color: #25262b;
+      background-color: var(--bg-background);
       box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.5);
       position: relative;
       z-index: 1;
     }
     .mobile-withdrawal-foot {
       width: 100%;
-      height: calc(65px + env(safe-area-inset-bottom));
+      height: calc(60px + env(safe-area-inset-bottom));
       padding-bottom: env(safe-area-inset-bottom);
       display: flex;
       flex-direction: row;
@@ -142,7 +142,7 @@
     }
     .mobile-withdrawal-content {
       width: 100%;
-      height: calc(100% - 125px);
+      height: calc(100% - 120px);
       overflow-x: hidden;
       position: relative;
     }

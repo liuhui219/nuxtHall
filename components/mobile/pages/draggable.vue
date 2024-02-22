@@ -8,12 +8,16 @@
       class="redpacket-mobile"
       :class="{duration: !isDrag}"
       :style="transformStyle"
+      v-if="show"
     >
       <div class="cursor-pointer">
-        <el-progress type="circle" status="success" :width="60" :show-text="false" :stroke-width="4" :percentage="60" />
+        <!-- <el-progress type="circle" status="success" :width="60" :show-text="false" :stroke-width="4" :percentage="60" /> -->
         <div class="redpacket-image w-full h-full">
-          <base-img class="h-[60px] w-[60px] logo" name="redpacket" type="avif" path="images/home" />
+          <base-img class="h-[60px] w-[60px] logo" :name="img" type="png" path="images/home" />
         </div>
+      </div>
+      <div @click="closeFn" class="redpacket-close text-[14px]">
+        <el-icon><component is="CloseBold"></component></el-icon>
       </div>
       <div class="redpacket-text"></div></div
   ></client-only>
@@ -21,17 +25,34 @@
 
 <script setup>
   import {useDraggable, useParentElement, useScroll} from "@vueuse/core";
-
+  const props = defineProps({
+    initialX: {
+      type: String,
+      default: "10",
+    },
+    initialY: {
+      type: String,
+      default: "100",
+    },
+    img: {
+      type: String,
+      default: "",
+    },
+  });
   const redpacketRef = ref(null);
   const parentEl = useParentElement();
   const {isScrolling} = useScroll(parentEl, {behavior: "auto"});
   const isDrag = ref(false);
+  const show = ref(true);
 
   let timer = null;
   let right = true;
   let firstTime = 0;
   let lastTime = 0;
   let key;
+  const closeFn = () => {
+    show.value = false;
+  };
   const dragStart = (position, event) => {
     isDrag.value = true;
     firstTime = new Date().getTime();
@@ -52,18 +73,18 @@
     let offsetLeft = document.querySelector(".mobile-root").offsetLeft;
 
     if (position.x - offsetLeft <= (innerWidth - elWidth) / 2) {
-      position.x = 10 + offsetLeft;
+      position.x = props.initialX + offsetLeft;
       right = false;
     }
     if (position.x - offsetLeft >= (innerWidth - elWidth) / 2) {
-      position.x = innerWidth - elWidth - 10 + offsetLeft;
+      position.x = innerWidth - elWidth - props.initialX - 7 + offsetLeft;
       right = true;
     }
     if (position.y <= 100) {
       position.y = 100;
     }
     if (position.y >= innerHeight - elHeight - 100) {
-      position.y = innerHeight - elHeight - 100;
+      position.y = innerHeight - elHeight - props.initialY;
     }
   };
 
@@ -72,6 +93,7 @@
     preventDefault: true,
     onStart: dragStart,
     onEnd: dragEnd,
+    pointerTypes: [],
   });
 
   const transformStyle = computed(() => `transform: translate(${position.value.x}px, ${position.value.y}px)`);
@@ -81,8 +103,8 @@
     let innerHeight = document.querySelector(".mobile-root").getBoundingClientRect().height;
     let offsetLeft = document.querySelector(".mobile-root").offsetLeft;
 
-    position.value.x = innerWidth - 60 - 10 + offsetLeft;
-    position.value.y = innerHeight - 60 - 100;
+    position.value.x = innerWidth - 60 - props.initialX - 7 + offsetLeft;
+    position.value.y = innerHeight - 60 - props.initialY;
   });
 
   watch(isScrolling, (newVal, oldVal) => {
@@ -105,16 +127,14 @@
           position.value.x = 10 + offsetLeft;
         }
         if (right) {
-          position.value.x = innerWidth - elWidth - 10 + offsetLeft;
+          position.value.x = innerWidth - elWidth - props.initialX - 7 + offsetLeft;
         }
       }, 500);
     }
   });
 
   const redpacket = () => {
-    if (key) {
-      openPopup("moneyRain");
-    }
+    openPopup("moneyRain");
   };
 </script>
 
@@ -127,6 +147,7 @@
     touch-action: none;
     left: 0;
     top: 0;
+
     .cursor-pointer {
       width: 60px;
       height: 60px;
@@ -142,9 +163,14 @@
         left: 0;
         top: 0;
       }
-      .redpacket-image {
-        background: linear-gradient(90deg, #f90, #ec0039);
-      }
+      // .redpacket-image {
+      //   background: linear-gradient(90deg, #f90, #ec0039);
+      // }
+    }
+    .redpacket-close {
+      position: absolute;
+      top: -7px;
+      right: -7px;
     }
   }
   .duration {

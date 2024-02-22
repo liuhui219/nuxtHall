@@ -17,8 +17,9 @@
       </button>
     </div>
     <section class="mobile-header-main flex justify-between w-full px-[15px] h-full">
-      <div class="left flex justify-center items-center" @click="goHome">
-        <base-img class="h-[36px] w-[133px] logo" name="logo" type="png" path="images/logo" />
+      <div class="left flex justify-center items-center">
+        <BaseIcon @click="openPopup('menu')" name="menu1" style="font-size: 24px; margin-right: 5px" />
+        <base-img @click="goHome" class="h-[29px] w-[91px] logo" name="logo" type="png" path="images/logo" />
       </div>
       <div class="right tools-login">
         <template v-if="!isLogin"
@@ -100,6 +101,7 @@
   const router = useRouter();
   const isLogin = useIsLogin();
   const finish = ref(false);
+  const route = useRoute();
   onMounted(() => {
     finish.value = true;
   });
@@ -142,7 +144,8 @@
     width: 100%;
     max-width: var(--maxWidth);
     transform: translateX(-50%);
-    background-color: var(--el-bg-color);
+    background-color: var(--bg-background);
+    box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.5);
     .down-tip {
       background: var(--background);
       height: var(--app-download-height, 0);
@@ -168,25 +171,29 @@
     .tools-login {
       align-items: center;
       display: flex;
+      .el-button {
+        color: #ffffff;
+        height: 35px;
+      }
     }
 
     .el-button-sign-up {
-      background: linear-gradient(to right, #80d693, #34aa4e);
+      background: var(--background);
       position: relative;
-      &::after {
-        content: "";
-        background-color: var(--el-color-primary);
-        position: absolute;
-        left: -16%;
-        top: -7%;
-        width: 132%;
-        height: 114%;
-        -moz-border-radius: 50%;
-        border-radius: 50%;
-        opacity: 0.7;
-        z-index: 1;
-        filter: blur(20px);
-      }
+      // &::after {
+      //   content: "";
+      //   background-color: var(--el-color-primary);
+      //   position: absolute;
+      //   left: -16%;
+      //   top: -7%;
+      //   width: 132%;
+      //   height: 114%;
+      //   -moz-border-radius: 50%;
+      //   border-radius: 50%;
+      //   opacity: 0.7;
+      //   z-index: 1;
+      //   filter: blur(20px);
+      // }
     }
   }
 
