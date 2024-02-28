@@ -83,8 +83,12 @@
       </section> -->
 
       <div class="mobile-home-card">
-        <div class="w-1/2"><base-img class="w-full h-full" name="cunkuan" type="png" path="images/home" /></div>
-        <div class="w-1/2"><base-img class="w-full h-full" name="jiangli" type="png" path="images/home" /></div>
+        <div class="w-1/2">
+          <base-img class="w-full h-full rounded-[4px]" name="cunkuan" type="jpg" path="images/home" />
+        </div>
+        <div class="w-1/2">
+          <base-img class="w-full h-full rounded-[4px]" name="jiangli" type="jpg" path="images/home" />
+        </div>
       </div>
 
       <section class="game-classification mt-[20px] w-full" v-for="(item, index) in tabList" :key="index">
@@ -145,7 +149,7 @@
   const homeTab = ref<any>(null);
   const info = ref();
   const containerNews = ref<any>(null);
-
+  const router = useRouter();
   const animationtime = ref(5);
   const durations = `${animationtime.value}s`;
   const newsContainer = ref<any>(null);
@@ -165,6 +169,7 @@
 
     document.body.appendChild(style);
   });
+
   const url = games.gameURL();
   const openPopupFn = () => {};
   const nodes = reactive<any>([]);
@@ -188,26 +193,26 @@
       value: 1,
       text: "V0033",
       title: "V0030",
-      img: "hby111",
+      img: "h5_guanggaotu1_bg",
     },
-    {
-      value: 2,
-      text: "V0033",
-      title: "V0030",
-      img: "jc1103",
-    },
-    {
-      value: 3,
-      text: "V0033",
-      title: "V0030",
-      img: "kuisunlun1",
-    },
-    {
-      value: 4,
-      text: "V0033",
-      title: "V0030",
-      img: "phb11-6",
-    },
+    // {
+    //   value: 2,
+    //   text: "V0033",
+    //   title: "V0030",
+    //   img: "jc1103",
+    // },
+    // {
+    //   value: 3,
+    //   text: "V0033",
+    //   title: "V0030",
+    //   img: "kuisunlun1",
+    // },
+    // {
+    //   value: 4,
+    //   text: "V0033",
+    //   title: "V0030",
+    //   img: "phb11-6",
+    // },
   ];
   const gamereload = gameReload();
   const httpLoading = useHttpLoading();
@@ -290,14 +295,14 @@
       children: List.slice(30, 60),
       titleIcon: "spirit_icon",
     },
-    {
-      value: 3,
-      text: "L1024",
-      length: 6,
-      icon: "cherry1",
-      children: List.slice(60, 81),
-      titleIcon: "tuijian_icon",
-    },
+    // {
+    //   value: 3,
+    //   text: "L1024",
+    //   length: 6,
+    //   icon: "cherry1",
+    //   children: List.slice(60, 81),
+    //   titleIcon: "tuijian_icon",
+    // },
   ];
 
   const activeIndex = ref(0);
@@ -320,7 +325,7 @@
         .container-banner-box {
           position: relative;
           height: 0;
-          padding-bottom: 51.6%;
+          padding-bottom: 44.6%;
           border-radius: var(--border-radius);
           overflow: hidden;
         }
@@ -478,7 +483,7 @@
       .mobile-home-container-header {
         flex-direction: row;
         align-items: center;
-        margin-top: 20px;
+        margin-top: 5px;
         pointer-events: none;
         i {
           font-size: 20px;
@@ -519,7 +524,7 @@
         display: flex;
         flex-direction: row;
         gap: 6px;
-        margin-top: 10px;
+        margin-top: 5px;
       }
 
       .home-tab {
@@ -617,7 +622,7 @@
     }
     .game_title {
       position: relative;
-
+      font-size: 16px;
       gap: 5px;
       // &::before {
       //   content: "";

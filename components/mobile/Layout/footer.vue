@@ -11,7 +11,13 @@
     >
       <div class="icon-box">
         <div v-if="item.bg" class="img-box">
-          <base-img class="h-[42px] w-[38px] mt-[-8px] logo" name="fenxiang_btn" type="png" path="images/home" />
+          <base-img
+            class="h-[42px] w-[38px] mt-[-8px] logo animate__animated"
+            :class="{animate__jello: activeName === item.text && isChanged}"
+            name="fenxiang_btn"
+            type="png"
+            path="images/home"
+          />
         </div>
 
         <BaseIcon
@@ -32,12 +38,12 @@
   const list = ref([
     {name: "home2", text: "Home", path: "", title: "H0003"},
     // {name: "Rewards", text: "About", path: "about", title: "H0004"},
-    {name: "meiyuan", text: "Charge", hash: "charge", title: "H0014"},
+    {name: "meiyuan", text: "Recharge", hash: "recharge", title: "H0014"},
     {name: "share", text: "Share", hash: "share", title: "H0008", bg: true},
     // {name: "Mygame", text: "Vip", path: "vip", title: "TR0001"},
 
     {name: "vip1", text: "Vip", hash: "Vip", title: "H0005"},
-    {name: "user", text: "User", path: "user", title: "H0016"},
+    {name: "xd-icon-avatar", text: "User", path: "user", title: "H0016"},
     // {name: "home", text: "Home", path: "", title: "H0003"},
     // { name: 'member', text: 'userInfo', hash: 'userInfo', title: 'H0048' },
     // {name: "chatb", text: "Chat", hash: "chat", title: "Chat", isTranslation: true},
@@ -168,16 +174,5 @@
     border-radius: 50%;
     color: var(--el-color-primary);
     background: linear-gradient(180deg, rgba(31, 223, 117, 0.1), rgba(23, 212, 55, 0.4) 93.23%, rgba(6, 155, 68, 0.4));
-  }
-
-  .animate__animated {
-    animation-duration: 1s;
-    animation-duration: 1s;
-    animation-fill-mode: both;
-  }
-
-  .animate__jello {
-    animation-name: jello;
-    transform-origin: center;
   }
 </style>

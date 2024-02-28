@@ -3,22 +3,28 @@
 <template>
   <el-button
     class="sys-btn btn-home-next"
-    color="#373939"
     aria-label="Prev"
     @click="slidePrev"
-    :icon="ArrowLeft"
+    text
     :class="{'swiper-button-disabled': disabled && activeIndex === 0}"
     :disabled="disabled && activeIndex === 0"
-  />
+    ><BaseIcon
+      v-if="!(disabled && activeIndex === 0)"
+      name="left"
+      style="font-size: 24px; color: rgb(255 255 255 / 30%)"
+  /></el-button>
   <el-button
     class="sys-btn btn-home-next"
-    color="#373939"
     aria-label="Next"
     @click="slideNext"
-    :icon="ArrowRight"
+    text
     :class="{'swiper-button-disabled': disabled && (activeIndex === swiperLength || swiperLength <= 0)}"
     :disabled="disabled && (activeIndex === swiperLength || swiperLength <= 0)"
-  />
+    ><BaseIcon
+      v-if="!(disabled && (activeIndex === swiperLength || swiperLength <= 0))"
+      name="right"
+      style="font-size: 24px; color: rgb(255 255 255 / 30%)"
+  /></el-button>
 </template>
 
 <script setup lang="ts">
@@ -74,7 +80,7 @@
   $w_H: v-bind(w_H);
   .sys-btn.btn-home-next {
     align-items: center;
-    background: var(--el-border-color-lighter);
+    background: transparent;
     border: none;
     border-radius: 3px;
     color: var(--el-color-primary);
@@ -91,7 +97,7 @@
     }
     &:focus {
       color: var(--el-color-primary);
-      background: var(--el-border-color-lighter);
+      background: transparent;
     }
     &:hover {
       opacity: 0.6;
@@ -104,5 +110,8 @@
     background: var(--el-border-color-lighter);
     color: var(--el-text-color-disabled);
     pointer-events: none;
+  }
+  ::v-deep(.el-icon) {
+    font-size: 20px;
   }
 </style>

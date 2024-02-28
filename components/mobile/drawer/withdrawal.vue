@@ -1,21 +1,13 @@
 <!-- @format -->
 
 <template>
-  <LazyMobileModelDrawer
-    :title="'Withdrawal'"
-    :direction="'btt'"
-    :drawer="drawerDetail"
-    :header="false"
-    :hash="'withdrawal'"
-  >
+  <LazyMobileModelDrawer :title="'Withdrawal'" :drawer="drawerDetail" :header="false" :hash="'withdrawal'">
     <template #body>
       <div class="mobile-withdrawal">
-        <div class="mobile-withdrawal-header">
+        <div class="mobile-sign-header">
           <div class="flex justify-start items-center">
+            <BaseIcon @click="closeFn" name="left" style="font-size: 26px" class="font-bold mr-[16px]" />
             <base-img class="h-[29px] w-[91px] logo" name="logo" type="png" path="images/logo" />
-          </div>
-          <div @click="closeFn" class="withdrawal-close text-[14px]">
-            <el-icon><component is="CloseBold"></component></el-icon>
           </div>
         </div>
         <div class="mobile-withdrawal-content">
@@ -91,7 +83,8 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    .mobile-withdrawal-header {
+    background-color: #25262b;
+    .mobile-sign-header {
       width: 100%;
       height: 60px;
       padding: 0 15px;
@@ -99,8 +92,7 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      background-color: var(--bg-background);
-      box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.5);
+      // box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.5);
       position: relative;
       z-index: 1;
     }
@@ -149,6 +141,10 @@
     .withdrawal-close .el-icon {
       font-size: 22px;
       color: var(--el-color-primary);
+    }
+    ::v-deep(.el-divider__text) {
+      background-color: #25262b;
+      padding: 0 8px;
     }
   }
 </style>

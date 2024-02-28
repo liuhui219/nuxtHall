@@ -46,7 +46,7 @@
     top: 0;
     left: 0;
     z-index: 10000000;
-    background-color: var(--el-bg-color);
+    background-color: var(--bg-background);
     display: flex;
     flex-direction: column;
     align-items: center;

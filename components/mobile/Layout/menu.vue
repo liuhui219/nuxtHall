@@ -31,11 +31,17 @@
             :collapse-transition="true"
           >
             <template v-for="routes in menus">
-              <el-menu-item-group v-if="routes.itemGroup"
-                ><LayoutItem v-for="route in routes.itemGroup" :key="route.path" :item="route" :base-path="route.path"
-              /></el-menu-item-group>
+              <el-menu-item-group v-if="routes.itemGroup">
+                <div :class="routes.class">
+                  <MobileLayoutItem
+                    v-for="route in routes.itemGroup"
+                    :key="route.path"
+                    :item="route"
+                    :base-path="route.path"
+                  /></div
+              ></el-menu-item-group>
               <template v-else>
-                <LayoutItem :key="routes.path" :item="routes" :base-path="routes.path" />
+                <MobileLayoutItem :key="routes.path" :item="routes" :base-path="routes.path" />
               </template>
             </template>
           </el-menu>
@@ -82,6 +88,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     .closeBtn {
       width: 50px;
       height: 40px;
@@ -91,12 +98,13 @@
     }
     .el-icon {
       font-size: 22px;
-      color: var(--el-border-color-darker);
+      color: #ffffff;
     }
   }
 
   .navigation-body {
     height: calc(100% - 72px);
+
     overflow-x: hidden;
     width: 100%;
     .navigation-group-wrap {
@@ -108,6 +116,7 @@
       padding-bottom: 30px;
       overflow-x: hidden;
       overflow-y: auto;
+      margin-top: -10px;
 
       .el-menu {
         border-right: none;
@@ -116,14 +125,21 @@
       .el-menu-vertical-demo:not(.el-menu--collapse) {
         width: 100%;
         .el-menu-item {
-          background-color: var(--el-fill-color);
+          background-color: #1e2028;
           margin: 5px 0;
-          border-radius: 6px;
+          border-radius: 4px;
+          height: 40px;
+          font-size: 12px;
+          position: relative;
+          gap: 10px;
         }
         ::v-deep(.el-sub-menu__title) {
           background-color: var(--el-fill-color);
           margin: 5px 0;
           border-radius: 6px;
+        }
+        ::v-deep(.menuIcon) {
+          margin-right: 15px;
         }
       }
 
@@ -139,11 +155,47 @@
 
       .menu-vip {
         font-size: 16px;
-        background-image: linear-gradient(25deg, #58481f 12.57%, rgba(38, 40, 40, 0) 95.76%);
+        font-weight: bold;
+        padding: 0;
+        height: 43px !important;
+        gap: 4px !important;
+        background-image: linear-gradient(0deg, #3c2858 0%, #1c1f25 100%), linear-gradient(#53c16c, #53c16c);
       }
       .menu-bonus {
         font-size: 16px;
+        font-weight: bold;
+        padding: 0;
+        height: 43px !important;
+        gap: 4px !important;
         background-image: linear-gradient(28deg, #4d1f1c 13.78%, rgba(38, 40, 40, 0) 152.19%);
+      }
+
+      .menu-Download {
+        font-size: 14px !important;
+        font-weight: bold;
+        padding: 0;
+        height: 43px !important;
+        background-image: linear-gradient(90deg, #0e2954 0%, #181f29 100%), linear-gradient(#53c16c, #53c16c);
+      }
+
+      .menu-Free {
+        padding: 0;
+        background-image: linear-gradient(90deg, #e2385d 0%, #d10533 100%), linear-gradient(#53c16c, #53c16c);
+        font-size: 16px !important;
+      }
+      .gap {
+        column-gap: 8px;
+      }
+
+      .menu-box {
+        display: flex;
+        flex-direction: column;
+        border-radius: 4px;
+        overflow: hidden;
+        li {
+          margin: 0 !important;
+          border-radius: 0 !important;
+        }
       }
     }
   }

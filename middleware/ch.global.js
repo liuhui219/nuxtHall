@@ -2,10 +2,10 @@
 import store from "store";
 export default defineNuxtRouteMiddleware((to, from) => {
   if (process.server) return;
-
+  const router = useRouter();
   //dialog弹框做登录权限判断
 
-  let authList = ["charge", "withdrawal", "share"];
+  let authList = ["recharge", "withdrawal", "share"];
 
   const isLogin = useIsLogin();
   let status = store.get("w_l_s_a");

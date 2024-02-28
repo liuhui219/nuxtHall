@@ -4,7 +4,7 @@
   <header class="mobile-header fixed">
     <div
       v-if="tipShow && !isDesktop"
-      class="down-tip flex items-center justify-between w-full text-[12px] whitespace-pre-wrap relative px-[15px]"
+      class="down-tip flex items-center justify-between w-full text-[12px] whitespace-pre-wrap relative px-[10px]"
     >
       <span>{{ $t("H0033") }}</span>
       <el-button @click="downLoadFn" size="small" icon="Cellphone" color="#ffffff">{{ $t("H0034") }}</el-button>
@@ -16,17 +16,29 @@
         <el-icon><Close /></el-icon>
       </button>
     </div>
-    <section class="mobile-header-main flex justify-between w-full px-[15px] h-full">
+    <section class="mobile-header-main flex justify-between w-full px-[10px] h-full">
       <div class="left flex justify-center items-center">
-        <BaseIcon @click="openPopup('menu')" name="menu1" style="font-size: 24px; margin-right: 5px" />
+        <base-img
+          @click="openPopup('menu')"
+          class="h-[20px] w-[23px] mr-[8px] logo"
+          name="h5_caidan_icon"
+          type="png"
+          path="images/home"
+        />
         <base-img @click="goHome" class="h-[29px] w-[91px] logo" name="logo" type="png" path="images/logo" />
       </div>
       <div class="right tools-login">
         <template v-if="!isLogin"
-          ><el-button @click="openPopup('login')" size="large" type="primary" text>{{ $t("L1001") }}</el-button>
-          <el-button @click="openPopup('register')" class="el-button-sign-up" size="large" type="primary">{{
-            $t("L1002")
-          }}</el-button></template
+          ><el-button @click="openPopup('login')" size="large" type="primary" text class="!px-[10px]"
+            ><span class="uppercase font-bold text-[12px]">{{ $t("L1001") }}</span></el-button
+          >
+          <el-button
+            @click="openPopup('register')"
+            class="el-button-sign-up !ml-[2px] !px-[10px]"
+            size="large"
+            type="primary"
+            ><span class="uppercase font-bold text-[12px]">{{ $t("L1002") }}</span></el-button
+          ></template
         >
         <el-dropdown v-else trigger="click" placement="bottom-end" popper-class="el-dropdown-popper">
           <span class="el-dropdown-link" aria-label="dropdown">

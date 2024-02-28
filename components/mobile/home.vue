@@ -8,13 +8,18 @@
     <main class="mobile-container-main">
       <NuxtPage />
       <NuxtPwaManifest />
-      <LazyMobilePagesDraggable :initialX="10" :initialY="180" img="qiandao" />
+      <LazyMobilePagesDraggable initialX="10" initialY="180" img="qiandao" />
       <LazyMobilePagesDraggable img="feiji" />
     </main>
     <LazyMobileLayoutFooter />
 
     <template v-for="(item, index) in components"
-      ><component :is="item.component" v-if="getHashValue(route.hash) === item.name"
+      ><component
+        :is="item.component"
+        v-if="
+          getHashValue(route.hash) === item.name ||
+          (item.name === 'signModel' && ['login', 'reset', 'register'].includes(getHashValue(route.hash)))
+        "
     /></template>
     <baseLoading :http="true" v-if="httpLoading"></baseLoading>
   </div>

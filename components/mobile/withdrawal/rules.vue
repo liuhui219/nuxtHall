@@ -2,7 +2,9 @@
 
 <template>
   <div class="rules">
-    <div class="rules-title">Ilustrar</div>
+    <el-divider
+      ><span class="font-black">{{ $t("H0025") }}</span>
+    </el-divider>
     <div class="rules-content">
       saques de jogo dependem de limite deapostas, e see você não conseguir fazer um levantamento do seu dinheiro, você
       pode ire jogar o jogo para aumentar seu limite de apostas. Se você tiver alguma dúvida, pergunta à nossa equipe de
@@ -18,6 +20,7 @@
     width: 100%;
     height: 100%;
     background-color: #25262b;
+    padding: 0 16px;
     .rules-title {
       width: 100%;
       height: 36px;
@@ -43,7 +46,7 @@
     }
 
     .rules-content {
-      padding: 50px 20px;
+      padding: 50px 10px;
       width: 100%;
       display: flex;
       justify-content: center;

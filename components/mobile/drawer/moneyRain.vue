@@ -106,6 +106,7 @@
   .mobile-moneyRain {
     width: 100%;
     height: 100%;
+    background-color: var(--bg-background);
     .close .el-icon {
       font-size: 22px;
       color: var(--el-color-primary);

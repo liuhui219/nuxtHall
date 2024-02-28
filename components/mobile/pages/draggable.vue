@@ -2,15 +2,8 @@
 
 <template>
   <client-only
-    ><div
-      ref="redpacketRef"
-      @click="redpacket"
-      class="redpacket-mobile"
-      :class="{duration: !isDrag}"
-      :style="transformStyle"
-      v-if="show"
-    >
-      <div class="cursor-pointer">
+    ><div ref="redpacketRef" class="redpacket-mobile" :class="{duration: !isDrag}" :style="transformStyle" v-if="show">
+      <div class="cursor-pointer" @click="redpacket">
         <!-- <el-progress type="circle" status="success" :width="60" :show-text="false" :stroke-width="4" :percentage="60" /> -->
         <div class="redpacket-image w-full h-full">
           <base-img class="h-[60px] w-[60px] logo" :name="img" type="png" path="images/home" />

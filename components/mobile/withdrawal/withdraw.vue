@@ -2,13 +2,18 @@
 
 <template>
   <div class="withdraw">
-    <div class="withdraw-title">Bonus De Teste</div>
-    <div class="withdraw-money">
-      <div class="inline py-[35px] gap-[6px]">
-        <span class="unit">R$</span> <span class="money">{{ formattedNum(money) }}</span>
+    <div class="px-[16px]">
+      <el-divider
+        ><span class="font-black">{{ $t("H0038") }}</span>
+      </el-divider>
+      <div class="withdraw-money py-[20px] gap-[10px]">
+        <div class="inline gap-[8px]">
+          <span class="unit">R$</span> <span class="money">{{ formattedNum(money) }}</span>
+        </div>
+        <div class="title text-[12px]">Ainda faltam 0 apostas para poderfazer o saque</div>
       </div>
-      <div class="title text-[14px]">Ainda faltam 0 apostas para poderfazer o saque</div>
     </div>
+
     <div class="withdraw-form">
       <el-form
         ref="ruleFormRef"
@@ -18,7 +23,7 @@
         label-width="0"
         class="demo-ruleForm"
       >
-        <div class="withdraw-view">
+        <div class="withdraw-view px-[16px]">
           <div class="withdraw-view-money">
             <el-form-item label="" prop="amount"
               ><el-input
@@ -29,13 +34,10 @@
                 @input="inputFn"
                 placeholder="Por favor, insira o valor do saque"
               >
-                <template #prefix>
-                  <span class="unit">R$</span>
-                </template>
-              </el-input></el-form-item
-            >
+              </el-input
+            ></el-form-item>
           </div>
-          <div class="withdraw-view-list grid grid-cols-2 gap-[10px]">
+          <div class="withdraw-view-list grid grid-cols-3 gap-[10px]">
             <div
               class="withdraw-view-list-btn"
               :class="{active: item.value === activeIndex}"
@@ -46,10 +48,13 @@
               R$ {{ item.text }}
             </div>
           </div>
+          <p class="text-[10px] text-left mt-[10px]" style="color: #f8bd31">
+            Para sacar com Pix, registre seu CPF através do aplicativo do seu banco.
+          </p>
         </div>
 
-        <div class="withdraw-info">
-          <el-form-item label="PIX" prop="amount" label-width="60px">
+        <div class="withdraw-info p-[16px]">
+          <el-form-item label="" prop="amount" label-width="0px">
             <el-row :gutter="4">
               <el-col :span="8">
                 <el-select size="large" v-model="ruleForm.amount" placeholder="Activity zone">
@@ -62,15 +67,28 @@
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="NOME" prop="amount" label-width="60px">
+          <el-form-item label="" prop="amount" label-width="0px">
             <el-input v-model="ruleForm.amount" size="large" clearable placeholder="Insira seu nome" />
           </el-form-item>
-          <el-form-item label="CPF" prop="amount" label-width="60px">
+          <el-form-item label="" prop="amount" label-width="0px">
             <el-input v-model="ruleForm.amount" size="large" clearable placeholder="Insira sua conta" />
           </el-form-item>
+
+          <div class="text-[12px] text-left mt-[10px]" style="color: rgb(100 119 163)">
+            <p>1. Abra o aplicativo bancário.</p>
+            <p>2. Abra a seção Pix e toque em “Registrar chave".</p>
+            <p>3. Insira o CPF e registre sua chave.</p>
+            <p>4. Saque PIX pronto após confirmação da chave.</p>
+            <p class="mt-[20px]">R${{ ruleForm.amount }} depósito em sua conta pessoal</p>
+          </div>
+
+          <button
+            class="flex submit items-center min-h-[40px] justify-center w-full rounded-[4px] text-[13px] font-bold text-color-white"
+          >
+            {{ $t("H0038") }}
+          </button>
         </div>
       </el-form>
-      <el-button v-btn size="large" class="submit">Saque</el-button>
     </div>
   </div>
 </template>
@@ -78,10 +96,12 @@
 <script setup>
   const {locale, t} = useI18n();
   const list = ref([
+    {text: 50, value: "50"},
     {text: 100, value: "100"},
     {text: 200, value: "200"},
     {text: 300, value: "300"},
     {text: 500, value: "500"},
+    {text: 1000, value: "1000"},
   ]);
 
   const rules = computed(() => {
@@ -168,16 +188,20 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      background-color: #313642;
+      border-radius: 4px;
 
       font-family: Arial-BoldMT;
       .unit {
-        color: var(--el-color-primary);
-        font-size: 32px;
-        font-weight: bolder;
+        color: #2ff85a;
+        font-size: 18px;
+
+        font-family: FZ;
       }
       .money {
-        font-size: 42px;
-        font-weight: bolder;
+        font-size: 32px;
+
+        font-family: FZ;
       }
 
       .title {
@@ -187,13 +211,11 @@
 
     .withdraw-form {
       width: 100%;
-      padding: 0 8px;
       margin-top: 20px;
       gap: 10px;
       .withdraw-view {
-        background: #36373b;
         width: 100%;
-        padding: 8px;
+
         gap: 10px;
         border-radius: 4px;
         .unit {
@@ -210,13 +232,15 @@
             justify-content: center;
             align-items: center;
             height: 50px;
-            background: #45464a;
+            background-color: rgb(93 99 116 / 25%);
+            border: solid 1px rgb(192 197 213 / 25%);
             border-radius: 4px;
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 18px;
+            font-family: FZ;
           }
           .active {
-            background: var(--background);
+            background-image: linear-gradient(0deg, #203c1f 0%, #1f1f25 100%), linear-gradient(#5d6374, #5d6374);
+            border: solid 1px #2df832;
           }
         }
         ::v-deep(.el-input__inner) {
@@ -227,7 +251,7 @@
       .withdraw-info {
         background: #36373b;
         width: 100%;
-        padding: 8px;
+
         border-radius: 4px;
         margin-top: 10px;
         ::v-deep(.el-form-item) {
@@ -240,15 +264,28 @@
       }
       ::v-deep(.submit) {
         width: 100%;
-        margin-top: 40px;
-        height: 50px;
-        font-size: 18px;
-        background: var(--background);
+        margin-top: 10px;
+        font-weight: bold;
+        background-image: linear-gradient(90deg, #62cc7a 0%, #34aa4e 100%), linear-gradient(#53c16c, #53c16c);
       }
-      padding-bottom: 50px;
     }
     ::v-deep(.el-input__wrapper) {
       background-color: #2b2f35;
+    }
+
+    ::v-deep(.el-input__wrapper) {
+      background-color: #07080a;
+      box-shadow: 0 0 0 1px #07080a inset;
+    }
+
+    ::v-deep(.el-input__wrapper.is-focus) {
+      box-shadow: 0 0 0 1px #6188fd inset;
+    }
+    ::v-deep(.el-form-item.is-error .el-input__wrapper) {
+      box-shadow: 0 0 0 1px var(--el-color-danger) inset;
+    }
+    ::v-deep(.el-form-item__error) {
+      margin-left: 0;
     }
   }
 </style>

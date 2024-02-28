@@ -2,6 +2,9 @@
 
 <template>
   <div class="records">
+    <el-divider
+      ><span class="font-black">{{ $t("H0024") }}</span>
+    </el-divider>
     <div class="records-content">
       <div class="records-content-head records-content-cont">
         <span>Valor</span>
@@ -41,25 +44,24 @@
   .records {
     width: 100%;
     height: 100%;
-    padding: 8px;
+    padding: 0 16px;
+    background-color: #25262b;
 
     .records-content {
       width: 100%;
-      background: #36373b;
       border-radius: 4px;
-      height: 100%;
-      overflow-x: hidden;
+      height: calc(100% - 50px);
+
       padding: 0 8px;
-      .records-content-head {
-        position: sticky;
-        top: 0;
-        background: #36373b;
-      }
+
       .records-content-cont {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 50px;
+        margin-bottom: 5px;
+        background: #313642;
+        border-radius: 4px;
         span {
           font-size: 14px;
           flex: 1;
@@ -80,9 +82,15 @@
           color: var(--el-color-primary);
         }
         &:nth-child(2n) {
-          background: #45464a;
-          border-radius: 4px;
         }
+      }
+      .records-content-head {
+        position: sticky;
+        top: 0;
+        background-color: transparent;
+        height: auto;
+        background-color: #25262b;
+        color: #46516b;
       }
     }
   }

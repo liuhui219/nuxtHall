@@ -2,6 +2,9 @@
 
 <template>
   <div class="privilege">
+    <el-divider
+      ><span class="font-black">{{ $t("H0023") }}</span>
+    </el-divider>
     <div class="privilege-content">
       <div class="privilege-content-head privilege-content-cont">
         <span>Privilege</span>
@@ -41,25 +44,25 @@
   .privilege {
     width: 100%;
     height: 100%;
-    padding: 8px;
+    padding: 0 16px;
+    background-color: #25262b;
 
     .privilege-content {
       width: 100%;
-      background: #36373b;
+
       border-radius: 4px;
-      height: 100%;
-      overflow-x: hidden;
+      height: calc(100% - 50px);
+
       padding: 0 8px;
-      .privilege-content-head {
-        position: sticky;
-        top: 0;
-        background: #36373b;
-      }
+
       .privilege-content-cont {
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-bottom: 5px;
         height: 50px;
+        background: #313642;
+        border-radius: 4px;
         span {
           font-size: 14px;
           flex: 1;
@@ -70,10 +73,14 @@
         .vip {
           color: var(--el-color-primary);
         }
-        &:nth-child(2n) {
-          background: #45464a;
-          border-radius: 4px;
-        }
+      }
+      .privilege-content-head {
+        position: sticky;
+        top: 0;
+        background-color: transparent;
+        height: auto;
+        background-color: #25262b;
+        color: #46516b;
       }
     }
   }

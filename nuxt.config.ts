@@ -118,9 +118,9 @@ export default defineNuxtConfig({
     manifest: {
       name: "EasyGame",
       short_name: "EasyGame",
-      theme_color: "#141414",
+      theme_color: "#25262b",
       display: "standalone",
-      background_color: "#141414",
+      background_color: "#25262b",
       start_url: "/",
       scope: "/",
       icons: [
@@ -174,7 +174,7 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    defaultLocale: envData?.VITE_PUBLIC_LANG || "en",
+    defaultLocale: envData?.VITE_PUBLIC_LANG || "pt-br",
     vueI18n: "./locales/index.js",
   },
 
