@@ -8,8 +8,6 @@
     <main class="mobile-container-main">
       <NuxtPage />
       <NuxtPwaManifest />
-      <LazyMobilePagesDraggable initialX="10" initialY="180" img="qiandao" />
-      <LazyMobilePagesDraggable img="feiji" />
     </main>
     <LazyMobileLayoutFooter />
 

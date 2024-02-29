@@ -43,7 +43,7 @@
     // {name: "Mygame", text: "Vip", path: "vip", title: "TR0001"},
 
     {name: "vip1", text: "Vip", hash: "Vip", title: "H0005"},
-    {name: "xd-icon-avatar", text: "User", path: "user", title: "H0016"},
+    {name: "xd-icon-avatar", text: "Profile", path: "profile", title: "H0016"},
     // {name: "home", text: "Home", path: "", title: "H0003"},
     // { name: 'member', text: 'userInfo', hash: 'userInfo', title: 'H0048' },
     // {name: "chatb", text: "Chat", hash: "chat", title: "Chat", isTranslation: true},

@@ -33,7 +33,7 @@
       <!-- 滚动播放站内通知 -->
       <div class="mobile-home-container-header flex w-full h-[30px] overflow-y-hidden">
         <BaseIcon name="notifications" />
-        <div class="mobile-home-container-news flex h-full">
+        <div ref="container" class="mobile-home-container-news flex h-full">
           <div class="mobile-home-container-news-main flex h-full" ref="newsContainer">
             <div ref="containerNews" class="mobile-home-container-news-box flex h-full">
               <span v-for="(item, index) in newsList" :key="index">{{ item.text }}</span>
@@ -136,6 +136,8 @@
       </section>
     </div>
     <LazyMobilePagesFooter />
+    <LazyMobilePagesDraggable initialX="10" initialY="180" img="qiandao" />
+    <LazyMobilePagesDraggable img="feiji" />
   </div>
 </template>
 
@@ -149,6 +151,7 @@
   const homeTab = ref<any>(null);
   const info = ref();
   const containerNews = ref<any>(null);
+
   const router = useRouter();
   const animationtime = ref(5);
   const durations = `${animationtime.value}s`;
@@ -168,6 +171,10 @@
     style.innerHTML = dymanicStyle;
 
     document.body.appendChild(style);
+
+    let scrollLength = containerNews.value.offsetWidth;
+    let scrollTime = scrollLength / 40;
+    newsContainer.value.style.animationDuration = `${scrollTime}s`;
   });
 
   const url = games.gameURL();
@@ -187,7 +194,7 @@
       text: "央行通知：目前巴西央行临时维护将影响部分希望提款的用户，对于出现的意外情况我们深表歉意，我们将尽快解决。",
     },
   ];
-  const duration = `${newsList.length * 10}s`;
+
   const list = [
     {
       value: 1,
@@ -504,7 +511,6 @@
         font-size: 12px;
         width: 100%;
         animation-name: scroll-left;
-        animation-duration: v-bind(duration);
         animation-timing-function: linear;
         animation-iteration-count: infinite;
         .mobile-home-container-news-box {
