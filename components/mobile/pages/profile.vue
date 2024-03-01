@@ -110,12 +110,20 @@
           </div>
         </div>
       </template>
+      <button v-if="isLogin" class="mb-[40px] font-bold text-[13px]" @click="signOutFn">{{ $t("L1018") }}</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+  import store from "store";
   const isLogin = useIsLogin();
+  const router = useRouter();
+  const signOutFn = () => {
+    store.remove("w_l_s_a");
+    isLogin.value = false;
+    router.push({path: "/"});
+  };
   let routes = ref([
     {
       class: "grid grid-cols-2 gap-[8px]",

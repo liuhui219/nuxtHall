@@ -66,8 +66,13 @@
   // };
 
   const routFn = (item) => {
+    const route = useRoute();
     if (item.meta.route) {
-      navigateTo(item.path);
+      if (item.hash) {
+        openPopup(item.hash);
+      } else {
+        navigateTo(item.path);
+      }
     } else if (item.meta.type === "install") {
       download.callBack();
     }

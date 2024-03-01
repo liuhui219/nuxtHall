@@ -95,7 +95,7 @@ let routes = [
         children: [],
       },
       {
-        path: "/#/withdrawal",
+        hash: "withdrawal",
         name: "withdrawal",
         meta: {
           title: "H0038",

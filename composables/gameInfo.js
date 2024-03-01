@@ -52,7 +52,7 @@ export const games = {
       let status = store.get("w_l_s_a");
       let loginInfo = isLogin.value ? JSON.parse(decodeURIComponent(atob(status))) : {};
 
-      url = `${game_url}/${roomId}/index.html?oid=${loginInfo?.oid}&oa=${loginInfo?.account}&op=${
+      url = `${game_url}/${roomId}/index.html?oid=${loginInfo?.oid}&oa=${loginInfo?.phoneNumber}&op=${
         loginInfo?.password
       }&hv=8283EAA9F1EBAF5D5CA773D30F5A02EF&ip=192.17.18.23&b=1&sid=${sid}&l=en&g=${roomId}&t=${new Date().getTime()}&s=1&isdbg=hxdebug&e=ToCloseWebView`;
     }

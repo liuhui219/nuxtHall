@@ -9,6 +9,7 @@ export const useMenuDrawer = () => useState("menu-drawer", () => false);
 export const useLang = () => useState("lang", () => "en");
 
 export const useDialog = () => useState("dialog", () => false);
+export const useNotification = () => useState("notification", () => false);
 
 export const gameReload = () => useState("game-reload", () => 0);
 export const gameURL = () => useState("game-URL", () => "");

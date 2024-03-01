@@ -228,7 +228,7 @@
       padding-bottom: env(safe-area-inset-bottom);
       overflow-x: hidden;
       position: relative;
-      padding: 16px;
+      padding: 0 16px;
       box-sizing: border-box;
       .mobile-home-card {
         width: 100%;
@@ -304,7 +304,7 @@
               font-size: 8px;
               font-weight: bold;
               position: absolute;
-              left: -1px;
+              left: 0px;
               top: 12px;
               z-index: -1;
               transform: rotate(-45deg);

@@ -40,25 +40,36 @@
             ><span class="uppercase font-bold text-[12px]">{{ $t("L1002") }}</span></el-button
           ></template
         >
-        <el-dropdown v-else trigger="click" placement="bottom-end" popper-class="el-dropdown-popper">
-          <span class="el-dropdown-link" aria-label="dropdown">
-            <el-badge is-dot
-              ><el-avatar fit="fit" :size="35" alt="" :src="avatar" @error="errorHandler">
-                <base-img class="h-[35px] w-[35px]" name="error" type="png" path="images/load" /></el-avatar
-            ></el-badge>
-          </span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item
-                v-for="(item, index) in dropdownMenu"
-                :divided="item.divided"
-                :key="index"
-                @click="setLang(item)"
-                >{{ $t(item.text) }}</el-dropdown-item
+
+        <div class="flex items-center text-[11px]" v-else>
+          <div
+            @click="openPopup('recharge')"
+            class="h-[35px] px-[6px] py-[4px] flex items-center gap-[15px] font-bold rounded-[4px]"
+            style="background: #191b21"
+          >
+            <div class="flex items-center gap-[4px]">
+              <span style="color: #45d91e">R$</span><span class="whitespace-pre">{{ formattedNum(money) }}</span>
+            </div>
+            <div
+              class="relative h-[27px] w-[27px] flex items-center justify-center rounded-[4px]"
+              style="background: #ff7300"
+            >
+              <BaseIcon name="plus" class="animate__animated text-[22px]" />
+            </div>
+          </div>
+          <div class="flex" @click="notificationFn">
+            <!---->
+            <div class="w-[35px] h-[35px] flex items-center justify-center relative">
+              <el-icon size="26px" color="#516382"><BellFilled /></el-icon>
+              <div
+                class="rounded-full shrink-0 text-color-white flex items-center justify-center font-bold w-[15px] h-[15px] text-[10px] absolute right-[4px] top-[4px]"
+                style="background: #45d91e"
               >
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
+                6
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </header>
@@ -68,6 +79,8 @@
   import {useImage, useIntersectionObserver} from "@vueuse/core";
   import store from "store";
   const {locale, setLocale} = useI18n();
+  const notification = useNotification();
+  const money = ref(0);
   const {isAndroid, isApple, isDesktop} = useDevice();
   const avatar = ref("https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png");
   const {isLoading} = useImage({src: avatar.value});
@@ -102,6 +115,15 @@
       lang: false,
     },
   ];
+  const notificationFn = () => {
+    notification.value = true;
+  };
+  const formattedNum = (num) => {
+    return num.toLocaleString("de-DE", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
   const goHome = () => {
     navigateTo("/");
   };

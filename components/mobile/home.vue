@@ -11,14 +11,7 @@
     </main>
     <LazyMobileLayoutFooter />
 
-    <template v-for="(item, index) in components"
-      ><component
-        :is="item.component"
-        v-if="
-          getHashValue(route.hash) === item.name ||
-          (item.name === 'signModel' && ['login', 'reset', 'register'].includes(getHashValue(route.hash)))
-        "
-    /></template>
+    <template v-for="(item, index) in components"><component :is="item.component" /></template>
     <baseLoading :http="true" v-if="httpLoading"></baseLoading>
   </div>
 </template>

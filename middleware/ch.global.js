@@ -5,6 +5,10 @@ export default defineNuxtRouteMiddleware((to, from) => {
   const router = useRouter();
   //dialog弹框做登录权限判断
 
+  console.log("====================================");
+  console.log(to, from);
+  console.log("====================================");
+
   let authList = ["recharge", "withdrawal", "share"];
 
   const isLogin = useIsLogin();
@@ -18,7 +22,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   if ((to.meta.auth || authList.includes(getHashValue(to.hash))) && !isLogin.value) {
     return navigateTo({
-      path: "/",
+      path: to.path,
       hash: "#/login",
     });
   }
