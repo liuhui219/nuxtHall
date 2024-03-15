@@ -73,14 +73,10 @@
 
 <script setup>
   const notification = useNotification();
-  const activeName = ref("0");
+  const activeName = ref("1");
 
   const read = ref(true);
   let tabList = [
-    {
-      text: "Plataforma",
-      value: "0",
-    },
     {
       text: "Pessoal",
       value: "1",

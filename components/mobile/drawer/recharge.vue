@@ -19,6 +19,8 @@
               <base-img class="w-full h-full rounded-[4px]" name="jiangli" type="jpg" path="images/home" />
             </div>
           </div>
+          <!-- 滚动播放站内通知 -->
+          <BaseMessageCarousel />
           <el-divider
             ><span class="font-black">{{ $t("L1036") }}</span>
           </el-divider>

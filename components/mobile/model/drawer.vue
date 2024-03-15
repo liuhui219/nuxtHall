@@ -12,6 +12,7 @@
       :destroy-on-close="true"
       :modal="true"
       :size="'100%'"
+      @opened="opened"
     >
       <div class="mobile-modal-content">
         <header v-if="header" class="mobile-modal-content-header">
@@ -50,6 +51,7 @@
       type: String,
       default: "",
     },
+    opened: {type: Function},
   });
   const httpLoading = useHttpLoading();
 

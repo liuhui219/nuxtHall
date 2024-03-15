@@ -91,7 +91,7 @@ export default {
   H0047: "O número de celular tem {length} dígitos",
   H0048: "Número de telefone errado",
   H0049: "Retirada",
-  H0050: "registo",
+  H0050: "Registo",
   H0051: "Sorteio de mesa giratória",
   H0052: "Convite para casa",
   H0053: "Detalhes da promoção",
