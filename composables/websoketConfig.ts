@@ -9,6 +9,7 @@ export const websoket = {
             const baseUrl = useRuntimeConfig().public.ws;
             const url = `ws://${baseUrl}`;
             let ws = useWs();
+
             ws.value = undefined;
             let net = await module.useNet(url, (s, e) => {
                 switch (e.status) {
@@ -20,6 +21,7 @@ export const websoket = {
                         break;
                     case WebSocket.OPEN:
                         console.log("open");
+
                         break;
                     case WebSocket.CLOSING:
                         console.log("closing");
@@ -29,6 +31,7 @@ export const websoket = {
                 }
             });
             ws.value = net;
+            return net;
         }
     },
 };

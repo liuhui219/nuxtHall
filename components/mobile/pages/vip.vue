@@ -48,28 +48,57 @@
         >
             <div class="w-full h-full flex flex-col items-between">
                 <div class="flex w-full justify-between">
-                    <div><base-img class="w-[160px] mx-auto" name="15" type="png" path="images/vip" /></div>
+                    <div>
+                        <base-img
+                            class="w-[160px] mx-auto"
+                            :name="GetGrowUserStatusResult.growLevel"
+                            type="png"
+                            path="images/vip"
+                        />
+                    </div>
 
                     <div class="flex flex-col w-full justify-center gap-[10px] pr-[10px]">
                         <div>
                             <div>
-                                <h2 class="text-[15px] font-bold">VIP 1</h2>
+                                <h2 class="text-[15px] font-bold">VIP{{ GetGrowUserStatusResult.growLevel }}</h2>
                             </div>
                         </div>
                         <div class="text-[10px]">
                             <div class="flex flex-row justify-between">
-                                <span>RECARGA ACUMULADA</span> <span>440.00/400.00</span>
+                                <span>RECARGA ACUMULADA</span>
+                                <span
+                                    >{{ formattedNum(GetGrowUserStatusResult.payCurrent) }}/{{
+                                        formattedNum(GetGrowUserStatusResult.payRequire)
+                                    }}</span
+                                >
                             </div>
                             <div class="h-[6px] rounded-[3px] overflow-hidden relative my-[4px]">
-                                <el-progress :percentage="80" color="#3764ff" :show-text="false" />
+                                <el-progress
+                                    :percentage="
+                                        (GetGrowUserStatusResult.payCurrent / GetGrowUserStatusResult.payRequire) * 100
+                                    "
+                                    color="#3764ff"
+                                    :show-text="false"
+                                />
                             </div>
                         </div>
                         <div class="text-[10px]">
                             <div class="flex flex-row justify-between">
-                                <span>RECARGA ACUMULADA</span> <span>440.00/400.00</span>
+                                <span>APOSTAS ACUMULADAS</span>
+                                <span
+                                    >{{ formattedNum(GetGrowUserStatusResult.betCurrent) }}/{{
+                                        formattedNum(GetGrowUserStatusResult.betRequire)
+                                    }}</span
+                                >
                             </div>
                             <div class="h-[6px] rounded-[3px] overflow-hidden relative my-[4px]">
-                                <el-progress :percentage="80" color="#3764ff" :show-text="false" />
+                                <el-progress
+                                    :percentage="
+                                        (GetGrowUserStatusResult.betCurrent / GetGrowUserStatusResult.betRequire) * 100
+                                    "
+                                    color="#3764ff"
+                                    :show-text="false"
+                                />
                             </div>
                         </div>
                     </div>
@@ -203,32 +232,53 @@
 </template>
 
 <script setup lang="ts">
+    import {commands} from "~/core/define";
     const {$importImage} = useNuxtApp();
-    const isLogin = useIsLogin();
-    const activeIndex = ref("1");
+    const activeIndex = ref(0);
     const dialogVisible = useVipLevel();
+    const isLogin = useIsLogin();
+    const loginInfo = ref<CMD_MB_LogonSuccess>();
+    let ws: INetService;
+    const UserStatus = reactive<CMD_MB_GetGrowUserStatus>({
+        userID: 0,
+        experienceRenderMode: 1,
+    });
+    const GetGrowUserStatusResult = ref<CMD_MB_GetGrowUserStatusResult>({
+        growLevel: 0, // 成长等级/VIP等级
+        payCurrent: 0, // 当前充值额
+        payRequire: 0, // 需求充值额
+        betCurrent: 0, // 当前下注额
+        betRequire: 0, // 需求下注额
+        dailyAddition: 0, // 当前等级日转盘加成
+        dailyAdditionNext: 0, // 下个等级日转盘加成
+        weeklyAddition: 0, // 当前等级周转盘加成
+        weeklyAdditionNext: 0, // 下个等级周转盘加成
+        monthlyAddition: 0, // 当前等级月转盘加成
+        monthlyAdditionNext: 0, // 下个等级周转盘加成
+    });
+    const tagScoreInfo = useTagScoreInfo();
     const vipList = [
-        {text: "VIP 0", value: "0"},
-        {text: "VIP 1", value: "1"},
-        {text: "VIP 2", value: "2"},
-        {text: "VIP 3", value: "3"},
-        {text: "VIP 4", value: "4"},
-        {text: "VIP 5", value: "5"},
-        {text: "VIP 6", value: "6"},
-        {text: "VIP 7", value: "7"},
-        {text: "VIP 8", value: "8"},
-        {text: "VIP 9", value: "9"},
-        {text: "VIP 10", value: "10"},
-        {text: "VIP 11", value: "11"},
-        {text: "VIP 12", value: "12"},
-        {text: "VIP 13", value: "13"},
-        {text: "VIP 14", value: "14"},
-        {text: "VIP 15", value: "15"},
-        {text: "VIP 16", value: "16"},
-        {text: "VIP 17", value: "17"},
-        {text: "VIP 18", value: "18"},
-        {text: "VIP 19", value: "19"},
-        {text: "VIP 20", value: "20"},
+        {text: "VIP 0", value: 0},
+        {text: "VIP 1", value: 1},
+        {text: "VIP 2", value: 2},
+        {text: "VIP 3", value: 3},
+        {text: "VIP 4", value: 4},
+        {text: "VIP 5", value: 5},
+        {text: "VIP 6", value: 6},
+        {text: "VIP 7", value: 7},
+        {text: "VIP 8", value: 8},
+        {text: "VIP 9", value: 9},
+        {text: "VIP 10", value: 10},
+        {text: "VIP 11", value: 11},
+        {text: "VIP 12", value: 12},
+        {text: "VIP 13", value: 13},
+        {text: "VIP 14", value: 14},
+        {text: "VIP 15", value: 15},
+        {text: "VIP 16", value: 16},
+        {text: "VIP 17", value: 17},
+        {text: "VIP 18", value: 18},
+        {text: "VIP 19", value: 19},
+        {text: "VIP 20", value: 20},
     ];
 
     const box = $importImage("box", "png", "images/vip");
@@ -239,6 +289,47 @@
     const VIPLevelFn = () => {
         dialogVisible.value = true;
     };
+
+    const getGrowUserStatusFn = () => {
+        return new Promise((resolve, reject) => {
+            let {userID} = loginInfo.value as CMD_MB_LogonSuccess;
+            UserStatus.userID = userID;
+            getGrowUserStatus(UserStatus, "vip", (s: INetService, e: INetEventParam) => {
+                if (e.scmd === commands.SUB_MB_GetGrowUserStatus_RESULT) {
+                    GetGrowUserStatusResult.value = e.data as CMD_MB_GetGrowUserStatusResult;
+                    activeIndex.value = GetGrowUserStatusResult.value.growLevel;
+                    ws = s;
+                    resolve(e.data);
+                }
+            });
+        });
+    };
+
+    const init = () => {
+        const loginInfos = getLoginInfo();
+        loginInfo.value = loginInfos;
+
+        let result = schedule([getGrowUserStatusFn], 2);
+        result.then((res) => {});
+    };
+
+    const leave = () => {
+        ws.off("vip");
+    };
+    onMounted(() => {
+        init();
+    });
+    onActivated(() => {
+        init();
+    });
+
+    onUnmounted(() => {
+        leave();
+    });
+
+    onDeactivated(() => {
+        leave();
+    });
 </script>
 
 <style lang="scss" scoped>

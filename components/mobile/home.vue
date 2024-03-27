@@ -5,7 +5,7 @@
         <LazyMobileLayoutHeader />
 
         <LazyMobileLayoutMenu />
-        <main class="mobile-container-main">
+        <main class="mobile-container-main overscroll-none">
             <NuxtPage />
             <NuxtPwaManifest />
         </main>

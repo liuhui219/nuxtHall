@@ -26,6 +26,12 @@ class HxPackStream implements IHxPackStream {
         return this.getBuffer();
     }
 
+    public get finalBuffer(): ArrayBuffer {
+        let addrBuffer = wasmModule._finalBuffer(this.streamAddr);
+        let packLength = wasmModule._getDataLength(this.streamAddr) + 12;
+        return new Uint8Array(wasmModule.HEAPU8.buffer, addrBuffer, packLength);
+    }
+
     public get mainCommand(): number {
         return wasmModule._getMainCmd(this.streamAddr);
     }
@@ -36,6 +42,10 @@ class HxPackStream implements IHxPackStream {
 
     public get dataLength(): number {
         return wasmModule._getDataLength(this.streamAddr);
+    }
+
+    public get currentPosition(): number {
+        return wasmModule._getCurrentPosition(this.streamAddr);
     }
 
     public get addrHandle(): number {

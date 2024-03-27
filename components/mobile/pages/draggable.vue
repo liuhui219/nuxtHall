@@ -62,7 +62,7 @@
             default: "",
         },
     });
-    const value = ref(Date.now() + 1000 * 60 * 60);
+    const value = useCountdown();
     const redpacketRef = ref(null);
     const mobileMain = document.querySelector(".mobile-container-main");
     const {isScrolling} = useScroll(mobileMain, {behavior: "auto"});

@@ -12,6 +12,8 @@
             center
             align-center
             @close="handleClose"
+            @opened="openedFn"
+            @closed="closedFn"
         >
             <template #header="{close, titleId, titleClass}">
                 <div class="my-header">
@@ -26,7 +28,9 @@
                             class="closeBtn absolute right-[0px] top-[12px] bottom-0 m-auto z-[1] pr-[16px] pl-[16px]"
                             @click="handleClose"
                         >
-                            <el-icon size="22px"><component is="CloseBold"></component></el-icon>
+                            <el-icon size="22px">
+                                <component is="CloseBold"></component>
+                            </el-icon>
                         </div>
                     </div>
                 </div>
@@ -37,30 +41,31 @@
                         <div class="flex gap-[5px]">
                             <div
                                 class="flex flex-col gap-[10px]"
-                                v-for="(item, index) in vipList"
+                                v-for="(item, index) in vipList.items"
                                 :key="index"
-                                :class="{active: activeIndex === item.value}"
+                                :class="{active: activeIndex === index}"
+                                @click="vipFn(item, index)"
                             >
                                 <div
                                     class="bg-color-main-1 scrollX-box relative text-color-0 p-[5px] w-[50px] vip-level-item whitespace-nowrap flex-1 z-[2] rounded-[4px]"
                                 >
                                     <base-img
-                                        :style="{transform: 'scale(' + item.scale + ')'}"
                                         class="w-[40px]"
-                                        :name="item.value"
+                                        :style="{transform: 'scale(' + vipListCopy[index].scale + ')'}"
+                                        :name="String(index)"
                                         type="png"
                                         path="images/vip"
                                     />
                                 </div>
-                                <p class="whitespace-nowrap w-full text-center font-black">{{ item.text }}</p>
+                                <p class="whitespace-nowrap w-full text-center font-black">VIP {{ index }}</p>
                             </div>
                         </div>
                         <div
                             class="bg-color-text-2 progress flex h-[10px] gap-[5px] mt-[6px] min-w-full w-[max-content]"
                         >
                             <div
-                                v-for="(item, index) in vipList"
-                                :class="{activeText: activeIndex === item.value}"
+                                v-for="(item, index) in vipList.items"
+                                :class="{activeText: activeIndex === index}"
                                 :key="index"
                                 class="relative h-[10px] flex-1 shrink-0 w-[50px] text-color-text-0 bg-color-text-2 whitespace-nowrap px-[25px] z-[2] vip-level-item-tag"
                             ></div>
@@ -89,21 +94,24 @@
                                     path="images/checkIn"
                                 />
                             </div>
-                            <span class="text-[12px] font-black">{{ formattedNum(item.price) }}</span>
+                            <span class="text-[12px] font-black">{{
+                                formattedNum(Number(vipList.items[activeIndex]?.rewardGold[index]))
+                            }}</span>
                         </div>
 
-                        <button
+                        <div
+                            @click="checkInFn(item)"
                             class="btn flex submit h-[22px] items-center justify-center w-full text-[12px] absolute bottom-0"
                         >
-                            <span v-if="item.status !== '3'">Check in</span>
+                            <span v-if="item.status !== '0'">Check in</span>
                             <base-img
-                                v-if="item.status === '3'"
+                                v-if="item.status === '0'"
                                 class="!w-[12px]"
                                 name="suo"
                                 type="png"
                                 path="images/checkIn"
                             />
-                        </button>
+                        </div>
                     </div>
                 </div>
                 <div class="w-full text-center text-[12px] mt-[5px]" style="color: #506383">
@@ -115,43 +123,30 @@
                     <div class="flex flex-row items-center justify-between">
                         <div class="flex flex-col items-center text-[12px] gap-[5px]">
                             <span class="font-black absolute top-0 w-max" style="color: #f39d00">0 Dia</span>
-                            <base-img class="w-[30px]" name="33" type="png" path="images/checkIn" />
+                            <base-img class="w-[30px]" name="56" type="png" path="images/checkIn" />
                             <span class="absolute bottom-0 w-max"></span>
                         </div>
                     </div>
                     <div
-                        v-for="(item, index) in checkDay"
-                        :key="item.value"
+                        v-for="(item, index) in vipList.items[activeIndex]?.serialCheckInReward"
+                        :key="index"
                         class="flex flex-row w-full items-center justify-between ml-[-1px]"
                     >
                         <el-progress
                             style="flex: 1"
                             class="mr-[-3px]"
-                            :percentage="item.percentage"
+                            :percentage="checkDay[index].percentage"
                             color="#3764ff"
                             :show-text="false"
                         />
                         <div class="flex flex-col items-center text-[12px] gap-[5px]">
                             <span class="font-black absolute top-0 w-max" style="color: #f39d00"
-                                >{{ item.day }} Dia</span
+                                >{{ vipList.items[activeIndex]?.serialCheckInReward[index]?.days }} Dia</span
                             >
                             <div class="w-[30px] relative">
+                                <base-img class="w-[30px]" name="56" type="png" path="images/checkIn" />
                                 <base-img
-                                    v-if="item.status === '0'"
-                                    class="w-[30px]"
-                                    name="33"
-                                    type="png"
-                                    path="images/checkIn"
-                                />
-                                <base-img
-                                    v-if="['1', '2'].includes(item.status)"
-                                    class="w-[30px]"
-                                    name="56"
-                                    type="png"
-                                    path="images/checkIn"
-                                />
-                                <base-img
-                                    v-if="item.status === '1'"
+                                    v-if="checkDay[index].status === 1"
                                     class="w-[30px] !absolute left-0 top-[-5px]"
                                     name="44"
                                     type="png"
@@ -159,144 +154,308 @@
                                 />
                             </div>
 
-                            <span class="absolute bottom-1 w-max">{{ item.price }}</span>
-                            <button
-                                v-if="item.status === '1'"
+                            <span class="absolute bottom-1 w-max">{{
+                                formattedNum(vipList.items[activeIndex]?.serialCheckInReward[index]?.score)
+                            }}</span>
+                            <div
+                                v-if="checkDay[index].status === 1"
+                                @click="CheckInTakeSerialRewardFn(index)"
                                 class="flex checkIn-btn absolute submit items-center h-[24px] px-[6px] justify-center w-max rounded-[4px] text-[10px] font-bold text-color-white mt-[45px]"
                             >
                                 <span class="font-black">Check in</span>
-                            </button>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="w-full text-center text-[12px] mt-[35px]" style="color: #506383">
                     Você pode obter um monte de moedas de ouro todos os dias
                 </div>
-            </div>
-        </Lazy-el-dialog></client-only
-    >
+                <baseLoading :http="true" v-if="Loading"></baseLoading>
+            </div> </Lazy-el-dialog
+    ></client-only>
 </template>
 
 <script setup lang="ts">
+    import {commands} from "~/core/define";
     const {locale, t} = useI18n();
+    const loginInfo = ref<CMD_MB_LogonSuccess>();
     const dialogVisible = ref(false);
     const isLogin = useIsLogin();
+    const Loading = ref(true);
+    let ws: INetService;
     const route = useRoute();
-    const activeIndex = ref("1");
-    const vipList = [
-        {text: "VIP 0", value: "0", scale: 1.5, price: "65.00", preferential: "20%"},
-        {text: "VIP 1", value: "1", scale: 1.5, price: "65.00", preferential: "20%"},
-        {text: "VIP 2", value: "2", scale: 1.5, price: "65.00", preferential: "20%"},
-        {text: "VIP 3", value: "3", scale: 1.3, price: "65.00", preferential: "20%"},
-        {text: "VIP 4", value: "4", scale: 1.3, price: "65.00", preferential: "20%"},
-        {text: "VIP 5", value: "5", scale: 1.3, price: "65.00", preferential: "20%"},
-        {text: "VIP 6", value: "6", scale: 1.3, price: "65.00", preferential: "20%"},
-        {text: "VIP 7", value: "7", scale: 1.3, price: "65.00", preferential: "20%"},
-        {text: "VIP 8", value: "8", scale: 1.3, price: "65.00", preferential: "20%"},
-        {text: "VIP 9", value: "9", scale: 1.3, price: "65.00", preferential: "20%"},
-        {text: "VIP 10", value: "10", scale: 1.3, price: "65.00", preferential: "20%"},
-        {text: "VIP 11", value: "11", scale: 1.3, price: "65.00", preferential: "20%"},
-        {text: "VIP 12", value: "12", scale: 1.3, price: "65.00", preferential: "20%"},
-        {text: "VIP 13", value: "13", scale: 1.3, price: "65.00", preferential: "20%"},
-        {text: "VIP 14", value: "14", scale: 1.2, price: "65.00", preferential: "20%"},
-        {text: "VIP 15", value: "15", scale: 1.2, price: "65.00", preferential: "20%"},
-        // {text: "VIP 16", value: "16", scale: 1.5, price: "65.00", preferential: "20%"},
-        // {text: "VIP 17", value: "17", scale: 1.5, price: "65.00", preferential: "20%"},
-        // {text: "VIP 18", value: "18", scale: 1.5, price: "65.00", preferential: "20%"},
-        // {text: "VIP 19", value: "19", scale: 1.5, price: "65.00", preferential: "20%"},
-        // {text: "VIP 20", value: "20", scale: 1.5, price: "65.00", preferential: "20%"},
+    const activeIndex = ref(0);
+    const growLevels = ref(0);
+    const parmas = reactive<CMD_MB_CheckInGetUserStatus>({userID: 0});
+    const vipList = reactive<CMD_MB_CheckInLoadConfigResult>({items: []});
+    const UserStatus = reactive<CMD_MB_GetGrowUserStatus>({
+        userID: 0,
+        experienceRenderMode: 1,
+    });
+    const StatusResult = ref<CMD_MB_CheckInGetUserStatusResult>({
+        turnDays: 0, // 普通签到本轮第几天[0-7]
+        seriesDays: 0, // 连续签到天数[0,20]
+        bTodayChecked: 0, // 今天是否签到了
+        allow: 0, // 是否允许签到
+        seriesAllow: [], // 是否有可领取连续签到的奖励
+        payScore: 0, // 今天充值总额
+        payRequire: 0,
+    });
+    const vipListCopy = [
+        {text: "VIP 0", value: "0", scale: 1.5},
+        {text: "VIP 1", value: "1", scale: 1.5},
+        {text: "VIP 2", value: "2", scale: 1.5},
+        {text: "VIP 3", value: "3", scale: 1.3},
+        {text: "VIP 4", value: "4", scale: 1.3},
+        {text: "VIP 5", value: "5", scale: 1.3},
+        {text: "VIP 6", value: "6", scale: 1.3},
+        {text: "VIP 7", value: "7", scale: 1.3},
+        {text: "VIP 8", value: "8", scale: 1.3},
+        {text: "VIP 9", value: "9", scale: 1.3},
+        {text: "VIP 10", value: "10", scale: 1.3},
+        {text: "VIP 11", value: "11", scale: 1.3},
+        {text: "VIP 12", value: "12", scale: 1.3},
+        {text: "VIP 13", value: "13", scale: 1.3},
+        {text: "VIP 14", value: "14", scale: 1.2},
+        {text: "VIP 15", value: "15", scale: 1.2},
+        {text: "VIP 16", value: "16", scale: 1.3},
+        {text: "VIP 17", value: "17", scale: 1.3},
+        {text: "VIP 18", value: "18", scale: 1.3},
+        {text: "VIP 19", value: "19", scale: 1.3},
+        {text: "VIP 20", value: "20", scale: 1.3},
     ];
 
-    const checkList = [
+    const checkList = reactive([
         {
             day: "1",
             pic: "1",
-            price: 1,
             value: "1",
             status: "1",
         },
         {
             day: "2",
             pic: "2",
-            price: 2,
             value: "2",
             status: "1",
         },
         {
             day: "3",
             pic: "3",
-            price: 3,
             value: "3",
             status: "2",
         },
         {
             day: "4",
             pic: "4",
-            price: 4,
             value: "4",
-            status: "3",
+            status: "0",
         },
         {
             day: "5",
             pic: "5",
-            price: 5,
             value: "5",
-            status: "3",
+            status: "0",
         },
         {
             day: "6",
             pic: "6",
-            price: 6,
             value: "6",
-            status: "3",
+            status: "0",
         },
         {
             day: "7",
             pic: "7",
-            price: 7,
             value: "7",
-            status: "3",
+            status: "0",
         },
-    ];
+    ]);
 
-    const checkDay = [
+    const checkDay = reactive([
         {
             day: 7,
             price: 0,
             value: 1,
-            status: "0",
-            percentage: 100,
+            status: 2,
+            percentage: 0,
         },
         {
             day: 10,
             price: 0,
             value: 2,
-            status: "1",
-            percentage: 100,
+            status: 1,
+            percentage: 0,
         },
         {
             day: 15,
             price: 0,
             value: 3,
-            status: "2",
+            status: 2,
             percentage: 0,
         },
         {
             day: 20,
             price: 0,
             value: 4,
-            status: "2",
+            status: 2,
             percentage: 0,
         },
-    ];
-    const formattedNum = (num: number) => {
-        return num.toLocaleString("de-DE", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        });
-    };
+    ]);
+
+    const CheckInDoneParmas = reactive<CMD_MB_CheckInDone>({
+        userID: 0, // 用户标识
+        dynamicPass: "", // 动态密码
+        machineID: "ffdgfdgdfgdfgdfgd21212", // 机器码
+        clientIP: "121.15.157.204",
+    });
+
+    const CheckInTakeSerialRewardParmas = reactive({
+        userID: 0, // 用户标识
+        index: 0, // 领取第几个奖励[1,4]
+        dynamicPass: "", // 动态密码
+        ip: "",
+    });
+
     const handleClose = () => {
         closePopup("checkIn");
+    };
+
+    const vipFn = (item: tagCheckInLoadConfig, index: number) => {
+        activeIndex.value = index;
+        setData();
+    };
+
+    const checkInFn = (item: {status: string}) => {
+        if (item.status === "2") {
+            console.log(666, CheckInDoneParmas);
+
+            CheckInDone(CheckInDoneParmas, "checkIn", (s: INetService, e: INetEventParam) => {
+                if (e.scmd === commands.SUB_MB_CheckInDone_RESULT) {
+                    openedFn();
+                    let {userID} = loginInfo.value as CMD_MB_LogonSuccess;
+                    loginCallback({userID: userID});
+                }
+            });
+        }
+    };
+
+    const CheckInTakeSerialRewardFn = (index: number) => {
+        CheckInTakeSerialRewardParmas.index = index;
+        CheckInTakeSerialReward(CheckInTakeSerialRewardParmas, "checkIn", (s: INetService, e: INetEventParam) => {
+            if (e.scmd === commands.SUB_MB_CheckInTakeSerialReward_RESULT) {
+                openedFn();
+                let {userID} = loginInfo.value as CMD_MB_LogonSuccess;
+                loginCallback({userID: userID});
+            }
+        });
+    };
+
+    const checkInLoadFn = () => {
+        return new Promise((resolve, reject) => {
+            checkInLoad(parmas, "checkIn", (s: INetService, e: INetEventParam) => {
+                ws = s;
+                if (e.scmd === commands.SUB_MB_CheckInLoadConfig_RESULT) {
+                    let {items} = e.data as CMD_MB_CheckInLoadConfigResult;
+                    vipList.items = items;
+                    resolve(e.data);
+                }
+            });
+        });
+    };
+
+    const checkInGetUserStatusFn = () => {
+        return new Promise((resolve, reject) => {
+            checkInGetUserStatus(parmas, "checkIn", (s: INetService, e: INetEventParam) => {
+                if (e.scmd === commands.SUB_MB_CheckInGetUserStatus_RESULT) {
+                    StatusResult.value = e.data;
+                    resolve(e.data);
+                }
+            });
+        });
+    };
+
+    const getGrowUserStatusFn = () => {
+        return new Promise((resolve, reject) => {
+            getGrowUserStatus(UserStatus, "checkIn", (s: INetService, e: INetEventParam) => {
+                if (e.scmd === commands.SUB_MB_GetGrowUserStatus_RESULT) {
+                    let {growLevel} = e.data as CMD_MB_GetGrowUserStatusResult;
+                    growLevels.value = growLevel;
+                    activeIndex.value = growLevel;
+                    resolve(e.data);
+                }
+            });
+        });
+    };
+
+    const setData = () => {
+        let {turnDays, bTodayChecked, seriesDays, seriesAllow} = StatusResult.value;
+
+        turnDays++;
+
+        checkList.map((item, index: number) => {
+            if (activeIndex.value === growLevels.value) {
+                if (turnDays > index + 1) {
+                    item.status = "1";
+                }
+                if (turnDays === index + 1 && bTodayChecked === 0) {
+                    item.status = "2";
+                }
+                if (turnDays === index + 1 && bTodayChecked === 1) {
+                    item.status = "0";
+                }
+                if (turnDays < index + 1) {
+                    item.status = "0";
+                }
+            } else {
+                item.status = "0";
+            }
+
+            return item;
+        });
+        if (activeIndex.value === growLevels.value) {
+            vipList.items[activeIndex.value].serialCheckInReward.reduce(
+                (prev, cur, index: number) => {
+                    if (prev.days < seriesDays && cur.days >= seriesDays) {
+                        let result = new Array(index).fill(false);
+                        if (result.length) {
+                            result.map((info, i) => {
+                                checkDay[i].percentage = 100;
+                            });
+                        }
+                        checkDay[index].percentage = ((seriesDays - prev.days) / (cur.days - prev.days)) * 100;
+                    }
+                    return cur;
+                },
+                {days: 0, score: 0}
+            );
+        }
+
+        seriesAllow.map((item, index) => {
+            if (activeIndex.value === growLevels.value) {
+                checkDay[index].status = item;
+            } else {
+                checkDay[index].status = 0;
+            }
+        });
+    };
+
+    const openedFn = () => {
+        const loginInfos = getLoginInfo();
+        loginInfo.value = loginInfos;
+        parmas.userID =
+            UserStatus.userID =
+            CheckInDoneParmas.userID =
+            CheckInTakeSerialRewardParmas.userID =
+                loginInfos.userID;
+        CheckInDoneParmas.dynamicPass = CheckInTakeSerialRewardParmas.dynamicPass = loginInfos.dynamicPass;
+        let result = schedule([checkInLoadFn, checkInGetUserStatusFn, getGrowUserStatusFn], 2);
+        result.then((res) => {
+            setData();
+            Loading.value = false;
+        });
+    };
+
+    const closedFn = () => {
+        ws.off("checkIn");
     };
 
     watchEffect(() => {
@@ -307,24 +466,29 @@
 <style lang="scss">
     .mobile-el-checkIn-dialog {
         backdrop-filter: blur(12px);
+
         .el-dialog {
             width: calc(100% - 40px);
             max-width: calc(var(--maxWidth) - 40px);
             border-radius: 8px;
             overflow: hidden;
         }
+
         .el-dialog__header {
             margin: 0 !important;
             padding: 0 !important;
         }
+
         .el-dialog__body {
             padding: 0 !important;
             background: #1d2027;
         }
+
         .checkIn-main {
             padding-bottom: 15px;
             overflow-x: hidden;
         }
+
         .scrollX {
             .bg-color-text-2 {
                 background: #33353f;
@@ -333,6 +497,7 @@
 
         .vip-level-item {
             background: #33353f;
+
             &::after {
                 background: #33353f;
                 bottom: -4px;
@@ -351,8 +516,10 @@
                 z-index: -1;
             }
         }
+
         .active {
             color: #3eb158;
+
             .scrollX-box {
                 background: #274333;
                 border: solid 1px #4cf76c;
@@ -378,6 +545,7 @@
                 }
             }
         }
+
         .vip-level-item-tag:after {
             color: #15161c;
             content: "\b7";
@@ -390,6 +558,7 @@
             position: absolute;
             width: 10px;
         }
+
         .activeText {
             &:after {
                 content: "";
@@ -406,6 +575,7 @@
                 border-radius: 50%;
             }
         }
+
         .bg-color-linear-12 {
             background: linear-gradient(270deg, #1d2027, #1b2746);
         }
@@ -416,15 +586,16 @@
                 background: #33353f;
                 position: absolute;
                 left: 0;
-                width: 15px;
+                width: 25px;
                 height: 10px;
             }
+
             &::after {
                 content: "";
                 background: #33353f;
                 position: absolute;
                 right: 0;
-                width: 15px;
+                width: 25px;
                 height: 10px;
             }
         }
@@ -433,8 +604,10 @@
             border-radius: 4px;
             border: solid 1px #464953;
             color: #ffffff;
+
             &:nth-child(7) {
                 grid-column: span 3 / span 3;
+
                 .checkIn-box-price {
                     flex-direction: row-reverse;
                     margin-bottom: 18px;
@@ -459,16 +632,20 @@
             background-color: #464953;
             border-radius: 0px 0px 4px 4px;
         }
+
         .status1 {
             color: #a1a2a3;
         }
+
         .status2 {
             background-image: linear-gradient(0deg, #3c201f 0%, #1f1f25 100%), linear-gradient(#000000, #000000);
             // border-color: #f88a2d;
             color: #ffde00;
+
             .checkIn-box-day {
                 background-color: #ffa800;
             }
+
             .btn {
                 color: #ffffff;
                 background-image: linear-gradient(90deg, #5ed404 0%, #38b20d 100%), linear-gradient(#000000, #000000);
@@ -480,8 +657,10 @@
                 background-color: #1a4a04;
             }
         }
+
         .checkIn-check {
             position: relative;
+
             &::before {
                 content: "";
                 width: 99%;
@@ -491,14 +670,18 @@
                 background-color: #363637;
             }
         }
+
         .checkIn-btn {
             background-image: linear-gradient(90deg, #5ed404 0%, #38b20d 100%), linear-gradient(#53c16c, #53c16c);
         }
+
         .el-progress-bar__inner {
             border-radius: 0 100px 100px 0;
         }
+
         .el-progress-bar__outer {
             border-radius: 0;
         }
     }
 </style>
+: any: any_item_reject_reject_s_reject_s_res_cur_$event

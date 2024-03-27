@@ -47,17 +47,17 @@
                     <div class="flex items-center mr-[10px] flex-1">
                         <base-img
                             class="h-[60px] w-[60px] rounded-full mr-[10px]"
-                            name="r"
+                            name="m"
                             type="png"
                             path="images/profile"
                         />
 
                         <div class="flex flex-col gap-[5px]">
                             <div class="text-[14px] font-[600]" style="color: #cbcdd0">
-                                <span>ty2</span>
+                                <span>{{ loginInfo?.nickName }}</span>
                             </div>
                             <div class="text-[12px] flex" style="color: #99a7b4">
-                                ID：{{ ID }}
+                                ID：{{ loginInfo?.userID }}
                                 <span @click="clipboardFn" class="ml-[8px] flex items-center"
                                     ><base-img class="w-[14px]" name="cose" type="png" path="images/profile"
                                 /></span>
@@ -69,7 +69,7 @@
                                         name="h5_xiaojinbi_icon"
                                         type="png"
                                         path="images/profile" /></span
-                                ><span style="color: #ffffff">50</span>
+                                ><span style="color: #ffffff">{{ formattedNum(Number(tagScoreInfo.score)) }}</span>
                             </div>
                         </div>
                     </div>
@@ -77,25 +77,56 @@
                 </div>
                 <div class="w-full h-[1px] shrink-0 my-[16px]" style="background-color: rgb(81 85 89)"></div>
                 <div class="flex items-center justify-between relative">
-                    <base-img class="w-[40px]" name="xz_1" type="png" path="images/profile" />
+                    <div class="w-[40px] relative flex justify-center items-center">
+                        <base-img class="w-[40px]" name="xz_1" type="png" path="images/profile" />
+                        <span class="absolute pt-[5px] font-bold" style="color: #592002">{{
+                            tagScoreInfo.growLevel
+                        }}</span>
+                    </div>
 
                     <div class="text-[10px] flex flex-1 items-center mx-[20px]">
-                        <div class="text-[14px] mr-[10px] text-color-text-0 font-bold">VIP 1</div>
+                        <div class="text-[14px] mr-[10px] text-color-text-0 font-bold">
+                            VIP{{ tagScoreInfo.growLevel }}
+                        </div>
                         <div class="flex-1 flex flex-col gap-[12px]">
                             <div class="text-[10px]">
                                 <div class="flex flex-row justify-between">
-                                    <span>RECARGA ACUMULADA</span> <span>440.00/400.00</span>
+                                    <span>RECARGA ACUMULADA</span>
+                                    <span
+                                        >{{ formattedNum(GetGrowUserStatusResult.payCurrent) }}/{{
+                                            formattedNum(GetGrowUserStatusResult.payRequire)
+                                        }}</span
+                                    >
                                 </div>
                                 <div class="h-[6px] rounded-[3px] overflow-hidden relative my-[4px]">
-                                    <el-progress :percentage="80" color="#3764ff" :show-text="false" />
+                                    <el-progress
+                                        :percentage="
+                                            (GetGrowUserStatusResult.payCurrent / GetGrowUserStatusResult.payRequire) *
+                                            100
+                                        "
+                                        color="#3764ff"
+                                        :show-text="false"
+                                    />
                                 </div>
                             </div>
                             <div class="text-[10px]">
                                 <div class="flex flex-row justify-between">
-                                    <span>RECARGA ACUMULADA</span> <span>440.00/400.00</span>
+                                    <span>APOSTAS ACUMULADAS</span>
+                                    <span
+                                        >{{ formattedNum(GetGrowUserStatusResult.betCurrent) }}/{{
+                                            formattedNum(GetGrowUserStatusResult.betRequire)
+                                        }}</span
+                                    >
                                 </div>
                                 <div class="h-[6px] rounded-[3px] overflow-hidden relative my-[4px]">
-                                    <el-progress :percentage="80" color="#3764ff" :show-text="false" />
+                                    <el-progress
+                                        :percentage="
+                                            (GetGrowUserStatusResult.betCurrent / GetGrowUserStatusResult.betRequire) *
+                                            100
+                                        "
+                                        color="#3764ff"
+                                        :show-text="false"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -142,19 +173,46 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+    import {commands} from "~/core/define";
     import store from "store";
     import {useClipboard, usePermission} from "@vueuse/core";
+    import {RouteLocationRaw} from "vue-router";
     const isLogin = useIsLogin();
+    const loginInfo = ref<CMD_MB_LogonSuccess>();
+    let ws: INetService;
+    const UserStatus = reactive<CMD_MB_GetGrowUserStatus>({
+        userID: 0,
+        experienceRenderMode: 1,
+    });
+    const GetGrowUserStatusResult = ref<CMD_MB_GetGrowUserStatusResult>({
+        growLevel: 0, // 成长等级/VIP等级
+        payCurrent: 0, // 当前充值额
+        payRequire: 0, // 需求充值额
+        betCurrent: 0, // 当前下注额
+        betRequire: 0, // 需求下注额
+        dailyAddition: 0, // 当前等级日转盘加成
+        dailyAdditionNext: 0, // 下个等级日转盘加成
+        weeklyAddition: 0, // 当前等级周转盘加成
+        weeklyAdditionNext: 0, // 下个等级周转盘加成
+        monthlyAddition: 0, // 当前等级月转盘加成
+        monthlyAdditionNext: 0, // 下个等级周转盘加成
+    });
+    const tagScoreInfo = useTagScoreInfo();
     const ID = ref(46575567);
     const {text, isSupported, copy} = useClipboard();
     const router = useRouter();
     const signOutFn = () => {
+        store.remove("w_l_s_r");
         store.remove("w_l_s_a");
         isLogin.value = false;
         router.push({path: "/"});
     };
-    const routFn = (parmas) => {
+    const routFn = (parmas: {
+        meta: {route: any};
+        hash: string | undefined;
+        path: RouteLocationRaw | null | undefined;
+    }) => {
         const route = useRoute();
         if (parmas.meta.route) {
             if (parmas.hash) {
@@ -164,8 +222,9 @@
             }
         }
     };
+
     const clipboardFn = () => {
-        copy(ID.value);
+        copy(String(tagScoreInfo.value.score));
 
         ElMessage({
             message: "Copiado!",
@@ -174,6 +233,47 @@
             type: "enum",
         });
     };
+
+    const getGrowUserStatusFn = () => {
+        return new Promise((resolve, reject) => {
+            let {userID} = loginInfo.value as CMD_MB_LogonSuccess;
+            UserStatus.userID = userID;
+            getGrowUserStatus(UserStatus, "profile", (s: INetService, e: INetEventParam) => {
+                if (e.scmd === commands.SUB_MB_GetGrowUserStatus_RESULT) {
+                    GetGrowUserStatusResult.value = e.data as CMD_MB_GetGrowUserStatusResult;
+                    ws = s;
+                    resolve(e.data);
+                }
+            });
+        });
+    };
+
+    const init = () => {
+        const loginInfos = getLoginInfo();
+        loginInfo.value = loginInfos;
+
+        let result = schedule([getGrowUserStatusFn], 2);
+        result.then((res) => {});
+    };
+
+    const leave = () => {
+        ws.off("profile");
+    };
+    onMounted(() => {
+        init();
+    });
+    onActivated(() => {
+        init();
+    });
+
+    onUnmounted(() => {
+        leave();
+    });
+
+    onDeactivated(() => {
+        leave();
+    });
+
     let routes = ref([
         {
             class: "grid grid-cols-2 gap-[8px]",

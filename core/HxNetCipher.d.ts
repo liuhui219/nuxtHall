@@ -33,9 +33,11 @@ interface IModule {
     // _onWSMessage(arrayBuffer: ArrayBuffer): boolean;
 
     _getBuffer(stream: pointer): number;
-    _getMainCmd(stream: pointer): number;
-    _getSubCmd(stream: pointer): number;
-    _getDataLength(stream: pointer): number;
+    _finalBuffer(stream: pointer): number;
+    _getMainCmd(stream: pointer): number;           // 主命令
+    _getSubCmd(stream: pointer): number;            // 子命令
+    _getDataLength(stream: pointer): number;        // 整个数据的长度
+    _getCurrentPosition(stream: pointer): number;   // 当前流的位置
 
     _readInt8: FuncNumberReader;
     _readUint8: FuncNumberReader;
@@ -89,6 +91,7 @@ interface IModule {
 
 declare interface IHxPackStream {
     getBuffer(): ArrayBuffer;
+    get finalBuffer():ArrayBuffer;
     get buffer(): ArrayBuffer;
     get mainCommand(): number;
     get subCommand(): number;

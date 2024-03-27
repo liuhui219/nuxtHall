@@ -1,5 +1,5 @@
  /*
-    auto generation at 2024/3/13 16:52:25  
+    auto generation at 2024/3/22 15:50:40  
 */
 
 // 基本协议模板定义(可自行修改)
@@ -87,6 +87,62 @@ interface CMD_MB_PlaceOrderResult {
 }
 
 /* ---------------------------------------- 专用结构 ---------------------------------------- */
+
+// 修改人物头像 (发送)
+// 发送 SUB_GP_SYSTEM_FACE_INFO (3,122)
+interface CMD_GP_SystemFaceInfo {
+    faceID: number;                                   // 图像标识
+    userID: number;                                   // 用户标识
+    dynamicPass: string;                              // 动态密码
+    machineID: string;                                // 机器码
+}
+
+// 修改人物头像 (接收)
+// 接收 SUB_GP_USER_FACE_INFO (3,120)
+interface CMD_GP_UserFaceInfo {
+    faceID: number;                                   // 图像标识
+    customID: number;                                 // 自定义头像标识(废弃)
+}
+
+// 获取任务列表 (发送)
+// 发送 SUB_GP_TASK_LIST_EX (3,230)
+interface CMD_GP_TaskListEx {
+    userID: number;                                   // 用户标识
+    taskTypeMask: number;                             // 任务类型掩码
+    dynamicPass: string;                              // 动态密码
+}
+
+// 任务明细
+interface tagTaskInfoEx {
+    taskID: number;                                   // 任务标识
+    taskType: number;                                 // 任务类型
+    taskStatus: number;                               // 任务状态
+    taskCurProgress: number;                          // 当前进度
+    taskMaxProgress: number;                          // 最大进度
+    taskOperationType: number;                        // 操作类型
+    taskOperationSubType: number;                     // 操作子类型
+    rewardType: number;                               // 奖励类型
+    rewardValue: number;                              // 奖励值
+    gameKindID: number;                               // 游戏类型
+    taskDesc: string;                                 // 任务描述
+}
+
+// 获取任务列表 (接收)
+// 接收 SUB_GP_TASK_LIST_EX_RESULT (3,231)
+interface CMD_GP_TaskListExResult {
+    errorCode: number;                                // 全局通用错误码
+    count: number;                                    // 数量
+    items: Array<tagTaskInfoEx>;                      // 任务列表
+}
+
+// 领取任务奖励 (发送)
+// 发送 SUB_GP_TaskRewardEx (3,232)
+interface CMD_GP_TaskRewardEx {
+    userID: number;                                   // 用户标识
+    dynamicPass: string;                              // 动态密码
+    taskID: number;                                   // 任务标识
+    clientIP: string;                                 // IP地址
+}
 
 // 获取商品列表 (发送)
 // 发送 SUB_MB_GetProductInfos (3,1210)
@@ -196,7 +252,7 @@ interface tagWithdrawAccountHistory {
 // 接收 SUB_MB_GetWithdrawHistoryAccount_RESULT (3,1225)
 interface CMD_MB_GetWithdrawHistoryAccountResult {
     count: number;                                    // 数量
-    history: tagWithdrawAccountHistory;               // 历史账号列表
+    history: Array<tagWithdrawAccountHistory>;        // 历史账号列表
 }
 
 // 获取提现记录 (发送)
@@ -218,6 +274,78 @@ interface CMD_MB_GetWithdrawRecordResult {
     items: Array<tagWithdrawRecord>;                  // 提现记录列表
 }
 
+// 任务活跃度配置
+interface tagTaskActivenessConfig {
+    configID: number;                                 // 配置标识
+    activeness: number;                               // 是否激活
+    rewardType: number;                               // 奖励类型
+    rewardValue: number;                              // 奖励值
+}
+
+// 获取任务活跃度全局配置表 (接收)
+// 接收 SUB_MB_GetTaskActivenessConfig_RESULT (3,1231)
+interface CMD_MB_GetTaskActivenessConfigResult {
+    errorCode: number;                                // 全局通用错误码
+    count: number;                                    // 数量
+    items: Array<tagTaskActivenessConfig>;            // 任务活跃度配置列表
+}
+
+// 获取当前可领奖励状态 (发送)
+// 发送 SUB_MB_GetUserTaskActivenessStatus (3,1232)
+interface CMD_MB_GetUserTaskActivenessStatus {
+    userID: number;                                   // 用户标识
+    dynamicPass: string;                              // 动态密码
+}
+
+// 任务活跃度状态
+interface tagTaskActivenessStatus {
+    configID: number;                                 // 配置标识
+    status: number;                                   // 任务状态
+}
+
+// 获取当前可领奖励状态 (接收)
+// 接收 SUB_MB_GetUserTaskActivenessStatus_RESULT (3,1233)
+interface CMD_MB_GetUserTaskActivenessStatusResult {
+    activeness: number;                               // 活跃度值
+    count: number;                                    // 数量
+    items: Array<tagTaskActivenessStatus>;            // 任务活跃度状态列表
+}
+
+// 领取活跃度奖励 (发送)
+// 发送 SUB_MB_ActivenessReward (3,1234)
+interface CMD_MB_ActivenessReward {
+    userID: number;                                   // 用户标识
+    dynamicPass: string;                              // 动态密码
+    configID: number;                                 // 配置标识
+    clientIP: string;                                 // IP地址
+}
+
+// 领取活跃度奖励 (接收)
+// 接收 SUB_MB_ActivenessReward_RESULT (3,1235)
+interface CMD_MB_ActivenessRewardResult {
+    errorCode: number;                                // 全局通用错误码
+    configID: number;                                 // 配置标识
+    rewardType: number;                               // 奖励类型
+    rewardValue: number;                              // 奖励值
+}
+
+// 红点信息
+interface tagRedDot {
+    type: number;                                     // 红点类型
+    subType: number;                                  // 子类型
+    count: number;                                    // 红点数量
+    method: number;                                   // 处理方式
+    style: number;                                    // 呈现样式
+}
+
+// 红点信息 (接收)
+// 接收 SUB_MB_GetRedDotStatus_RESULT (3,1241)
+interface CMD_MB_GetRedDotStatusResult {
+    errorCode: number;                                // 全局通用错误码
+    count: number;                                    // 数量
+    items: Array<tagRedDot>;                          // 红点列表
+}
+
 // 平台客服信息
 interface tagCustomServiceUrl {
     type: number;                                     // 客服类型 1:whatsapp/2:facebook/3:Telegram
@@ -230,6 +358,65 @@ interface CMD_MB_GetCustomServiceResult {
     errorCode: number;                                // 全局通用错误码
     count: number;                                    // 数量
     items: Array<tagCustomServiceUrl>;                // 平台客服列表
+}
+
+// 获取在线用户数量 (发送)
+// 发送 SUB_MB_GetOnlineUserInfo (3,1260)
+interface CMD_MB_GetOnlineUserInfo {
+    userID: number;                                   // 用户标识
+    kindID: number;                                   // 游戏类型标识
+}
+
+// 在线信息明细
+interface tagOnlineInfo {
+    kindID: number;                                   // 游戏种类
+    sortID: number;                                   // 排序ID
+    serverKind: number;                               // 服务类型
+    onlineCount: number;                              // 在线人数
+}
+
+// 获取在线用户数量 (接收)
+// 接收 SUB_MB_GetOnlineUserInfo_RESULT (3,1261)
+interface CMD_MB_GetOnlineUserInfoResult {
+    count: number;                                    // 数量
+    items: Array<tagOnlineInfo>;                      // 在线信息列表
+}
+
+// 获取跑马灯滚动信息 (发送)
+// 发送 SUB_MB_GetScrollMessage (3,1262)
+interface CMD_MB_GetScrollMessage {
+    userID: number;                                   // 用户标识
+    queueIndex: number;                               // 最大队列索引号
+}
+
+// 滚动消息明细
+interface tagScrollMessageInfo {
+    queueIndex: number;                               // 上一个最大索引号
+    nickName: string;                                 // 用户昵称
+    score: number;                                    // 爆分
+    kindID: number;                                   // 游戏类型
+}
+
+// 获取跑马灯滚动信息 (接收)
+// 接收 SUB_MB_GetScrollMessage_RESULT (3,1263)
+interface CMD_MB_GetScrollMessageResult {
+    count: number;                                    // 数量
+    items: Array<tagScrollMessageInfo>;               // 滚动消息列表
+}
+
+// 滚动消息明细
+interface tagH5TopScrollMessageInfo {
+    queueIndex: number;                               // 队列索引号
+    nickName: string;                                 // 用户昵称
+    score: number;                                    // 充值/提现金额
+    type: number;                                     // 类型：1充值，2提现
+}
+
+// 获取H5顶部滚动信息 (接收)
+// 接收 SUB_MB_GetH5TopScrollMessageInfo_RESULT (3,1265)
+interface CMD_MB_GetH5TopScrollMessageResult {
+    count: number;                                    // 数量
+    items: Array<tagH5TopScrollMessageInfo>;          // 滚动消息列表
 }
 
 // 查询分享配置 (接收)
@@ -293,6 +480,24 @@ interface CMD_MB_GetShareRestLimitsResult {
 // 接收 SUB_MB_GetMobiles_RESULT (3,1279)
 interface CMD_MB_GetMobilesResult {
     mobiles: string;                                  // 手机列表
+}
+
+// 绑定手机 (发送)
+// 发送 SUB_MB_BindMobile (3,1282)
+interface CMD_MB_BindMobileNew {
+    userID: number;                                   // 用户标识
+    dynamicPass: string;                              // 动态密码
+    mobile: string;                                   // 手机号码
+    logonPass: string;                                // 登陆密码
+    checkCode: string;                                // 手机验证码
+    clientIP: string;                                 // IP地址
+}
+
+// 绑定手机 (接收)
+// 接收 SUB_MB_BindMobile_RESULT (3,1283)
+interface CMD_MB_BindMobileResult {
+    errorCode: number;                                // 全局通用错误码
+    rewardScore: number;                              // 绑定手机奖励，扎花专用
 }
 
 // 获取手机绑定状态 (接收)
@@ -1021,7 +1226,7 @@ interface tagWithdrawLimit {
 interface CMD_MB_WithdrawLoadLimitConfigResult {
     limitMin: number;                                 // 最小额度限制
     limitMax: number;                                 // 最大额度限制
-    growLevellimit: tagWithdrawLimit;                 // 每个成长等级的限制
+    growLevellimit: Array<tagWithdrawLimit>;          // 每个成长等级的限制
     requireBindMobile: number;                        // 是否需要绑定手机
 }
 
@@ -1117,6 +1322,7 @@ interface CMD_MB_CheckInGetUserStatusResult {
     seriesAllow: Array<number>;                       // 是否有可领取连续签到的奖励
     payScore: number;                                 // 今天充值总额
     payRequire: number;                               // 当前等级需求充值金额
+    payMultiple: number;                              // 签到充值后的赠送的倍数（与等级有关）
 }
 
 // 执行签到领取奖励 (发送)
@@ -1273,6 +1479,33 @@ interface CMD_MB_GetProductInfosByTypeResult {
     productTypeID: number;                            // 礼包类型标识
     count: number;                                    // 数量
     productInfos: Array<tagProductInfo>;              // 商品列表
+}
+
+// 获取房间列表 (发送)
+// 发送 SUB_MB_C_GET_SERVER_LIST (9,500)
+interface CMD_MB_GetServerList {
+    kindID: number;                                   // 游戏类型标识
+}
+
+// 获取房间列表
+interface tagMiniGameServer {
+    kindID: number;                                   // 分类标识
+    sortID: number;                                   // 排序索引
+    serverID: number;                                 // 房间索引
+    serverKind: number;                               // 房间类型
+    serverType: number;                               // 房间类型
+    cellScore: number;                                // 单元积分
+    enterScore: number;                               // 进入积分
+    onLineCount: number;                              // 在线人数
+    androidCount: number;                             // 机器人数
+    fullCount: number;                                // 满员人数
+    tableCount: number;                               // 桌子数目
+}
+
+// 获取房间列表 (接收)
+// 接收 SUB_MB_S_SERVER_LIST (9,501)
+interface CMD_MB_GetServerListResult {
+    items: tagMiniGameServer;                         // 房间列表
 }
 
 // 获取邮件列表 (发送)
@@ -1544,7 +1777,7 @@ interface CMD_MB_LogonAccountsV6 {
     deviceType: number;                               // 设备类型(参见DeviceType枚举)
     machineID: string;                                // 机器码
     accounts: string;                                 // 用户账号
-    password: string;                                 // 
+    password: string;                                 // 登陆密码或者动态密码
     clientIP: string;                                 // IP地址
     channelName: string;                              // 推广渠道名称
 }

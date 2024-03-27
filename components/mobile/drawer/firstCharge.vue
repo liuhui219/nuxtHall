@@ -26,8 +26,10 @@
                         path="images/recharge"
                     />
                 </div>
-                <div class="flex flex-col text-[12px] w-[70%] ml-[15%]">
-                    <div class="Countdown"><span>Disponível em:</span></div>
+                <div class="flex flex-col text-[12px] w-[70%] ml-[15%] pt-[42%]">
+                    <div class="Countdown" v-if="countdownShow">
+                        <span>Disponível em： </span> <el-countdown title="" @finish="finishFn" :value="value" />
+                    </div>
                     <div class="w-full flex flex-row pl-[6%] mt-[5%]">
                         <base-img class="w-[39%] h-fit" name="h5_libao_jinbi3_icon" type="png" path="images/recharge" />
                         <div class="flex flex-col">
@@ -263,6 +265,8 @@
     const firstCharge = useFirstCharge();
     const isLogin = useIsLogin();
     const route = useRoute();
+    const countdownShow = ref(true);
+    const value = useCountdown();
     const libnaodikuang = $importImage("libnaodikuang", "png", "images/recharge");
     const h5_libao_shangpindi1_bg = $importImage("h5_libao_shangpindi1_bg", "png", "images/recharge");
     const h5_libao_jiaobiao1_bg = $importImage("h5_libao_jiaobiao1_bg", "png", "images/recharge");
@@ -270,6 +274,9 @@
     const h5_libao_shangpindi2_bg = $importImage("h5_libao_shangpindi2_bg", "png", "images/recharge");
     const closeFn = () => {
         firstCharge.value = false;
+    };
+    const finishFn = () => {
+        countdownShow.value = false;
     };
 </script>
 
@@ -309,7 +316,11 @@
             .Countdown {
                 display: flex;
                 justify-content: center;
-                margin-top: 54%;
+                position: absolute;
+                top: 24%;
+                left: 50%;
+                transform: translateX(-50%);
+                align-items: center;
             }
             .money {
                 color: #f87045;

@@ -68,15 +68,15 @@
 </template>
 
 <script setup lang="ts">
-    import {useDebounceFn} from "@vueuse/core";
-    import md5 from "js-md5";
-    import {HxNetPack, HxCipher} from "~/core/HxNetCipher";
-    import {useStorage} from "@vueuse/core";
+    import {useThrottleFn} from "@vueuse/core";
+    import {HxCipher} from "~/core/HxNetCipher";
     import {cloneDeep} from "lodash";
+    import {v4 as uuidv4} from "uuid";
     import store from "store";
     const {locale, t} = useI18n();
     const formRef = ref();
     const ws = useWs();
+    const Score = userScore();
     const isLogin = useIsLogin();
     const route = useRoute();
     const loding = ref(false);
@@ -92,9 +92,9 @@
 
     const RegisterAccounts = reactive<CMD_MB_RegisterAccounts>({
         moduleID: 1, // 模块标识(废弃)
-        plazaVersion: 0x06070600, // 大厅版本(定值0x06070001)
+        plazaVersion: 0x06070001, // 大厅版本(定值0x06070001)
         deviceType: 3, // 设备类型(参见DeviceType枚举)
-        machineID: "521d26d2eac86935f2bab17fc60aa590", // 机器码
+        machineID: HxCipher.md5(uuidv4()), // 机器码
         accounts: "", // 用户账号
         logonPass: "", // 登陆密码
         checkCode: "123456", // 手机验证码
@@ -183,9 +183,6 @@
 
         return rule;
     });
-    const closeFn = () => {
-        closePopup("register");
-    };
 
     const inputFn = (val: any) => {
         let reg = /[^0-9]/g;
@@ -249,7 +246,7 @@
         });
     };
 
-    const submitFn = useDebounceFn(() => {
+    const submitFn = useThrottleFn(() => {
         const ruleFormClone = cloneDeep(ruleForm);
         RegisterAccounts.accounts = "0055" + ruleFormClone.phoneNumber;
         RegisterAccounts.logonPass = HxCipher.md5(ruleFormClone.password);
@@ -272,7 +269,10 @@
             if (e.scmd === 100) {
                 //console.log("登陆成功");
                 //store.set("w_l_s_a", btoa(encodeURIComponent(JSON.stringify(e.data))));
+                store.set("w_l_s_r", JSON.stringify(e.data));
+
                 isLogin.value = true;
+                loginCallback({userID: e.data.userID});
                 closePopup("register");
             }
             s.off("register");
@@ -325,7 +325,3 @@
         }
     }
 </style>
-: any: string | any[]: (arg0: Error | undefined) => void: any: string: (arg0: Error | undefined) => void: any: string:
-(arg0: Error | undefined) => void: any: number | bigint: string | number | NodeJS.Timeout | null | undefined: {
-validateField: (arg0: string, arg1: (valid: any) => void) => void; }: any: { validate: (arg0: (valid: any, fields: any)
-=> void) => any; }: any: any

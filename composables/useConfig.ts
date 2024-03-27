@@ -1,4 +1,5 @@
 /** @format */
+import store from "store";
 
 export const useIsCollapse = () => useState("is_Collapse", () => false);
 export const usePageLoading = () => useState("page-loading", () => true);
@@ -23,6 +24,24 @@ export const useTipShow = () => useState("tip-show", () => true);
 export const useVipLevel = () => useState("vip-level", () => false);
 export const useFirstCharge = () => useState("first-charge", () => false);
 export const useCheckIn = () => useState("check-in", () => false);
+
+export const useRaffleWheel = () => useState("raffle-wheel", () => false);
+export const useInvitation = () => useState("invitation", () => false);
+export const useRechargeRefund = () => useState("recharge-refund", () => false);
+
+export const userScore = () => useState("score", () => 0);
+export const useTagScoreInfo = () =>
+    useState("tag-score-info", () =>
+        ref<tagScoreInfo>({score: 0, insureScore: 0, tCCoin: 0, tCCoinInsure: 0, growLevel: 0})
+    );
+export const useCountdown = () => useState("count-down", () => Date.now() + 1000 * 60 * 60);
+
+export const getLoginInfo = () => {
+    const isLogin = useIsLogin();
+    let parmas = isLogin.value ? JSON.parse(store.get("w_l_s_r")) : {};
+    return parmas;
+};
+
 //判断当前是否在某个页面(current必须以【/】开头)或弹窗(不带【/】开头则是弹窗)
 export function isPageInSome(current: string, path = "") {
     if (!current) {

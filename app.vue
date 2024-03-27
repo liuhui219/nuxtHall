@@ -75,9 +75,9 @@
     });
 
     // Client
-    nuxtApp.hook("app:mounted", (vueApp) => {
+    nuxtApp.hook("app:mounted", async (vueApp) => {
         const initfirebase = initialize();
-
+        await websoket.initWebSocket();
         getAnalytics(initfirebase.app);
         console.log("app:mounted");
         const gameurl = gameURL();
@@ -92,12 +92,14 @@
         });
     });
 
-    onMounted(async () => {
+    onMounted(() => {
         const tipShow = useTipShow();
+        const loginInfo = getLoginInfo();
+        loginCallback({userID: loginInfo.userID});
         console.log("onMounted");
         pageLoading.value = false;
         setUid();
-        await websoket.initWebSocket();
+
         window.dataLayer = window.dataLayer || [];
         function gtag() {
             dataLayer.push(arguments);

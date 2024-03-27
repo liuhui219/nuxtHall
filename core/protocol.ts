@@ -473,15 +473,25 @@ class WebSocketService extends NetEventService implements INetService {
 
     // 在[公共定义]的模板中和[命令定义]的模板中 查找名字为name的解包模板定义
     private lookupTemplate(mcmd: number, scmd: number, forSend: boolean = true): INetPackTemplateDataTable | undefined {
-        try {
-            return NetDefine.structors[mcmd][scmd];
-        } catch {
-            try {
-                return (forSend ? NetDefine.sendStructors : NetDefine.recvStructors)[mcmd][scmd];
-            } catch {
-                return undefined;
+        if(forSend){
+            if(NetDefine.sendStructors[mcmd]?.[scmd]??false){
+                return NetDefine.sendStructors[mcmd][scmd];
+            }
+        }else{
+            if(NetDefine.recvStructors[mcmd]?.[scmd]??false){
+                return NetDefine.recvStructors[mcmd][scmd];
             }
         }
+        return NetDefine.structors[mcmd]?.[scmd];
+        // try {
+        //     return (forSend ? NetDefine.sendStructors : NetDefine.recvStructors)[mcmd][scmd];
+        // } catch {
+        //     try {
+        //         return NetDefine.structors[mcmd][scmd];
+        //     } catch {
+        //         return undefined;
+        //     }
+        // }
     }
 
     // 计算发送的封包尺寸
@@ -693,7 +703,7 @@ class WebSocketService extends NetEventService implements INetService {
                 let writer = HxNetPack.createWriter(mcmd_or_raw, scmd as number, size);
                 try {
                     this.writeData(writer, data as unknown as json, template);
-                    this.ws.send(writer.getBuffer());
+                    this.ws.send(writer.finalBuffer);
                 } catch {
                     return false;
                 } finally {
@@ -702,7 +712,7 @@ class WebSocketService extends NetEventService implements INetService {
             } else {
                 let writer = HxNetPack.createWriter(mcmd, scmd as number, 0);
                 try {
-                    this.ws.send(writer.getBuffer());
+                    this.ws.send(writer.finalBuffer);
                 } catch {
                     return false;
                 } finally {

@@ -56,9 +56,9 @@
 
 <script setup lang="ts">
     import {FormInstance} from "element-plus";
-    import {useDebounceFn} from "@vueuse/core";
+    import {useThrottleFn} from "@vueuse/core";
     import {HxNetPack, HxCipher} from "~/core/HxNetCipher";
-    import md5 from "js-md5";
+    import {v4 as uuidv4} from "uuid";
     import {useStorage} from "@vueuse/core";
     import {cloneDeep} from "lodash";
     import store from "store";
@@ -66,6 +66,7 @@
     const loginDialog = useLoginDialog();
     const formRef = ref<FormInstance>();
     const isLogin = useIsLogin();
+    const Score = userScore();
     const route = useRoute();
     const loding = ref(false);
     const drawerDetail = ref(false);
@@ -77,12 +78,12 @@
     const logonAccounts = reactive<CMD_MB_LogonAccounts>({
         moduleID: 1, // 模块标识(废弃)
         plazaVersion: 0x06070001, // 大厅版本(定值0x06070001)
-        deviceType: 1, // 设备类型(参见DeviceType枚举)
-        machineID: "string", // 机器码
-        accounts: "string", // 用户账号
-        password: "string", // 登陆密码或者动态密码
+        deviceType: 3, // 设备类型(参见DeviceType枚举)
+        machineID: HxCipher.md5(uuidv4()), // 机器码
+        accounts: "", // 用户账号
+        password: "", // 登陆密码或者动态密码
         ipAddr: [], // 加密后IP地址
-        channelName: "string", // 推广渠道名称
+        channelName: "ORGANIC-10001", // 推广渠道名称
         spreadBindID: 1, // 剪贴板绑定标识
     });
     const rules = computed(() => {
@@ -146,13 +147,34 @@
         });
     };
 
-    const submitFn = useDebounceFn(() => {
+    const submitFn = useThrottleFn(() => {
         const ruleFormClone = cloneDeep(ruleForm);
         ruleFormClone.password = HxCipher.md5(ruleFormClone.password);
-        store.set("w_l_s_a", btoa(encodeURIComponent(JSON.stringify(ruleFormClone))));
-        isLogin.value = true;
-        closePopup("login");
-        loding.value = false;
+        logonAccounts.accounts = "0055" + ruleFormClone.phoneNumber;
+        logonAccounts.password = ruleFormClone.password;
+
+        login(logonAccounts, "login", function (s: INetService, e: INetEventParam) {
+            loding.value = false;
+
+            if (e.scmd === 101) {
+                ElMessage({
+                    message: e?.data?.describeString,
+                    offset: 260,
+                    type: "enum",
+                });
+            }
+            if (e.scmd === 100) {
+                //console.log("登陆成功");
+                //store.set("w_l_s_a", btoa(encodeURIComponent(JSON.stringify(e.data))));
+                store.set("w_l_s_a", btoa(encodeURIComponent(JSON.stringify(ruleFormClone))));
+                store.set("w_l_s_r", JSON.stringify(e.data));
+
+                isLogin.value = true;
+                loginCallback({userID: e.data.userID});
+                closePopup("login");
+            }
+            s.off("register");
+        });
     }, 1000);
     watchEffect(() => {
         drawerDetail.value = getHashValue(route.hash) === "login";

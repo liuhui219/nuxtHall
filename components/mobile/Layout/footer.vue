@@ -39,7 +39,7 @@
         {name: "home2", text: "Home", path: "", title: "H0003"},
         // {name: "Rewards", text: "About", path: "about", title: "H0004"},
         {name: "meiyuan", text: "Recharge", hash: "recharge", title: "H0014"},
-        {name: "share", text: "Share", hash: "share", title: "H0008", bg: true},
+        {name: "share", text: "Share", path: "share", title: "H0008", bg: true},
         // {name: "Mygame", text: "Vip", path: "vip", title: "TR0001"},
 
         {name: "vip1", text: "Vip", path: "vip", title: "H0005"},
